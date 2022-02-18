@@ -1,16 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatelessWidget {
-  final String numerator;
-  final String denominator;
-  final Color typeColor;
+  String? progress;
+  String? numerator;
+  String? denominator;
+  Color typeColor;
 
-  const ProgressBar({
+  ProgressBar.fromProgress({
     Key? key,
-    this.numerator = "?",
-    this.denominator = "?",
+    required this.progress,
     this.typeColor = Colors.white,
-  }) : super(key: key);
+  }) : super(key: key) {
+    numerator = progress!.split('/')[0];
+    denominator = progress!.split('/')[1];
+    log("progress: $progress");
+    log("num: $numerator");
+    log("denom: $denominator");
+  }
+
+  ProgressBar.fromNumeratorAndDenominator({
+    Key? key,
+    required this.numerator,
+    required this.denominator,
+    this.typeColor = Colors.white,
+  }) : super(key: key) {
+    progress = "$numerator/$denominator";
+    log("progress: $progress");
+  }
 
   @override
   Widget build(BuildContext context) {

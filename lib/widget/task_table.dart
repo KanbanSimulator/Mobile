@@ -24,13 +24,21 @@ class TaskTable extends StatelessWidget {
         if (tasks != null && tasks.isEmpty) {
           return ErrorPage(text: "No tasks for day $day");
         }
-        return ListView.builder(
-          itemCount: tasks!.length,
-          itemBuilder: (context, index) {
-            return TaskCard(
-              taskModel: tasks[index],
-            );
-          },
+        final W = MediaQuery.of(context).size.width;
+        final H = MediaQuery.of(context).size.height;
+        return Expanded(
+          child: GridView.count(
+            crossAxisCount: 3,
+            children: List.generate(tasks!.length, (index) {
+              return SizedBox(
+                width: W * 0.3,
+                height: H * 0.3,
+                child: TaskCard(
+                  taskModel: tasks[index],
+                ),
+              );
+            }),
+          ),
         );
       },
     );

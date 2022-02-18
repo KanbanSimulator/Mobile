@@ -5,6 +5,7 @@ class _ApiBasic {
   static final Dio _dio = new Dio();
 
   static Future<List<TaskModel>> getTasks(int day) async {
+    // mock
     return [
       TaskModel(
         title: 'task 1',
@@ -17,6 +18,42 @@ class _ApiBasic {
       ),
       TaskModel(
         title: 'task 2',
+        value: 12,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 5',
+        value: 12,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 6',
+        value: 12,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 4',
         value: 12,
         progress: [
           '12/18',

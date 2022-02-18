@@ -21,7 +21,7 @@ class GamePage extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     PeopleBank(
                       stage: 0,

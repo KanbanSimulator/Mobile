@@ -23,7 +23,7 @@ class TaskCard extends StatelessWidget {
     _count = rng.nextInt(7);
     return Container(
       width: double.infinity,
-      height: 150,
+      height: 122,
       // height: double.infinity,
       decoration: BoxDecoration(
         color: AppStyle.taskBackgroundColor,

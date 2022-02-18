@@ -19,6 +19,7 @@ class GamePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
+                flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -37,7 +38,16 @@ class GamePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(child: TaskTable(day: 0)),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("analysis"),
+                  ],
+                ),
+              ),
+              Expanded(flex: 4, child: TaskTable(day: 0)),
             ],
           ),
         ),

@@ -81,19 +81,22 @@ class TaskColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      physics: const BouncingScrollPhysics(),
-      itemCount: tasks.length,
-      itemBuilder: (context, index) {
-        return TaskCard(
-          taskModel: tasks[index],
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(
-          height: 4,
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        itemCount: tasks.length,
+        itemBuilder: (context, index) {
+          return TaskCard(
+            taskModel: tasks[index],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 4,
+          );
+        },
+      ),
     );
   }
 }

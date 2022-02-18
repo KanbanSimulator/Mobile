@@ -6,7 +6,7 @@ class AppStyle {
   static const backgroundColor = Color(0xff222222);
 
   // colors for stages of development
-  static const typeColors = [
+  static const stageColor = [
     Color(0xffF2B6FF),
     Color(0xffA6C4FF),
     Color(0xffFFE5A1)

@@ -17,28 +17,81 @@ class TaskTable extends StatelessWidget {
     return FutureBuilder(
       future: ApiBasic.getTasks(day),
       builder: (context, AsyncSnapshot<List<TaskModel>> snapshot) {
-        if (!snapshot.hasData) {
-          return ErrorPage(text: "No data for day $day");
-        }
-        List<TaskModel>? tasks = snapshot.data;
-        if (tasks != null && tasks.isEmpty) {
+        if (!snapshot.hasData) return ErrorPage(text: "No data for day $day");
+        List<TaskModel> tasks = snapshot.data!;
+        if (tasks.isEmpty) {
           return ErrorPage(text: "No tasks for day $day");
         }
-        final W = MediaQuery.of(context).size.width;
-        final H = MediaQuery.of(context).size.height;
-        return Expanded(
-          child: GridView.count(
-            crossAxisCount: 3,
-            children: List.generate(tasks!.length, (index) {
-              return SizedBox(
-                width: W * 0.3,
-                height: H * 0.3,
-                child: TaskCard(
-                  taskModel: tasks[index],
-                ),
-              );
-            }),
-          ),
+
+        return Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 0).toList(),
+              ),
+            ),
+            Expanded(
+              child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 1).toList(),
+              ),
+            ),
+            Expanded(
+              child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 2).toList(),
+              ),
+            ),
+          ],
+        );
+
+        // return Expanded(
+        //   child: ListView.builder(
+        //     itemCount: tasks!.length,
+        //     itemBuilder: (context, index) {
+        //       return TaskCard(taskModel: tasks[index]);
+        //     },
+        //   ),
+        // );
+
+        // return Expanded(
+        //   child: GridView.count(
+        //     physics: const BouncingScrollPhysics(),
+        //     crossAxisCount: 3,
+        //     mainAxisSpacing: 5,
+        //     crossAxisSpacing: 12.5,
+        //     children: List.generate(tasks!.length, (index) {
+        //       return TaskCard(
+        //         taskModel: tasks[index],
+        //       );
+        //     }),
+        //   ),
+        // );
+      },
+    );
+  }
+}
+
+class TaskColumn extends StatelessWidget {
+  final List<TaskModel> tasks;
+
+  const TaskColumn({
+    Key? key,
+    required this.tasks,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        return TaskCard(
+          taskModel: tasks[index],
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(
+          height: 4,
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
@@ -8,15 +9,20 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenW = MediaQuery.of(context).size.width;
-    final double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            TaskTable(day: 0),
+            Expanded(
+              child: Row(
+                children: [
+                  // PeopleBank()
+                ],
+              ),
+            ),
+            Expanded(child: TaskTable(day: 0)),
           ],
         ),
       ),

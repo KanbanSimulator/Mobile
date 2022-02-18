@@ -15,9 +15,6 @@ class ProgressBar extends StatelessWidget {
   }) : super(key: key) {
     numerator = progress!.split('/')[0];
     denominator = progress!.split('/')[1];
-    log("progress: $progress");
-    log("num: $numerator");
-    log("denom: $denominator");
   }
 
   ProgressBar.fromNumeratorAndDenominator({
@@ -27,13 +24,13 @@ class ProgressBar extends StatelessWidget {
     this.typeColor = Colors.white,
   }) : super(key: key) {
     progress = "$numerator/$denominator";
-    log("progress: $progress");
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      // height: 34,
       height: 17,
       decoration: BoxDecoration(
         color: typeColor,
@@ -41,7 +38,7 @@ class ProgressBar extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "$numerator/$denominator",
+          progress!,
         ),
       ),
     );

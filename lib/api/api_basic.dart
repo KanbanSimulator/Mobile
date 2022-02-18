@@ -10,6 +10,7 @@ class _ApiBasic {
       TaskModel(
         title: 'task 1',
         value: 12,
+        stage: 0,
         progress: [
           '12/18',
           '0/24',
@@ -19,26 +20,9 @@ class _ApiBasic {
       TaskModel(
         title: 'task 2',
         value: 12,
+        stage: 1,
         progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 5',
-        value: 12,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 6',
-        value: 12,
-        progress: [
-          '12/18',
+          '1/18',
           '0/24',
           '0/13',
         ],
@@ -46,6 +30,17 @@ class _ApiBasic {
       TaskModel(
         title: 'task 3',
         value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
         progress: [
           '12/18',
           '0/24',
@@ -53,10 +48,321 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 4',
+        title: 'task 2',
         value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
         progress: [
           '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 1',
+        value: 12,
+        stage: 0,
+        progress: [
+          '12/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '0/18',
+          '0/24',
+          '0/13',
+        ],
+      ),
+      TaskModel(
+        title: 'task 3',
+        value: 12,
+        stage: 2,
+        progress: [
+          '12/19',
           '0/24',
           '0/13',
         ],

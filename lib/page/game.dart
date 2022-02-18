@@ -18,32 +18,43 @@ class GamePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
+              // Spacer(),
               Expanded(
                 flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PeopleBank(
-                      stage: 0,
-                      count: 3,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        PeopleBank(
+                          stage: 0,
+                          count: 3,
+                        ),
+                        Text("analysis", style: AppStyle.stageTitleTextStyle),
+                      ],
                     ),
-                    PeopleBank(
-                      stage: 1,
-                      count: 3,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        PeopleBank(
+                          stage: 1,
+                          count: 3,
+                        ),
+                        Text("development",
+                            style: AppStyle.stageTitleTextStyle),
+                      ],
                     ),
-                    PeopleBank(
-                      stage: 2,
-                      count: 3,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        PeopleBank(
+                          stage: 2,
+                          count: 3,
+                        ),
+                        Text("testing", style: AppStyle.stageTitleTextStyle),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("analysis"),
                   ],
                 ),
               ),

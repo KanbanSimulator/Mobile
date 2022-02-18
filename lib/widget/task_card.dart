@@ -31,7 +31,7 @@ class TaskCard extends StatelessWidget {
         border: Border.all(color: AppStyle.taskBorderColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.5),
+        padding: const EdgeInsets.all(11),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,

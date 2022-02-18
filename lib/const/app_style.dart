@@ -11,13 +11,18 @@ class AppStyle {
     Color(0xffA6C4FF),
     Color(0xffFFE5A1)
   ];
+  static const stageTitleTextStyle = TextStyle(
+    color: Colors.white,
+    letterSpacing: 1.2,
+  );
 
   // task card
-  static const taskBackgroundColor = Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
+  static const taskBackgroundColor =
+      Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
   static const taskBorderColor = Color(0xff9E9E9E);
-  static const taskTitleTextStyle = TextStyle( // task card > title text > style
+  static const taskTitleTextStyle = TextStyle(
+    // task card > title text > style
     color: Colors.white,
     fontSize: 14,
   );
-
 }

@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/model/task_model.dart';
 import 'package:kanban/widget/people_bank_mini.dart';
@@ -36,16 +38,40 @@ class TaskCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  taskModel.title,
-                  style: AppStyle.taskTitleTextStyle,
-                ),
-                // const PeopleBankMini(count: 2, stage: 1),
-                PeopleBankMini(count: _count, stage: taskModel.stage),
-              ],
+            LongPressDraggable(
+              delay: const Duration(milliseconds: 1),
+              feedbackOffset: const Offset(-500, -500),
+              feedback: SvgPicture.asset(
+                AppAssets.person,
+                width: 100,
+                color: AppStyle.stageColor[taskModel.stage],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    taskModel.title,
+                    style: AppStyle.taskTitleTextStyle,
+                  ),
+                  PeopleBankMini(
+                    count: _count,
+                    stage: taskModel.stage,
+                  ),
+                ],
+              ),
+              childWhenDragging: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    taskModel.title,
+                    style: AppStyle.taskTitleTextStyle,
+                  ),
+                  PeopleBankMini(
+                    count: _count - 1,
+                    stage: taskModel.stage,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 17),
             Expanded(

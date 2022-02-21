@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kanban/api/api_basic.dart';
+import 'package:kanban/const/app_style.dart';
 import 'package:kanban/model/task_model.dart';
 import 'package:kanban/page/error.dart';
 import 'package:kanban/widget/task_card.dart';
@@ -87,8 +88,16 @@ class TaskColumn extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          return TaskCard(
-            taskModel: tasks[index],
+          final taskCardWidget = TaskCard(taskModel: tasks[index]);
+          return LongPressDraggable(
+            // dragAnchorStrategy: pointerDragAnchorStrategy,
+            child: taskCardWidget,
+            childWhenDragging: Text("widget was here."),
+            feedback: SizedBox(
+              width: MediaQuery.of(context).size.width / 3 - 16,
+              height: 122,
+              child: taskCardWidget,
+            ),
           );
         },
         separatorBuilder: (context, index) {

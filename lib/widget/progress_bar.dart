@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kanban/const/app_style.dart';
 
 class ProgressBar extends StatelessWidget {
   String? progress;
@@ -39,6 +40,7 @@ class ProgressBar extends StatelessWidget {
       child: Center(
         child: Text(
           progress!,
+          style: AppStyle.progressBarTextStyle,
         ),
       ),
     );

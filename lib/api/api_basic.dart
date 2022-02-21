@@ -38,7 +38,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 1',
+        title: 'task 4',
         value: 12,
         stage: 0,
         progress: [
@@ -48,7 +48,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 2',
+        title: 'task 5',
         value: 12,
         stage: 1,
         progress: [
@@ -58,7 +58,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 3',
+        title: 'task 6',
         value: 12,
         stage: 2,
         progress: [
@@ -68,7 +68,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 1',
+        title: 'task 7',
         value: 12,
         stage: 0,
         progress: [
@@ -78,7 +78,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 2',
+        title: 'task 8',
         value: 12,
         stage: 1,
         progress: [
@@ -88,7 +88,7 @@ class _ApiBasic {
         ],
       ),
       TaskModel(
-        title: 'task 3',
+        title: 'task 9',
         value: 12,
         stage: 2,
         progress: [

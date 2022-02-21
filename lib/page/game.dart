@@ -25,7 +25,7 @@ class GamePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
                         PeopleBank(
                           stage: 0,
@@ -35,7 +35,7 @@ class GamePage extends StatelessWidget {
                       ],
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
                         PeopleBank(
                           stage: 1,
@@ -46,7 +46,7 @@ class GamePage extends StatelessWidget {
                       ],
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
                         PeopleBank(
                           stage: 2,

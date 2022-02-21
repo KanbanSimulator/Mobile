@@ -46,18 +46,21 @@ class TaskCard extends StatelessWidget {
                 width: 100,
                 color: AppStyle.stageColor[taskModel.stage],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    taskModel.title,
-                    style: AppStyle.taskTitleTextStyle,
-                  ),
-                  PeopleBankMini(
-                    count: _count,
-                    stage: taskModel.stage,
-                  ),
-                ],
+              child: Container(
+                decoration: BoxDecoration(color: Colors.red),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      taskModel.title,
+                      style: AppStyle.taskTitleTextStyle,
+                    ),
+                    PeopleBankMini(
+                      count: _count,
+                      stage: taskModel.stage,
+                    ),
+                  ],
+                ),
               ),
               childWhenDragging: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -20,35 +20,37 @@ class PeopleBank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double shift = _maxWidth - count * _circleWidth;
-    return SizedBox(
-      width: _maxWidth,
-      height: _circleWidth,
-      child: Stack(
-        children: List.generate(count, (index) {
-          final circle = SimpleShadow(
-            opacity: 0.5,
-            color: Colors.black,
-            offset: const Offset(0, 4),
-            sigma: 4,
-            child: SvgPicture.asset(
-              AppAssets.person,
-              width: _circleWidth,
-              color: AppStyle.stageColor[stage],
-            ),
-          );
+    final person = SimpleShadow(
+      opacity: 0.5,
+      color: Colors.black,
+      offset: const Offset(0, 4),
+      sigma: 4,
+      child: SvgPicture.asset(
+        AppAssets.person,
+        width: _circleWidth,
+        color: AppStyle.stageColor[stage],
+      ),
+    );
+    return Draggable(
+      feedback: person,
+      child: SizedBox(
+        width: _maxWidth,
+        height: _circleWidth,
+        child: Stack(
+          children: List.generate(count, (index) {
+            double dx = 0;
+            if (count > 2) {
+              dx = _circleWidth * index + shift / (count - 1) * index;
+            } else if (count == 2) {
+              dx = (_circleWidth + 2) * index;
+            }
 
-          double dx = 0;
-          if (count > 2) {
-            dx = _circleWidth * index + shift / (count - 1) * index;
-          } else if (count == 2) {
-            dx = (_circleWidth + 2) * index;
-          }
-
-          return Positioned(
-            right: dx,
-            child: circle,
-          );
-        }),
+            return Positioned(
+              right: dx,
+              child: person,
+            );
+          }),
+        ),
       ),
     );
   }

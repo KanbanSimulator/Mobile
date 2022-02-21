@@ -15,11 +15,10 @@ class PeopleBank extends StatelessWidget {
   }) : super(key: key);
 
   final double _maxWidth = 80;
-  final double _circleWidth = 104;
+  final double _personWidth = 104;
 
   @override
   Widget build(BuildContext context) {
-    final double shift = _maxWidth - count * _circleWidth;
     final person = SimpleShadow(
       opacity: 0.5,
       color: Colors.black,
@@ -27,30 +26,40 @@ class PeopleBank extends StatelessWidget {
       sigma: 4,
       child: SvgPicture.asset(
         AppAssets.person,
-        width: _circleWidth,
+        width: _personWidth,
         color: AppStyle.stageColor[stage],
       ),
     );
     return Draggable(
       feedback: person,
-      child: SizedBox(
-        width: _maxWidth,
-        height: _circleWidth,
-        child: Stack(
-          children: List.generate(count, (index) {
-            double dx = 0;
-            if (count > 2) {
-              dx = _circleWidth * index + shift / (count - 1) * index;
-            } else if (count == 2) {
-              dx = (_circleWidth + 2) * index;
-            }
+      child: buildPeopleStack(count, person),
+      childWhenDragging: buildPeopleStack(count - 1, person),
+    );
+  }
 
-            return Positioned(
-              right: dx,
-              child: person,
-            );
-          }),
-        ),
+  Widget buildPeopleStack(count, person) {
+    final double shift = _maxWidth - count * _personWidth;
+    return SizedBox(
+      width: _maxWidth,
+      height: _personWidth,
+      child: Stack(
+        children: List.generate(count, (index) {
+          double dx = 0;
+          if (count > 2) {
+            dx = _personWidth * index + shift / (count - 1) * index;
+          } else if (count == 2) {
+            dx = (_maxWidth/2 - _personWidth/2) * index;
+            print("dx: $dx");
+          } else if (count == 1) {
+            print("count1 dx: $dx");
+            // dx = shift/2;
+          }
+
+          return Positioned(
+            right: dx,
+            child: person,
+          );
+        }),
       ),
     );
   }

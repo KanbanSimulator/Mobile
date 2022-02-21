@@ -29,7 +29,7 @@ class GamePage extends StatelessWidget {
                       children: const [
                         PeopleBank(
                           stage: 0,
-                          count: 3,
+                          count: 2,
                         ),
                         Text("analysis", style: AppStyle.stageTitleTextStyle),
                       ],
@@ -50,7 +50,7 @@ class GamePage extends StatelessWidget {
                       children: const [
                         PeopleBank(
                           stage: 2,
-                          count: 3,
+                          count: 1,
                         ),
                         Text("testing", style: AppStyle.stageTitleTextStyle),
                       ],

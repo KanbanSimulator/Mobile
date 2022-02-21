@@ -90,7 +90,6 @@ class TaskColumn extends StatelessWidget {
         itemBuilder: (context, index) {
           final taskCardWidget = TaskCard(taskModel: tasks[index]);
           return LongPressDraggable(
-            // dragAnchorStrategy: pointerDragAnchorStrategy,
             child: taskCardWidget,
             childWhenDragging: Text("widget was here."),
             feedback: SizedBox(

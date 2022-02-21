@@ -40,11 +40,14 @@ class TaskCard extends StatelessWidget {
           children: [
             LongPressDraggable(
               delay: const Duration(milliseconds: 1),
-              feedbackOffset: const Offset(-500, -500),
-              feedback: SvgPicture.asset(
-                AppAssets.person,
-                width: 100,
-                color: AppStyle.stageColor[taskModel.stage],
+              feedback: Container(
+                decoration: BoxDecoration(color: Colors.red),
+                child: SvgPicture.asset(
+                  AppAssets.person,
+                  fit: BoxFit.fitWidth,
+                  width: 100,
+                  color: AppStyle.stageColor[taskModel.stage],
+                ),
               ),
               child: Container(
                 decoration: BoxDecoration(color: Colors.red),

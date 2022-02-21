@@ -26,33 +26,33 @@ class GamePage extends StatelessWidget {
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         PeopleBank(
                           stage: 0,
                           count: 2,
                         ),
-                        Text("analysis", style: AppStyle.stageTitleTextStyle),
+                        const Text("analysis", style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         PeopleBank(
                           stage: 1,
                           count: 3,
                         ),
-                        Text("development",
+                        const Text("development",
                             style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         PeopleBank(
                           stage: 2,
                           count: 1,
                         ),
-                        Text("testing", style: AppStyle.stageTitleTextStyle),
+                        const Text("testing", style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                   ],

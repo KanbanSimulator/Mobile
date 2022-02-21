@@ -38,7 +38,8 @@ class TaskCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            LongPressDraggable(
+            LongPressDraggable<TaskModel>(
+              data: taskModel,
               delay: const Duration(milliseconds: 1),
               feedback: Container(
                 decoration: BoxDecoration(color: Colors.red),

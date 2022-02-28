@@ -42,79 +42,97 @@ class _TaskCardState extends State<TaskCard> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppStyle.taskBorderColor),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(11),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            LongPressDraggable<TaskModel>(
-              data: widget.taskModel,
-              delay: const Duration(milliseconds: 1),
-              onDragCompleted: () {
-                print("drag completed");
-                setState(() {
-                  _count--;
-                });
-              },
-              feedback: Container(
-                decoration: const BoxDecoration(color: Colors.transparent),
-                child: SvgPicture.asset(
-                  AppAssets.person,
-                  fit: BoxFit.fitWidth,
-                  width: 100,
-                  color: AppStyle.stageColor[widget.taskModel.stage],
-                ),
-              ),
-              child: Container(
-                decoration: const BoxDecoration(color: Colors.transparent),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.taskModel.title,
-                      style: AppStyle.taskTitleTextStyle,
+      child: DragTarget<TaskModel>(
+        builder: (BuildContext context,
+            List<Object?> candidateData,
+            List<dynamic> rejectedData,) {
+          print("candidate data $candidateData");
+          return Padding(
+            padding: const EdgeInsets.all(11),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                LongPressDraggable<TaskModel>(
+                  data: widget.taskModel,
+                  delay: const Duration(milliseconds: 1),
+                  onDragCompleted: () {
+                    print("drag completed");
+                    setState(() {
+                      _count--;
+                    });
+                  },
+                  feedback: Container(
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    child: SvgPicture.asset(
+                      AppAssets.person,
+                      fit: BoxFit.fitWidth,
+                      width: 100,
+                      color: AppStyle.stageColor[widget.taskModel.stage],
                     ),
-                    PeopleBankMini(
-                      count: _count,
-                      stage: widget.taskModel.stage,
+                  ),
+                  child: Container(
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.taskModel.title,
+                          style: AppStyle.taskTitleTextStyle,
+                        ),
+                        PeopleBankMini(
+                          count: _count,
+                          stage: widget.taskModel.stage,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                  childWhenDragging: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.taskModel.title,
+                        style: AppStyle.taskTitleTextStyle,
+                      ),
+                      PeopleBankMini(
+                        count: _count - 1,
+                        stage: widget.taskModel.stage,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              childWhenDragging: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.taskModel.title,
-                    style: AppStyle.taskTitleTextStyle,
+                const SizedBox(height: 17),
+                Expanded(
+                  child: ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const BouncingScrollPhysics(),
+                    itemCount: widget.taskModel.progress.length,
+                    itemBuilder: (context, index) {
+                      return ProgressBar.fromProgress(
+                        typeColor: AppStyle.stageColor[index],
+                        progress: widget.taskModel.progress[index],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 7);
+                    },
                   ),
-                  PeopleBankMini(
-                    count: _count - 1,
-                    stage: widget.taskModel.stage,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 17),
-            Expanded(
-              child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                // physics: const BouncingScrollPhysics(),
-                itemCount: widget.taskModel.progress.length,
-                itemBuilder: (context, index) {
-                  return ProgressBar.fromProgress(
-                    typeColor: AppStyle.stageColor[index],
-                    progress: widget.taskModel.progress[index],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 7);
-                },
-              ),
-            ),
-          ],
-        ),
+          );
+        },
+        onWillAccept: (TaskModel? task) {
+          if (task == null) return false;
+          return (task.stage == widget.taskModel.stage);
+        },
+        onAccept: (TaskModel task) {
+          print("on accept: ${_count}");
+          setState(() {
+            _count++;
+          });
+          print("on accept: ${_count}");
+        },
       ),
     );
   }

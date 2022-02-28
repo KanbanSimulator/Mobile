@@ -43,7 +43,7 @@ class _PeopleBankState extends State<PeopleBank> {
         color: AppStyle.stageColor[widget.stage],
       ),
     );
-    return Draggable(
+    return Draggable<TaskModel>(
       feedback: person,
       child: DragTarget<TaskModel>(
         builder: (BuildContext context, List<Object?> candidateData,

@@ -96,6 +96,7 @@ class TaskColumn extends StatelessWidget {
             initialCount: rng.nextInt(4),
           );
           return LongPressDraggable(
+            delay: Duration(seconds: 2),
             child: taskCardWidget,
             childWhenDragging: Text("widget was here."),
             feedback: SizedBox(

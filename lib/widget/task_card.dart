@@ -9,24 +9,34 @@ import 'package:kanban/model/task_model.dart';
 import 'package:kanban/widget/people_bank_mini.dart';
 import 'package:kanban/widget/progress_bar.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   final TaskModel taskModel;
+  int initialCount = 0;
 
   TaskCard({
     Key? key,
     required this.taskModel,
+    required this.initialCount,
   }) : super(key: key);
 
-  final rng = Random();
-  int _count = 0;
+  @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  late int _count;
+
+  @override
+  void initState() {
+    _count = widget.initialCount;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _count = rng.nextInt(7);
     return Container(
       width: double.infinity,
       height: 122,
-      // height: double.infinity,
       decoration: BoxDecoration(
         color: AppStyle.taskBackgroundColor,
         borderRadius: BorderRadius.circular(12),
@@ -39,29 +49,35 @@ class TaskCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             LongPressDraggable<TaskModel>(
-              data: taskModel,
+              data: widget.taskModel,
               delay: const Duration(milliseconds: 1),
+              onDragCompleted: () {
+                print("drag completed");
+                setState(() {
+                  _count--;
+                });
+              },
               feedback: Container(
-                decoration: BoxDecoration(color: Colors.red),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: SvgPicture.asset(
                   AppAssets.person,
                   fit: BoxFit.fitWidth,
                   width: 100,
-                  color: AppStyle.stageColor[taskModel.stage],
+                  color: AppStyle.stageColor[widget.taskModel.stage],
                 ),
               ),
               child: Container(
-                decoration: BoxDecoration(color: Colors.red),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      taskModel.title,
+                      widget.taskModel.title,
                       style: AppStyle.taskTitleTextStyle,
                     ),
                     PeopleBankMini(
                       count: _count,
-                      stage: taskModel.stage,
+                      stage: widget.taskModel.stage,
                     ),
                   ],
                 ),
@@ -70,12 +86,12 @@ class TaskCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    taskModel.title,
+                    widget.taskModel.title,
                     style: AppStyle.taskTitleTextStyle,
                   ),
                   PeopleBankMini(
                     count: _count - 1,
-                    stage: taskModel.stage,
+                    stage: widget.taskModel.stage,
                   ),
                 ],
               ),
@@ -85,11 +101,11 @@ class TaskCard extends StatelessWidget {
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 // physics: const BouncingScrollPhysics(),
-                itemCount: taskModel.progress.length,
+                itemCount: widget.taskModel.progress.length,
                 itemBuilder: (context, index) {
                   return ProgressBar.fromProgress(
                     typeColor: AppStyle.stageColor[index],
-                    progress: taskModel.progress[index],
+                    progress: widget.taskModel.progress[index],
                   );
                 },
                 separatorBuilder: (context, index) {

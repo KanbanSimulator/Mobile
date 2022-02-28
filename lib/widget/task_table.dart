@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kanban/api/api_basic.dart';
 import 'package:kanban/const/app_style.dart';
@@ -88,7 +90,11 @@ class TaskColumn extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          final taskCardWidget = TaskCard(taskModel: tasks[index]);
+          final rng = Random();
+          final taskCardWidget = TaskCard(
+            taskModel: tasks[index],
+            initialCount: rng.nextInt(4),
+          );
           return LongPressDraggable(
             child: taskCardWidget,
             childWhenDragging: Text("widget was here."),

@@ -43,9 +43,11 @@ class _TaskCardState extends State<TaskCard> {
         border: Border.all(color: AppStyle.taskBorderColor),
       ),
       child: DragTarget<TaskModel>(
-        builder: (BuildContext context,
-            List<Object?> candidateData,
-            List<dynamic> rejectedData,) {
+        builder: (
+          BuildContext context,
+          List<Object?> candidateData,
+          List<dynamic> rejectedData,
+        ) {
           print("candidate data $candidateData");
           return Padding(
             padding: const EdgeInsets.all(11),
@@ -53,53 +55,45 @@ class _TaskCardState extends State<TaskCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                LongPressDraggable<TaskModel>(
-                  data: widget.taskModel,
-                  delay: const Duration(milliseconds: 1),
-                  onDragCompleted: () {
-                    print("drag completed");
-                    setState(() {
-                      _count--;
-                    });
-                  },
-                  feedback: Container(
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    child: SvgPicture.asset(
-                      AppAssets.person,
-                      fit: BoxFit.fitWidth,
-                      width: 100,
-                      color: AppStyle.stageColor[widget.taskModel.stage],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.taskModel.title,
+                      style: AppStyle.taskTitleTextStyle,
                     ),
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.taskModel.title,
-                          style: AppStyle.taskTitleTextStyle,
+                    LongPressDraggable<TaskModel>(
+                      data: widget.taskModel,
+                      delay: const Duration(milliseconds: 1),
+                      onDragCompleted: () {
+                        print("drag completed");
+                        setState(() {
+                          _count--;
+                        });
+                      },
+                      feedback: Container(
+                        decoration: const BoxDecoration(color: Colors.transparent),
+                        child: SvgPicture.asset(
+                          AppAssets.person,
+                          fit: BoxFit.fitWidth,
+                          width: 100,
+                          color: AppStyle.stageColor[widget.taskModel.stage],
                         ),
-                        PeopleBankMini(
+                      ),
+                      child: Container(
+                        decoration:
+                            const BoxDecoration(color: Colors.transparent),
+                        child: PeopleBankMini(
                           count: _count,
                           stage: widget.taskModel.stage,
                         ),
-                      ],
-                    ),
-                  ),
-                  childWhenDragging: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.taskModel.title,
-                        style: AppStyle.taskTitleTextStyle,
                       ),
-                      PeopleBankMini(
+                      childWhenDragging: PeopleBankMini(
                         count: _count - 1,
                         stage: widget.taskModel.stage,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 17),
                 Expanded(

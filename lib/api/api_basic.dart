@@ -16,6 +16,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 2',
@@ -26,6 +27,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 3',
@@ -36,6 +38,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 4',
@@ -46,6 +49,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 5',
@@ -56,6 +60,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 6',
@@ -66,6 +71,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 7',
@@ -76,6 +82,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 8',
@@ -86,6 +93,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
+        peopleCount: [0, 0, 0],
       ),
       TaskModel(
         title: 'task 9',
@@ -96,276 +104,7 @@ class _ApiBasic {
           '0/24',
           '0/13',
         ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 1',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-      ),
-      TaskModel(
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
+        peopleCount: [0, 0, 0],
       ),
     ];
   }

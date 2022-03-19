@@ -91,14 +91,14 @@ class TaskColumn extends StatelessWidget {
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final rng = Random();
-          final taskCardWidget = TaskCard(
+          Widget taskCardWidget;
+          taskCardWidget = TaskCard(
             taskModel: tasks[index],
-            initialCount: rng.nextInt(4),
           );
-          return Draggable( // for mobile use longdraggable
-            // delay: Duration(seconds: 2),
+          return Draggable(
+            // delay: Duration(seconds: 2), // for mobile use longdraggable
             child: taskCardWidget,
-            childWhenDragging: Text("widget was here."),
+            childWhenDragging: const Text("widget was here."),
             feedback: SizedBox(
               width: MediaQuery.of(context).size.width / 3 - 16,
               height: 122,

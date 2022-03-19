@@ -48,8 +48,6 @@ class _TaskCardState extends State<TaskCard> {
           List<Object?> candidateData,
           List<dynamic> rejectedData,
         ) {
-          print("candidate data $candidateData");
-          print("rej data $rejectedData");
           return Padding(
             padding: const EdgeInsets.all(11),
             child: Column(

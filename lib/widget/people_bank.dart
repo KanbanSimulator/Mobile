@@ -81,8 +81,10 @@ class _PeopleBankState extends State<PeopleBank> {
     return SizedBox(
       width: _maxWidth,
       height: _personWidth,
-      child: Stack(
+      child: count <= 0 ? const SizedBox.shrink() : Stack(
         children: List.generate(count, (index) {
+          print('list generate of size $count');
+
           // todo: align to center properly
           double dx = 0;
           if (count > 2) {

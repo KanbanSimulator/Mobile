@@ -49,6 +49,7 @@ class _TaskCardState extends State<TaskCard> {
           List<dynamic> rejectedData,
         ) {
           print("candidate data $candidateData");
+          print("rej data $rejectedData");
           return Padding(
             padding: const EdgeInsets.all(11),
             child: Column(
@@ -66,7 +67,6 @@ class _TaskCardState extends State<TaskCard> {
                       data: widget.taskModel,
                       delay: const Duration(milliseconds: 1),
                       onDragCompleted: () {
-                        print("drag completed");
                         setState(() {
                           _count--;
                         });
@@ -121,11 +121,9 @@ class _TaskCardState extends State<TaskCard> {
           return (task.stage == widget.taskModel.stage);
         },
         onAccept: (TaskModel task) {
-          print("on accept: ${_count}");
           setState(() {
             _count++;
           });
-          print("on accept: ${_count}");
         },
       ),
     );

@@ -45,6 +45,18 @@ class _PeopleBankState extends State<PeopleBank> {
     );
     return Draggable<TaskModel>(
       feedback: person,
+      onDragCompleted: () {
+        print("drag completed");
+        setState(() {
+          _count--;
+        });
+      },
+      data: TaskModel(
+        stage: widget.stage,
+        title: '',
+        value: -1,
+        progress: ['', '', ''],
+      ),
       child: DragTarget<TaskModel>(
         builder: (BuildContext context, List<Object?> candidateData,
             List rejectedData) {
@@ -55,11 +67,9 @@ class _PeopleBankState extends State<PeopleBank> {
           return (task.stage == widget.stage);
         },
         onAccept: (TaskModel task) {
-          print("on accept: ${_count}");
           setState(() {
             _count++;
           });
-          print("on accept: ${_count}");
         },
       ),
       childWhenDragging: _buildPeopleStack(_count - 1, person),

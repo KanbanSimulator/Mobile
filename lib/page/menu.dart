@@ -43,20 +43,14 @@ class _MenupageState extends State<MenuPage> {
                       future: username,
                       builder: (context, snapshot) => Text(
                         (snapshot.hasData
-                            ? "You are: ${snapshot.data}"
+                            ? "You are:\n${snapshot.data}"
                             : "..."),
+                        textAlign: TextAlign.end,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: AppButton(
-                      "Log out",
-                      onPressed: () => _onLogOutPressed(context),
                     ),
                   ),
                 ],
@@ -70,9 +64,21 @@ class _MenupageState extends State<MenuPage> {
                       "Menu",
                       style: AppStyle.pageHeaderTextStyle,
                     ),
-                    AppButton(
-                      "Start Game",
-                      onPressed: () => _onStartGamePressed(context),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        "Start Game",
+                        onPressed: () => _onStartGamePressed(context),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        "Log out",
+                        onPressed: () => _onLogOutPressed(context),
+                      ),
                     ),
                   ],
                 ),

@@ -5,6 +5,13 @@ import 'package:flutter/material.dart';
 class AppStyle {
   static const backgroundColor = Color(0xff222222);
 
+  // menu page
+  static const pageHeaderTextStyle = TextStyle(
+    fontSize: 24,
+    color: Colors.white,
+    letterSpacing: 1.5,
+  );
+
   // colors for stages of development
   static const stageColor = [
     Color(0xffF2B6FF),

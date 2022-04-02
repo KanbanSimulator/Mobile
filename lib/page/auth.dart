@@ -10,6 +10,8 @@ import 'package:kanban/widget/text_area_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'menu.dart';
+
 class AuthPage extends StatelessWidget {
   AuthPage({Key? key}) : super(key: key);
 
@@ -86,7 +88,7 @@ class AuthPage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const GamePage(),
+          builder: (context) => const MenuPage(),
         ),
       );
     } else {

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth.dart';
 import 'game.dart';
+import 'menu.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            (username == AppConst.unnamed ? AuthPage() : GamePage()),
+            (username == AppConst.unnamed ? AuthPage() : MenuPage()),
       ),
     );
   }

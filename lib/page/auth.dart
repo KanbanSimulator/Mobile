@@ -3,15 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/const/app_style.dart';
+import 'package:kanban/const/app_ui.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_area_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  AuthPage({Key? key}) : super(key: key);
 
-  get _usernameFieldController => TextEditingController();
+  final _usernameFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +73,16 @@ class AuthPage extends StatelessWidget {
   }
 
   void _onGoPressed(context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => GamePage(),
-      ),
-    );
+    print("username field ${_usernameFieldController.text}");
+    if (_validateUsername(_usernameFieldController.text)) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const GamePage(),
+        ),
+      );
+    } else {
+      AppUi.toast(context, AppRes.usernameNotValid);
+    }
   }
 }

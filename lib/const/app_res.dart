@@ -6,4 +6,6 @@ class AppRes {
   "Ultrices morbi quisque vitae sit id. Sit id massa lobortis nunc, mattis nibh. Rutrum diam sed egestas volutpat. Elit turpis volutpat montes, enim amet ut consequat, ut lectus. Egestas molestie pharetra ut amet, nunc neque ac ipsum dolor. Accumsan dolor sem quam tincidunt a nulla tempor, vivamus lectus. Laoreet fringilla egestas eu vulputate neque imperdiet. Diam, scelerisque lacus est mi.\n"
   "Nisl facilisis commodo, dictumst donec scelerisque et lectus. Lacus, nibh suspendisse diam diam duis congue. Nunc facilisis quam tempus dignissim a nibh sollicitudin fames. Integer etiam ipsum, purus id habitasse ...\n";
 
+  static const String usernameNotValid = "Username not valid: it should contain at least 4 characters.";
+
 }

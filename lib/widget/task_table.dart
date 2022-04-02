@@ -28,10 +28,16 @@ class TaskTable extends StatelessWidget {
 
         return Row(
           mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
               child: TaskColumn(
                 tasks: tasks.where((e) => e.stage == 0).toList(),
+              ),
+            ),
+            Expanded(
+              child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 3).toList(),
               ),
             ),
             Expanded(
@@ -41,7 +47,17 @@ class TaskTable extends StatelessWidget {
             ),
             Expanded(
               child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 4).toList(),
+              ),
+            ),
+            Expanded(
+              child: TaskColumn(
                 tasks: tasks.where((e) => e.stage == 2).toList(),
+              ),
+            ),
+            Expanded(
+              child: TaskColumn(
+                tasks: tasks.where((e) => e.stage == 5).toList(),
               ),
             ),
           ],

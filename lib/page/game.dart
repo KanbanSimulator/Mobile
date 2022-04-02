@@ -21,44 +21,36 @@ class GamePage extends StatelessWidget {
               // Spacer(),
               Expanded(
                 flex: 2,
-                child: Row(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        PeopleBank(
-                          stage: 0,
-                          count: 2,
-                        ),
-                        const Text("analysis", style: AppStyle.stageTitleTextStyle),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        PeopleBank(count: 3, stage: 0),
+                        PeopleBank(count: 3, stage: 1),
+                        PeopleBank(count: 3, stage: 2),
                       ],
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        PeopleBank(
-                          stage: 1,
-                          count: 3,
-                        ),
-                        const Text("development",
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Text("analysis", style: AppStyle.stageTitleTextStyle),
+                        Text("finished", style: AppStyle.stageTitleTextStyle),
+                        Text("development",
                             style: AppStyle.stageTitleTextStyle),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        PeopleBank(
-                          stage: 2,
-                          count: 1,
-                        ),
-                        const Text("testing", style: AppStyle.stageTitleTextStyle),
+                        Text("finished", style: AppStyle.stageTitleTextStyle),
+                        Text("testing", style: AppStyle.stageTitleTextStyle),
+                        Text("finished", style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                   ],
                 ),
               ),
-              Expanded(flex: 4, child: TaskTable(day: 0)),
+              Expanded(flex: 3, child: TaskTable(day: 0)),
             ],
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
+import 'package:kanban/page/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
       // ),
-      home: AuthPage(),
+      home: SplashPage(),
     );
   }
 }

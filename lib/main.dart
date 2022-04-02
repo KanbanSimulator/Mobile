@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Kanban',
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,

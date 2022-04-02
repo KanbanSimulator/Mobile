@@ -37,9 +37,24 @@ class AppStyle {
   );
 
   // hint text style
-  static const hintTextStyle = TextStyle(
+  static const labelTextStyle = TextStyle(
     color: Color(0xff9a9a9a),
     fontSize: 14,
+  );
+
+  static final textFieldDecorationBase = InputDecoration(
+    contentPadding: const EdgeInsets.all(16).copyWith(left: 24, right: 24),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(color: Colors.redAccent, width: 0.0),
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
   );
 
 }

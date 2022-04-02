@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kanban/const/app_style.dart';
 
 class TextInput extends StatelessWidget {
   final String placeholder;
@@ -13,9 +14,9 @@ class TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: placeholder,
+      decoration: AppStyle.textFieldDecorationBase.copyWith(
+        labelText: placeholder,
+        labelStyle: AppStyle.labelTextStyle,
       ),
       controller: controller,
     );

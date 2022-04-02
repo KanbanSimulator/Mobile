@@ -9,7 +9,7 @@ class AppStyle {
   static const stageColor = [
     Color(0xffF2B6FF),
     Color(0xffA6C4FF),
-    Color(0xffFFE5A1)
+    Color(0xffFFE5A1),
   ];
   static const stageTitleTextStyle = TextStyle(
     color: Colors.white,

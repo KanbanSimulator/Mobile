@@ -23,42 +23,72 @@ class GamePage extends StatelessWidget {
                 flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         PeopleBank(
                           stage: 0,
                           count: 2,
                         ),
-                        const Text("analysis", style: AppStyle.stageTitleTextStyle),
+                        const SizedBox(height: 64),
+                        const Text("analysis",
+                            style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 170),
+                        const Text("finished",
+                            style: AppStyle.stageTitleTextStyle),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         PeopleBank(
                           stage: 1,
                           count: 3,
                         ),
+                        const SizedBox(height: 64),
                         const Text("development",
                             style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 170),
+                        const Text("finished",
+                            style: AppStyle.stageTitleTextStyle),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         PeopleBank(
                           stage: 2,
                           count: 1,
                         ),
-                        const Text("testing", style: AppStyle.stageTitleTextStyle),
+                        const SizedBox(height: 64),
+                        const Text("testing",
+                            style: AppStyle.stageTitleTextStyle),
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 170),
+                        const Text("finished",
+                            style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                   ],
                 ),
               ),
-              Expanded(flex: 4, child: TaskTable(day: 0)),
+              // Expanded(flex: 4, child: TaskTable(day: 0)),
             ],
           ),
         ),

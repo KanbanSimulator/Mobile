@@ -115,10 +115,13 @@ class TaskColumn extends StatelessWidget {
             // delay: Duration(seconds: 2), // for mobile use longdraggable
             child: taskCardWidget,
             childWhenDragging: const Text("widget was here."),
-            feedback: SizedBox(
-              width: MediaQuery.of(context).size.width / 3 - 16,
-              height: 122,
-              child: taskCardWidget,
+            feedback: Card(
+              color: Colors.transparent,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 6 - 16,
+                height: 138,
+                child: taskCardWidget,
+              ),
             ),
           );
         },

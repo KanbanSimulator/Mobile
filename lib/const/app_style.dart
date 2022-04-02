@@ -18,7 +18,7 @@ class AppStyle {
 
   // task card
   static const taskBackgroundColor =
-      Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
+  Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
   static const taskBorderColor = Color(0xff9E9E9E);
   static const taskTitleTextStyle = TextStyle(
     // task card > title text > style
@@ -40,9 +40,29 @@ class AppStyle {
   static const labelTextStyle = TextStyle(
     color: Color(0xff9a9a9a),
     fontSize: 14,
+    letterSpacing: 1.8,
   );
 
+  static const buttonTextStyle = TextStyle(
+    color: Color(0xff9a9a9a),
+    fontSize: 15,
+    fontWeight: FontWeight.w800,
+  );
+
+  static final buttonDecoration = ButtonStyle(
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+        side: const BorderSide(color: Colors.white),
+      ),
+    ),
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    // textStyle: MaterialStateProperty.all(buttonTextStyle),
+  );
+
+  // text field border style
   static final textFieldDecorationBase = InputDecoration(
+    fillColor: Colors.white,
     contentPadding: const EdgeInsets.all(16).copyWith(left: 24, right: 24),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
@@ -57,4 +77,10 @@ class AppStyle {
     ),
   );
 
+  // text field text style
+  static const textFieldStyle = TextStyle(
+    color: Color(0xff9a9a9a),
+    fontSize: 14,
+    letterSpacing: 1.8,
+  );
 }

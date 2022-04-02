@@ -17,7 +17,9 @@ class TextInput extends StatelessWidget {
       decoration: AppStyle.textFieldDecorationBase.copyWith(
         labelText: placeholder,
         labelStyle: AppStyle.labelTextStyle,
+        hintStyle: AppStyle.labelTextStyle,
       ),
+      style: AppStyle.textFieldStyle,
       controller: controller,
     );
   }

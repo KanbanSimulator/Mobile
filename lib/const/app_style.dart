@@ -27,7 +27,7 @@ class AppStyle {
   );
   static const valueTextStyle = TextStyle(
     color: Colors.white,
-    fontSize: 8,
+    fontSize: 9,
   );
 
   // progress bar
@@ -35,4 +35,11 @@ class AppStyle {
     color: Color(0xff3E3E3E),
     fontSize: 12,
   );
+
+  // hint text style
+  static const hintTextStyle = TextStyle(
+    color: Color(0xff9a9a9a),
+    fontSize: 14,
+  );
+
 }

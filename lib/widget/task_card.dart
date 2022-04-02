@@ -38,7 +38,7 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 150,
+      height: 137,
       decoration: BoxDecoration(
         color: AppStyle.taskBackgroundColor,
         borderRadius: BorderRadius.circular(12),
@@ -98,13 +98,12 @@ class _TaskCardState extends State<TaskCard> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   "Value: ${widget.taskModel.value}",
-                  textAlign: TextAlign.end,
                   style: AppStyle.valueTextStyle,
                 ),
-                const SizedBox(height: 17),
+                const SizedBox(height: 12),
                 Expanded(
                   child: ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),

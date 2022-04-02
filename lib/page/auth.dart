@@ -8,6 +8,7 @@ import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_area_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPage extends StatelessWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -72,9 +73,16 @@ class AuthPage extends StatelessWidget {
     return username.length >= 4;
   }
 
-  void _onGoPressed(context) {
-    print("username field ${_usernameFieldController.text}");
-    if (_validateUsername(_usernameFieldController.text)) {
+  void _storeCredentials({required String username}) async {
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setString("username", username);
+  }
+
+  void _onGoPressed(context) async {
+    final uname = _usernameFieldController.text;
+    print("username field $uname");
+    if (_validateUsername(uname)) {
+      _storeCredentials(username: uname);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

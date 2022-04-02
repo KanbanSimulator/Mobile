@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kanban/model/task_model.dart';
 
-class _ApiBasic {
+class _Api {
   static final Dio _dio = new Dio();
   static const String baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
 
@@ -71,9 +71,9 @@ class _ApiBasic {
   // }
 }
 
-class ApiBasic {
+class Api {
   static Future<List<TaskModel>> getTasks(int day) async {
-    List<TaskModel> tasks = await _ApiBasic.getTasksMock(day);
+    List<TaskModel> tasks = await _Api.getTasksMock(day);
     return tasks;
   }
 }

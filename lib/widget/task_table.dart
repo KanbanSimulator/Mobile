@@ -18,7 +18,7 @@ class TaskTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApiBasic.getTasks(day),
+      future: Api.getTasks(day),
       builder: (context, AsyncSnapshot<List<TaskModel>> snapshot) {
         if (!snapshot.hasData) return ErrorPage(text: "No data for day $day");
         List<TaskModel> tasks = snapshot.data!;

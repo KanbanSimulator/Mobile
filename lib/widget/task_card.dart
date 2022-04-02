@@ -11,6 +11,7 @@ import 'package:kanban/widget/progress_bar.dart';
 
 class TaskCard extends StatefulWidget {
   final TaskModel taskModel;
+
   // int initialCount = 0;
 
   const TaskCard({
@@ -37,7 +38,7 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 122,
+      height: 150,
       decoration: BoxDecoration(
         color: AppStyle.taskBackgroundColor,
         borderRadius: BorderRadius.circular(12),
@@ -68,7 +69,8 @@ class _TaskCardState extends State<TaskCard> {
                       onDragCompleted: () {
                         setState(() {
                           _count--;
-                          widget.taskModel.peopleCount![widget.taskModel.stage] = _count;
+                          widget.taskModel
+                              .peopleCount![widget.taskModel.stage] = _count;
                         });
                       },
                       feedback: Container(
@@ -95,6 +97,12 @@ class _TaskCardState extends State<TaskCard> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Value: ${widget.taskModel.value}",
+                  textAlign: TextAlign.end,
+                  style: AppStyle.valueTextStyle,
                 ),
                 const SizedBox(height: 17),
                 Expanded(

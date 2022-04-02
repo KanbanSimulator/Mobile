@@ -3,8 +3,9 @@ import 'package:kanban/model/task_model.dart';
 
 class _ApiBasic {
   static final Dio _dio = new Dio();
+  static const String baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
 
-  static Future<List<TaskModel>> getTasks(int day) async {
+  static Future<List<TaskModel>> getTasksMock(int day) async {
     // mock
     return [
       TaskModel(
@@ -64,11 +65,15 @@ class _ApiBasic {
       ),
     ];
   }
+
+  // static Future<List<TaskModel>> getTasks(int day) async {
+  //   _dio.get("$baseUrl/")
+  // }
 }
 
 class ApiBasic {
   static Future<List<TaskModel>> getTasks(int day) async {
-    List<TaskModel> tasks = await _ApiBasic.getTasks(day);
+    List<TaskModel> tasks = await _ApiBasic.getTasksMock(day);
     return tasks;
   }
 }

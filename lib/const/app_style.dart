@@ -25,6 +25,10 @@ class AppStyle {
     color: Colors.white,
     fontSize: 14,
   );
+  static const valueTextStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 8,
+  );
 
   // progress bar
   static const progressBarTextStyle = TextStyle(

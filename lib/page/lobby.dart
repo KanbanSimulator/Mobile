@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kanban/const/app_const.dart';
+import 'package:kanban/const/app_res.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/core/api/api.dart';
+import 'package:kanban/core/app_ui.dart';
+import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
@@ -68,7 +72,12 @@ class _LobbyPageState extends State<LobbyPage> {
     );
   }
 
-  void _onCreateWaitingRoomPressed(BuildContext context) {
+  void _onCreateWaitingRoomPressed(BuildContext context) async {
+    String username = await CacheService.getCredentials();
+    if (username == AppConst.unnamed) {
+      AppUi.toast(context, AppRes.checkLoggedIn);
+      return;
+    }
     Api.createRoom();
   }
 

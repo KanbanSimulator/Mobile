@@ -6,6 +6,8 @@ import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'lobby.dart';
+
 class MenuPage extends StatefulWidget {
   const MenuPage({
     Key? key,
@@ -104,7 +106,7 @@ class _MenupageState extends State<MenuPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => GamePage(),
+        builder: (context) => LobbyPage(),
       ),
     );
   }

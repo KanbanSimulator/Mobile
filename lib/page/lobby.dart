@@ -30,6 +30,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 CupertinoSwitch(
                   value: _isSpectatorSelected,
                   onChanged: _onSwitchSpectator,
+                  activeColor: Colors.redAccent,
                 ),
               ],
             ),

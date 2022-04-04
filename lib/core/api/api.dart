@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kanban/model/room_model.dart';
 import 'package:kanban/model/task_model.dart';
 
 class _Api {
@@ -70,7 +71,19 @@ class _Api {
   //   _dio.get("$baseUrl/")
   // }
 
-  // static Future<> postRoom()
+  static Future<Response> roomCreate(
+    String name,
+    bool isSpectator,
+    int teamsAmount,
+  ) async {
+    return _dio.post("$baseUrl/room/create", data: {
+      "player": {
+        "name": name,
+        "spectator": true,
+      },
+      "teamsAmount": teamsAmount
+    });
+  }
 }
 
 class Api {
@@ -79,6 +92,18 @@ class Api {
     return tasks;
   }
 
-  static void createRoom() {}
-
+  static Future<RoomModel?> createRoom(
+    String username,
+    bool isSpectator,
+    int teamsAmount,
+  ) async {
+    Response response = await _Api.roomCreate(username, isSpectator, teamsAmount);
+    try {
+      Map<String, dynamic> data = response.data;
+      RoomModel room = RoomModel.fromJson(data);
+      return room;
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+  }
 }

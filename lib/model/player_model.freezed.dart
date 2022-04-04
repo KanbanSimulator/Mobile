@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+PlayerModel _$PlayerModelFromJson(Map<String, dynamic> json) {
+  return _PlayerModel.fromJson(json);
+}
+
 /// @nodoc
 class _$PlayerModelTearOff {
   const _$PlayerModelTearOff();
@@ -25,6 +29,10 @@ class _$PlayerModelTearOff {
       name: name,
       teamNumber: teamNumber,
     );
+  }
+
+  PlayerModel fromJson(Map<String, Object?> json) {
+    return PlayerModel.fromJson(json);
   }
 }
 
@@ -38,6 +46,7 @@ mixin _$PlayerModel {
   String? get name => throw _privateConstructorUsedError;
   int? get teamNumber => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PlayerModelCopyWith<PlayerModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -136,9 +145,12 @@ class __$PlayerModelCopyWithImpl<$Res> extends _$PlayerModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_PlayerModel implements _PlayerModel {
   _$_PlayerModel({this.id, this.creator, this.name, this.teamNumber});
+
+  factory _$_PlayerModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PlayerModelFromJson(json);
 
   @override
   final int? id;
@@ -178,11 +190,19 @@ class _$_PlayerModel implements _PlayerModel {
   @override
   _$PlayerModelCopyWith<_PlayerModel> get copyWith =>
       __$PlayerModelCopyWithImpl<_PlayerModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PlayerModelToJson(this);
+  }
 }
 
 abstract class _PlayerModel implements PlayerModel {
   factory _PlayerModel(
       {int? id, bool? creator, String? name, int? teamNumber}) = _$_PlayerModel;
+
+  factory _PlayerModel.fromJson(Map<String, dynamic> json) =
+      _$_PlayerModel.fromJson;
 
   @override
   int? get id;

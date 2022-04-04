@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+RoomModel _$RoomModelFromJson(Map<String, dynamic> json) {
+  return _RoomModel.fromJson(json);
+}
+
 /// @nodoc
 class _$RoomModelTearOff {
   const _$RoomModelTearOff();
@@ -30,6 +34,10 @@ class _$RoomModelTearOff {
       started: started,
     );
   }
+
+  RoomModel fromJson(Map<String, Object?> json) {
+    return RoomModel.fromJson(json);
+  }
 }
 
 /// @nodoc
@@ -42,6 +50,7 @@ mixin _$RoomModel {
   List<PlayerModel>? get players => throw _privateConstructorUsedError;
   bool? get started => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $RoomModelCopyWith<RoomModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -161,9 +170,12 @@ class __$RoomModelCopyWithImpl<$Res> extends _$RoomModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_RoomModel implements _RoomModel {
   _$_RoomModel({this.id, this.player, this.players, this.started});
+
+  factory _$_RoomModel.fromJson(Map<String, dynamic> json) =>
+      _$$_RoomModelFromJson(json);
 
   @override
   final int? id;
@@ -202,6 +214,11 @@ class _$_RoomModel implements _RoomModel {
   @override
   _$RoomModelCopyWith<_RoomModel> get copyWith =>
       __$RoomModelCopyWithImpl<_RoomModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RoomModelToJson(this);
+  }
 }
 
 abstract class _RoomModel implements RoomModel {
@@ -210,6 +227,9 @@ abstract class _RoomModel implements RoomModel {
       PlayerModel? player,
       List<PlayerModel>? players,
       bool? started}) = _$_RoomModel;
+
+  factory _RoomModel.fromJson(Map<String, dynamic> json) =
+      _$_RoomModel.fromJson;
 
   @override
   int? get id;

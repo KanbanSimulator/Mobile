@@ -70,6 +70,7 @@ class _MenupageState extends State<MenuPage> {
                     const SizedBox(height: 16),
                     SizedBox(
                       width: 150,
+                      height: 36,
                       child: AppButton(
                         "Create Room",
                         onPressed: () => _onStartGamePressed(context),
@@ -78,6 +79,7 @@ class _MenupageState extends State<MenuPage> {
                     const SizedBox(height: 8),
                     SizedBox(
                       width: 150,
+                      height: 36,
                       child: AppButton(
                         "Join Room",
                         onPressed: () => _onStartGamePressed(context),
@@ -86,6 +88,7 @@ class _MenupageState extends State<MenuPage> {
                     const SizedBox(height: 8),
                     SizedBox(
                       width: 150,
+                      height: 36,
                       child: AppButton(
                         "Log out",
                         onPressed: () => _onLogOutPressed(context),

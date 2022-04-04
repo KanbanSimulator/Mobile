@@ -79,4 +79,6 @@ class Api {
     return tasks;
   }
 
+  static void createRoom() {}
+
 }

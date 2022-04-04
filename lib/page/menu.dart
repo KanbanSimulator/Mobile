@@ -70,7 +70,7 @@ class _MenupageState extends State<MenuPage> {
                     SizedBox(
                       width: 150,
                       child: AppButton(
-                        "Start Game",
+                        "Start",
                         onPressed: () => _onStartGamePressed(context),
                       ),
                     ),

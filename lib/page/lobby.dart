@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kanban/api/api.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
@@ -28,12 +29,16 @@ class _LobbyPageState extends State<LobbyPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Text(
+                "Game details",
+                style: AppStyle.pageHeaderTextStyle,
+              ),
+              const SizedBox(height: 48),
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Spectator? ", style: AppStyle.labelTextStyle),
-                  const SizedBox(width: 8),
+                  const Text("Spectator? ", style: AppStyle.labelTextStyle),
                   CupertinoSwitch(
                     value: _isSpectatorSelected,
                     onChanged: _onSwitchSpectator,
@@ -41,18 +46,20 @@ class _LobbyPageState extends State<LobbyPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               SizedBox(
                 width: 200,
                 child: TextInput(
                   placeholder: "How many teams?",
                   controller: _teamsCounterFieldController,
+                  keyboardType: TextInputType.number,
                 ),
               ),
               const SizedBox(height: 32),
               SizedBox(
                 width: 200,
-                child: AppButton("Create waiting room"),
+                height: 48,
+                child: AppButton("Create waiting room", onPressed: () => _onCreateWaitingRoomPressed(context),),
               ),
             ],
           ),
@@ -61,9 +68,24 @@ class _LobbyPageState extends State<LobbyPage> {
     );
   }
 
+  void _onCreateWaitingRoomPressed(BuildContext context) {
+    Api.createRoom();
+  }
+
   void _onSwitchSpectator(bool value) {
     setState(() {
       _isSpectatorSelected = !_isSpectatorSelected;
     });
   }
+
+  bool _validateTeamsCounter(String s) {
+    int t = 0;
+    try {
+      t = int.parse(s);
+    } catch (e) {
+      return false;
+    }
+    return t > 0 && t < 16;
+  }
+
 }

@@ -8,4 +8,6 @@ class AppRes {
 
   static const String usernameNotValid = "Username not valid: it should contain at least 4 characters.";
 
+  static const String checkLoggedIn = "Something went wrong: Check if you're logged in.";
+
 }

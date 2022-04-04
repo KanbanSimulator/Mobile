@@ -69,6 +69,8 @@ class _Api {
   // static Future<List<TaskModel>> getTasks(int day) async {
   //   _dio.get("$baseUrl/")
   // }
+
+  // static Future<> postRoom()
 }
 
 class Api {
@@ -76,4 +78,5 @@ class Api {
     List<TaskModel> tasks = await _Api.getTasksMock(day);
     return tasks;
   }
+
 }

@@ -30,7 +30,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   void initState() {
     // _count = widget.initialCount;
-    _count = widget.taskModel.peopleCount![widget.taskModel.stage];
+    _count = widget.taskModel.peopleCount![widget.taskModel.stage!];
     super.initState();
   }
 
@@ -60,7 +60,7 @@ class _TaskCardState extends State<TaskCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.taskModel.title,
+                      widget.taskModel.title!,
                       style: AppStyle.taskTitleTextStyle,
                     ),
                     LongPressDraggable<TaskModel>(
@@ -70,7 +70,7 @@ class _TaskCardState extends State<TaskCard> {
                         setState(() {
                           _count--;
                           widget.taskModel
-                              .peopleCount![widget.taskModel.stage] = _count;
+                              .peopleCount![widget.taskModel.stage!] = _count;
                         });
                       },
                       feedback: Container(
@@ -80,7 +80,7 @@ class _TaskCardState extends State<TaskCard> {
                           AppAssets.person,
                           fit: BoxFit.fitWidth,
                           width: 100,
-                          color: AppStyle.stageColor[widget.taskModel.stage],
+                          color: AppStyle.stageColor[widget.taskModel.stage!],
                         ),
                       ),
                       child: Container(
@@ -88,12 +88,12 @@ class _TaskCardState extends State<TaskCard> {
                             const BoxDecoration(color: Colors.transparent),
                         child: PeopleBankMini(
                           count: _count,
-                          stage: widget.taskModel.stage,
+                          stage: widget.taskModel.stage!,
                         ),
                       ),
                       childWhenDragging: PeopleBankMini(
                         count: _count - 1,
-                        stage: widget.taskModel.stage,
+                        stage: widget.taskModel.stage!,
                       ),
                     ),
                   ],
@@ -108,11 +108,11 @@ class _TaskCardState extends State<TaskCard> {
                   child: ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     // physics: const BouncingScrollPhysics(),
-                    itemCount: widget.taskModel.progress.length,
+                    itemCount: widget.taskModel.progress!.length,
                     itemBuilder: (context, index) {
                       return ProgressBar.fromProgress(
                         typeColor: AppStyle.stageColor[index],
-                        progress: widget.taskModel.progress[index],
+                        progress: widget.taskModel.progress![index],
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -131,7 +131,7 @@ class _TaskCardState extends State<TaskCard> {
         onAccept: (TaskModel task) {
           setState(() {
             _count++;
-            widget.taskModel.peopleCount![widget.taskModel.stage] = _count;
+            widget.taskModel.peopleCount![widget.taskModel.stage!] = _count;
           });
         },
       ),

@@ -22,50 +22,57 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const Expanded(
-              flex: 2,
-              child: TextArea(text: AppRes.rules),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: SvgPicture.asset(AppAssets.logo),
-                  ),
-                  const SizedBox(height: 64),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: TextInput(
-                          placeholder: "Username",
-                          controller: _usernameFieldController,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      SizedBox(
-                        width: 64,
-                        height: 50,
-                        child: AppButton(
-                          "Go",
-                          onPressed: () => _onGoPressed(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(100.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  child: const TextArea(text: AppRes.rules),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 100),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      height: MediaQuery.of(context).size.width * 0.1,
+                      child: SvgPicture.asset(AppAssets.logo),
+                    ),
+                    const SizedBox(height: 64),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: TextInput(
+                            placeholder: "Username",
+                            controller: _usernameFieldController,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        SizedBox(
+                          width: 64,
+                          height: 50,
+                          child: AppButton(
+                            "Go",
+                            onPressed: () => _onGoPressed(context),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

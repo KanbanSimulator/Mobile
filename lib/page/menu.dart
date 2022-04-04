@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
@@ -22,7 +23,7 @@ class _MenupageState extends State<MenuPage> {
 
   @override
   void initState() {
-    username = _getCredentials();
+    username = CacheService.getCredentials();
     super.initState();
   }
 
@@ -93,7 +94,7 @@ class _MenupageState extends State<MenuPage> {
   }
 
   void _onLogOutPressed(context) {
-    _clearCredentials();
+    CacheService.clearCredentials();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -111,13 +112,4 @@ class _MenupageState extends State<MenuPage> {
     );
   }
 
-  void _clearCredentials() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("username");
-  }
-
-  Future<String> _getCredentials() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("username") ?? AppConst.unnamed;
-  }
 }

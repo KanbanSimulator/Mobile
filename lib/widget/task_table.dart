@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:kanban/api/api.dart';
+import 'package:kanban/core/api/api.dart';
 import 'package:kanban/model/task_model.dart';
 import 'package:kanban/page/error.dart';
 import 'package:kanban/widget/task_card.dart';

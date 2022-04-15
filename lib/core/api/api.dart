@@ -99,7 +99,7 @@ class Api {
   ) async {
     Response response = await _Api.roomCreate(username, isSpectator, teamsAmount);
     try {
-      Map<String, dynamic> data = response.data;
+      Map<String, dynamic> data = response.data['payload'];
       RoomModel room = RoomModel.fromJson(data);
       return room;
     } catch (e) {

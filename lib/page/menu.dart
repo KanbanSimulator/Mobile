@@ -49,10 +49,7 @@ class _MenupageState extends State<MenuPage> {
                             ? "You are:\n${snapshot.data}"
                             : "..."),
                         textAlign: TextAlign.end,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
+                        style: AppStyle.h2,
                       ),
                     ),
                   ),

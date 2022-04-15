@@ -12,6 +12,11 @@ class AppStyle {
     letterSpacing: 1.5,
   );
 
+  static const h2 = TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+  );
+
   // colors for stages of development
   static const stageColor = [
     Color(0xffF2B6FF),

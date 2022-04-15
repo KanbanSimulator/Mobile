@@ -48,26 +48,53 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Waiting room",
-                style: AppStyle.pageHeaderTextStyle,
-              ),
-              const SizedBox(height: 32),
-              SizedBox(
-                child: const Text(
-                  "hello",
-                  style: AppStyle.labelTextStyle,
+              Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: Text(
+                    "Room ID: ${roomState.id}",
+                    textAlign: TextAlign.end,
+                    style: AppStyle.h2,
+                  ),
                 ),
               ),
-              const SizedBox(height: 32),
-              SizedBox(
-                width: 200,
-                height: 48,
-                child: AppButton(
-                  "Start game",
-                  onPressed: () => _onStartGamePressed(context),
+              Expanded(
+                flex: 4,
+                child: Column(
+                  children: [
+                    const Text(
+                      "Waiting room",
+                      style: AppStyle.pageHeaderTextStyle,
+                    ),
+                    const SizedBox(height: 32),
+                    const Text(
+                      "Connected players:",
+                      textAlign: TextAlign.start,
+                      style: AppStyle.textFieldStyle,
+                    ),
+                    const SizedBox(height: 16),
+                    for (var player in roomState.players!)
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          player.name!,
+                          textAlign: TextAlign.start,
+                          style: AppStyle.labelTextStyle,
+                        ),
+                      ),
+                    const SizedBox(height: 32),
+                    SizedBox(
+                      width: 200,
+                      height: 48,
+                      child: AppButton(
+                        "Start game",
+                        onPressed: () => _onStartGamePressed(context),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              )
             ],
           ),
         ),

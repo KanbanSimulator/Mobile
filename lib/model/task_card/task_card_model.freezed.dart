@@ -23,13 +23,15 @@ class _$TaskCardModelTearOff {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount}) {
+      List<int>? peopleCount,
+      int? inColumnIndex}) {
     return _TaskCardModel(
       title: title,
       progress: progress,
       value: value,
       stage: stage,
       peopleCount: peopleCount,
+      inColumnIndex: inColumnIndex,
     );
   }
 }
@@ -44,7 +46,9 @@ mixin _$TaskCardModel {
       throw _privateConstructorUsedError; // list of progresses
   int? get value => throw _privateConstructorUsedError;
   int? get stage => throw _privateConstructorUsedError;
-  List<int>? get peopleCount => throw _privateConstructorUsedError;
+  List<int>? get peopleCount =>
+      throw _privateConstructorUsedError; // list of people on each stage
+  int? get inColumnIndex => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskCardModelCopyWith<TaskCardModel> get copyWith =>
@@ -61,7 +65,8 @@ abstract class $TaskCardModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount});
+      List<int>? peopleCount,
+      int? inColumnIndex});
 }
 
 /// @nodoc
@@ -80,6 +85,7 @@ class _$TaskCardModelCopyWithImpl<$Res>
     Object? value = freezed,
     Object? stage = freezed,
     Object? peopleCount = freezed,
+    Object? inColumnIndex = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -102,6 +108,10 @@ class _$TaskCardModelCopyWithImpl<$Res>
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      inColumnIndex: inColumnIndex == freezed
+          ? _value.inColumnIndex
+          : inColumnIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -118,7 +128,8 @@ abstract class _$TaskCardModelCopyWith<$Res>
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount});
+      List<int>? peopleCount,
+      int? inColumnIndex});
 }
 
 /// @nodoc
@@ -139,6 +150,7 @@ class __$TaskCardModelCopyWithImpl<$Res>
     Object? value = freezed,
     Object? stage = freezed,
     Object? peopleCount = freezed,
+    Object? inColumnIndex = freezed,
   }) {
     return _then(_TaskCardModel(
       title: title == freezed
@@ -161,15 +173,25 @@ class __$TaskCardModelCopyWithImpl<$Res>
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      inColumnIndex: inColumnIndex == freezed
+          ? _value.inColumnIndex
+          : inColumnIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_TaskCardModel implements _TaskCardModel {
+class _$_TaskCardModel extends _TaskCardModel {
   _$_TaskCardModel(
-      {this.title, this.progress, this.value, this.stage, this.peopleCount});
+      {this.title,
+      this.progress,
+      this.value,
+      this.stage,
+      this.peopleCount,
+      this.inColumnIndex})
+      : super._();
 
   @override
   final String? title;
@@ -181,10 +203,12 @@ class _$_TaskCardModel implements _TaskCardModel {
   final int? stage;
   @override
   final List<int>? peopleCount;
+  @override // list of people on each stage
+  final int? inColumnIndex;
 
   @override
   String toString() {
-    return 'TaskCardModel(title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount)';
+    return 'TaskCardModel(title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, inColumnIndex: $inColumnIndex)';
   }
 
   @override
@@ -197,7 +221,9 @@ class _$_TaskCardModel implements _TaskCardModel {
             const DeepCollectionEquality().equals(other.value, value) &&
             const DeepCollectionEquality().equals(other.stage, stage) &&
             const DeepCollectionEquality()
-                .equals(other.peopleCount, peopleCount));
+                .equals(other.peopleCount, peopleCount) &&
+            const DeepCollectionEquality()
+                .equals(other.inColumnIndex, inColumnIndex));
   }
 
   @override
@@ -207,7 +233,8 @@ class _$_TaskCardModel implements _TaskCardModel {
       const DeepCollectionEquality().hash(progress),
       const DeepCollectionEquality().hash(value),
       const DeepCollectionEquality().hash(stage),
-      const DeepCollectionEquality().hash(peopleCount));
+      const DeepCollectionEquality().hash(peopleCount),
+      const DeepCollectionEquality().hash(inColumnIndex));
 
   @JsonKey(ignore: true)
   @override
@@ -215,13 +242,15 @@ class _$_TaskCardModel implements _TaskCardModel {
       __$TaskCardModelCopyWithImpl<_TaskCardModel>(this, _$identity);
 }
 
-abstract class _TaskCardModel implements TaskCardModel {
+abstract class _TaskCardModel extends TaskCardModel {
   factory _TaskCardModel(
       {String? title,
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount}) = _$_TaskCardModel;
+      List<int>? peopleCount,
+      int? inColumnIndex}) = _$_TaskCardModel;
+  _TaskCardModel._() : super._();
 
   @override
   String? get title;
@@ -233,6 +262,8 @@ abstract class _TaskCardModel implements TaskCardModel {
   int? get stage;
   @override
   List<int>? get peopleCount;
+  @override // list of people on each stage
+  int? get inColumnIndex;
   @override
   @JsonKey(ignore: true)
   _$TaskCardModelCopyWith<_TaskCardModel> get copyWith =>

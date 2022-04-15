@@ -26,14 +26,35 @@ class TaskColumn extends StatelessWidget {
             taskCardWidget = TaskCard(
               taskModel: tasks[index],
             );
-            return Draggable(
+            return Draggable<TaskModel>(
               // delay: Duration(seconds: 2), // for mobile use longdraggable
-              child: taskCardWidget,
-              childWhenDragging: const Text("widget was here."),
+              data: tasks[index],
+
+              child: DragTarget<TaskModel>(
+                builder: (BuildContext context, List<Object?> candidateData,
+                    List rejectedData) {
+                  return taskCardWidget;
+                },
+                onWillAccept: (TaskModel? task) {
+                  if (task == null) return false;
+                  return (task.stage == tasks[index].stage);
+                },
+                onAccept: (TaskModel task) {
+                  print("accepted $task");
+                },
+              ),
+
+              childWhenDragging: TaskCard(
+                taskModel: tasks[index],
+                isGhost: true,
+              ),
               feedback: Card(
                 color: Colors.transparent,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 6 - 16,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 6 - 16,
                   height: 138,
                   child: taskCardWidget,
                 ),

@@ -5,10 +5,12 @@ import 'package:kanban/widget/task_card.dart';
 
 class TaskColumn extends StatelessWidget {
   final List<TaskModel> tasks;
+  final Function swapTasks;
 
   const TaskColumn({
     Key? key,
     required this.tasks,
+    required this.swapTasks,
   }) : super(key: key);
 
   @override
@@ -16,8 +18,8 @@ class TaskColumn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xff151515),
+        decoration: const BoxDecoration(
+          color: Color(0xff151515),
         ),
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),
@@ -43,7 +45,7 @@ class TaskColumn extends StatelessWidget {
                 },
                 onAccept: (TaskCardModel task) {
                   print("accepted $task");
-                  _swapTasks(task, TaskCardModel.fromTaskModel(tasks[index], index));
+                  swapTasks(task, TaskCardModel.fromTaskModel(tasks[index], index));
                 },
               ),
 
@@ -69,9 +71,5 @@ class TaskColumn extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _swapTasks(TaskCardModel t1, TaskCardModel t2) {
-    print("swapping ${t1.inColumnIndex} and ${t2.inColumnIndex}");
   }
 }

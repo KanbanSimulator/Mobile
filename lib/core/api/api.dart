@@ -4,7 +4,7 @@ import 'package:kanban/model/task/task_model.dart';
 
 class _Api {
   static final Dio _dio = new Dio();
-  static const String baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
+  static const String baseUrl = 'http://peaceful-cove-23510.herokuapp.com';
 
   static Future<List<TaskModel>> getTasksMock(int day) async {
     // mock

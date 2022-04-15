@@ -45,42 +45,13 @@ class _TaskTableState extends State<TaskTable> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Expanded(
-              child: TaskColumn(
-                tasks: tasks[0],
-                swapTasks: _onSwapTasks,
+            for (int i = 0; i < tasks.length; i++)
+              Expanded(
+                child: TaskColumn(
+                  tasks: tasks[i],
+                  swapTasks: _onSwapTasks,
+                ),
               ),
-            ),
-            Expanded(
-              child: TaskColumn(
-                tasks:  tasks[1],
-                swapTasks: _onSwapTasks,
-              ),
-            ),
-            Expanded(
-              child: TaskColumn(
-                tasks:  tasks[2],
-                swapTasks: _onSwapTasks,
-              ),
-            ),
-            Expanded(
-              child: TaskColumn(
-                tasks: tasks[3],
-                swapTasks: _onSwapTasks,
-              ),
-            ),
-            Expanded(
-              child: TaskColumn(
-                tasks: tasks[4],
-                swapTasks: _onSwapTasks,
-              ),
-            ),
-            Expanded(
-              child: TaskColumn(
-                tasks: tasks[5],
-                swapTasks: _onSwapTasks,
-              ),
-            ),
           ],
         );
       },

@@ -120,6 +120,7 @@ class Api {
     Response response = await _Api.getRoom(playerId, roomId);
     try {
       Map<String, dynamic> data = response.data['payload'];
+      print("data on get room: $data");
       RoomModel room = RoomModel.fromJson(data);
       return room;
     } catch (e) {

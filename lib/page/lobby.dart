@@ -94,12 +94,13 @@ class _LobbyPageState extends State<LobbyPage> {
       _isSpectatorSelected,
       int.parse(teamsCounter),
     );
-    print('room just created: ${roomCreated!.toJson().toString()}');
+    int roomId = roomCreated!.id!;
     CacheService.store("userId", roomCreated.player!.id);
+    print('room just created: ${roomCreated.toJson().toString()}');
     print("user id set: ${await CacheService.getUserId()}");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (routeContext) => WaitingRoomPage(),
+        builder: (routeContext) => WaitingRoomPage(roomModel: roomCreated),
       ),
     );
   }

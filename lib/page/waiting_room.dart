@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kanban/const/app_const.dart';
@@ -11,8 +13,11 @@ import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
 class WaitingRoomPage extends StatefulWidget {
+  final RoomModel roomModel;
+
   const WaitingRoomPage({
     Key? key,
+    required this.roomModel,
   }) : super(key: key);
 
   @override
@@ -20,6 +25,17 @@ class WaitingRoomPage extends StatefulWidget {
 }
 
 class _WaitingRoomPageState extends State<WaitingRoomPage> {
+  late int _playerId; // pulled from cache
+  late RoomModel roomState; // passed from prev page
+
+  @override
+  void initState() {
+    roomState = widget.roomModel;
+    initCachedFields();
+    initLongPolling();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +51,13 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
               const Text(
                 "Waiting room",
                 style: AppStyle.pageHeaderTextStyle,
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: const Text(
+                  "hello",
+                  style: AppStyle.labelTextStyle,
+                ),
               ),
               const SizedBox(height: 32),
               SizedBox(
@@ -58,5 +81,23 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
+  }
+
+  void initLongPolling() {
+    Timer.periodic(const Duration(seconds: 3), (timer) async {
+      RoomModel? roomFromServer = await Api.checkRoom(_playerId, roomState.id!);
+      if (roomFromServer != null) {
+        setState(() {
+          roomState = roomFromServer;
+        });
+        print("LP: players list from server: ${roomState.players}");
+      } else {
+        print("something went wrong: this room is null!");
+      }
+    });
+  }
+
+  void initCachedFields() async {
+    _playerId = await CacheService.getUserId();
   }
 }

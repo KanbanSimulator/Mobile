@@ -29,7 +29,7 @@ class TaskColumn extends StatelessWidget {
             );
             return Draggable<TaskCardModel>(
               // delay: Duration(seconds: 2), // for mobile use longdraggable
-              data: TaskCardModel.fromTaskModel(tasks[index]),
+              data: TaskCardModel.fromTaskModel(tasks[index], index),
 
               child: DragTarget<TaskCardModel>(
                 builder: (BuildContext context, List<Object?> candidateData,
@@ -43,6 +43,7 @@ class TaskColumn extends StatelessWidget {
                 },
                 onAccept: (TaskCardModel task) {
                   print("accepted $task");
+                  _swapTasks(task, TaskCardModel.fromTaskModel(tasks[index], index));
                 },
               ),
 
@@ -68,5 +69,9 @@ class TaskColumn extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _swapTasks(TaskCardModel t1, TaskCardModel t2) {
+    print("swapping ${t1.inColumnIndex} and ${t2.inColumnIndex}");
   }
 }

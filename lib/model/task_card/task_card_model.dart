@@ -13,15 +13,17 @@ class TaskCardModel with _$TaskCardModel {
     int? value,
     int? stage,
     List<int>? peopleCount, // list of people on each stage
+    int? inColumnIndex,
   }) = _TaskCardModel;
 
-  static TaskCardModel fromTaskModel(TaskModel task) {
+  static TaskCardModel fromTaskModel(TaskModel task, int inColumnIndex) {
     return TaskCardModel(
       title: task.title ?? "",
       progress: task.progress ?? [], // list of progresses
       value: task.value ?? -1,
       stage: task.stage ?? -1,
       peopleCount: task.peopleCount ?? [],
+      inColumnIndex: inColumnIndex,
     );
   }
 }

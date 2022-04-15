@@ -4,6 +4,7 @@ import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/core/app_ui.dart';
+import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_area_widget.dart';
@@ -83,8 +84,7 @@ class AuthPage extends StatelessWidget {
   }
 
   void _storeCredentials({required String username}) async {
-    final SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString("username", username);
+    CacheService.store("username", username);
   }
 
   void _onGoPressed(context) async {

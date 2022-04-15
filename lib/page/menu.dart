@@ -23,7 +23,7 @@ class _MenupageState extends State<MenuPage> {
 
   @override
   void initState() {
-    username = CacheService.getCredentials();
+    username = CacheService.getUsername();
     super.initState();
   }
 

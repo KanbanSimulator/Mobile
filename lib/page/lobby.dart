@@ -7,6 +7,7 @@ import 'package:kanban/core/api/api.dart';
 import 'package:kanban/core/app_ui.dart';
 import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/model/room/room_model.dart';
+import 'package:kanban/page/waiting_room.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
@@ -78,7 +79,7 @@ class _LobbyPageState extends State<LobbyPage> {
   }
 
   void _onCreateWaitingRoomPressed(BuildContext context) async {
-    String username = await CacheService.getCredentials();
+    String username = await CacheService.getUsername();
     if (username == AppConst.unnamed) {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
@@ -94,6 +95,13 @@ class _LobbyPageState extends State<LobbyPage> {
       int.parse(teamsCounter),
     );
     print('room just created: ${roomCreated!.toJson().toString()}');
+    CacheService.store("userId", roomCreated.player!.id);
+    print("user id set: ${await CacheService.getUserId()}");
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (routeContext) => WaitingRoomPage(),
+      ),
+    );
   }
 
   void _onSwitchSpectator(bool value) {

@@ -71,7 +71,7 @@ class _Api {
   //   _dio.get("$baseUrl/")
   // }
 
-  static Future<Response> roomCreate(
+  static Future<Response> postRoom(
     String name,
     bool isSpectator,
     int teamsAmount,
@@ -82,6 +82,12 @@ class _Api {
         "spectator": true,
       },
       "teamsAmount": teamsAmount
+    });
+  }
+
+  static Future<Response> getRoom(int playerId, int roomId) async {
+    return _dio.get("$baseUrl/room/$roomId", queryParameters: {
+      "playerId": playerId,
     });
   }
 }
@@ -97,7 +103,21 @@ class Api {
     bool isSpectator,
     int teamsAmount,
   ) async {
-    Response response = await _Api.roomCreate(username, isSpectator, teamsAmount);
+    Response response = await _Api.postRoom(username, isSpectator, teamsAmount);
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      RoomModel room = RoomModel.fromJson(data);
+      return room;
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+  }
+
+  static Future<RoomModel?> checkRoom(
+    int playerId,
+    int roomId,
+  ) async {
+    Response response = await _Api.getRoom(playerId, roomId);
     try {
       Map<String, dynamic> data = response.data['payload'];
       RoomModel room = RoomModel.fromJson(data);

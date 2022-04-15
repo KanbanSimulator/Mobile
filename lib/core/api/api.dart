@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:kanban/model/room_model.dart';
-import 'package:kanban/model/task_model.dart';
+import 'package:kanban/model/room/room_model.dart';
+import 'package:kanban/model/task/task_model.dart';
 
 class _Api {
   static final Dio _dio = new Dio();

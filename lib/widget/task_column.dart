@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kanban/model/task_model.dart';
+import 'package:kanban/model/task_card/task_card_model.dart';
+import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
 
 class TaskColumn extends StatelessWidget {
@@ -26,20 +27,21 @@ class TaskColumn extends StatelessWidget {
             taskCardWidget = TaskCard(
               taskModel: tasks[index],
             );
-            return Draggable<TaskModel>(
+            return Draggable<TaskCardModel>(
               // delay: Duration(seconds: 2), // for mobile use longdraggable
-              data: tasks[index],
+              data: TaskCardModel.fromTaskModel(tasks[index]),
 
-              child: DragTarget<TaskModel>(
+              child: DragTarget<TaskCardModel>(
                 builder: (BuildContext context, List<Object?> candidateData,
                     List rejectedData) {
                   return taskCardWidget;
                 },
-                onWillAccept: (TaskModel? task) {
+                onWillAccept: (TaskCardModel? task) {
                   if (task == null) return false;
-                  return (task.stage == tasks[index].stage);
+                  return true;
+                  // return (task.stage == tasks[index].stage);
                 },
-                onAccept: (TaskModel task) {
+                onAccept: (TaskCardModel task) {
                   print("accepted $task");
                 },
               ),
@@ -51,10 +53,7 @@ class TaskColumn extends StatelessWidget {
               feedback: Card(
                 color: Colors.transparent,
                 child: SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width / 6 - 16,
+                  width: MediaQuery.of(context).size.width / 6 - 16,
                   height: 138,
                   child: taskCardWidget,
                 ),

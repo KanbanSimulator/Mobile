@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kanban/model/player_model.dart';
+import 'package:kanban/model/player/player_model.dart';
 
 part 'room_model.freezed.dart';
 part 'room_model.g.dart';

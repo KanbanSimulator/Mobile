@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_style.dart';
-import 'package:kanban/model/task_model.dart';
+import 'package:kanban/model/task/task_model.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
 class PeopleBank extends StatefulWidget {

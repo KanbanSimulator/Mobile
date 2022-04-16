@@ -67,7 +67,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 child: Column(
                   children: [
                     const Text(
-                      "Waiting room",
+                      "Lobby",
                       style: AppStyle.pageHeaderTextStyle,
                     ),
                     if (_roomState.player!.creator!) const SizedBox(height: 32),
@@ -84,30 +84,40 @@ class _LobbyPageState extends State<LobbyPage> {
                       style: AppStyle.textFieldStyle,
                     ),
                     const SizedBox(height: 16),
-                    for (var player in _roomState.players!)
-                      SizedBox(
-                        width: 350,
-                        height: 36,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              player.name!,
-                              textAlign: TextAlign.start,
-                              style: AppStyle.labelTextStyle,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          for (var player in _roomState.players!)
+                            SizedBox(
+                              height: 36,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    player.name!,
+                                    textAlign: TextAlign.start,
+                                    style: AppStyle.labelTextStyle,
+                                  ),
+                                  const Spacer(),
+                                  const Text("Spectator? ",
+                                      style: AppStyle.labelTextStyle),
+                                  CupertinoSwitch(
+                                    value: true,
+                                    onChanged: (val) {},
+                                    activeColor: Colors.redAccent,
+                                  ),
+                                ],
+                              ),
                             ),
-                            Spacer(),
-                            const Text("Spectator? ",
-                                style: AppStyle.labelTextStyle),
-                            CupertinoSwitch(
-                              value: true,
-                              onChanged: (val) {},
-                              activeColor: Colors.redAccent,
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
+                    ),
                     const SizedBox(height: 32),
                     if (_roomState.player!.creator!)
                       SizedBox(

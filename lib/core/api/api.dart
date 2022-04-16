@@ -79,9 +79,20 @@ class _Api {
     return _dio.post("$baseUrl/room/create", data: {
       "player": {
         "name": name,
-        "spectator": true,
+        "spectator": isSpectator,
       },
       "teamsAmount": teamsAmount
+    });
+  }
+
+  static Future<Response> postRoomJoin(
+    String name,
+    bool isSpectator,
+    int roomId,
+  ) async {
+    return _dio.post("$baseUrl/room/$roomId/join", data: {
+      "name": name,
+      "spectator": isSpectator,
     });
   }
 
@@ -104,6 +115,21 @@ class Api {
     int teamsAmount,
   ) async {
     Response response = await _Api.postRoom(username, isSpectator, teamsAmount);
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      RoomModel room = RoomModel.fromJson(data);
+      return room;
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+  }
+
+  static Future<RoomModel?> joinRoom(
+    String username,
+    bool isSpectator,
+    int roomId,
+  ) async {
+    Response response = await _Api.postRoomJoin(username, isSpectator, roomId);
     try {
       Map<String, dynamic> data = response.data['payload'];
       RoomModel room = RoomModel.fromJson(data);

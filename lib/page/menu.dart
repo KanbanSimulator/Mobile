@@ -7,6 +7,7 @@ import 'package:kanban/page/game.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'join.dart';
 import 'lobby.dart';
 
 class MenuPage extends StatefulWidget {
@@ -79,7 +80,7 @@ class _MenupageState extends State<MenuPage> {
                       height: 36,
                       child: AppButton(
                         "Join Room",
-                        onPressed: () => _onStartGamePressed(context),
+                        onPressed: () => _onJoinPressed(context),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -116,6 +117,15 @@ class _MenupageState extends State<MenuPage> {
       context,
       MaterialPageRoute(
         builder: (context) => LobbyPage(),
+      ),
+    );
+  }
+
+  void _onJoinPressed(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => JoinPage(),
       ),
     );
   }

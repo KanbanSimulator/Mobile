@@ -77,6 +77,7 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
                     for (var player in roomState.players!)
                       SizedBox(
                         width: 200,
+                        height: 24,
                         child: Text(
                           player.name!,
                           textAlign: TextAlign.start,
@@ -84,14 +85,15 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
                         ),
                       ),
                     const SizedBox(height: 32),
-                    SizedBox(
-                      width: 200,
-                      height: 48,
-                      child: AppButton(
-                        "Start game",
-                        onPressed: () => _onStartGamePressed(context),
+                    if (roomState.player!.creator!)
+                      SizedBox(
+                        width: 200,
+                        height: 48,
+                        child: AppButton(
+                          "Start game",
+                          onPressed: () => _onStartGamePressed(context),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               )

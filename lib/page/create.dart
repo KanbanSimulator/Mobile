@@ -11,16 +11,17 @@ import 'package:kanban/page/lobby.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
-class JoinPage extends StatefulWidget {
-  const JoinPage({Key? key}) : super(key: key);
+class CreatePage extends StatefulWidget {
+  const CreatePage({Key? key}) : super(key: key);
 
   @override
-  State<JoinPage> createState() => _JoinPageState();
+  State<CreatePage> createState() => _CreatePageState();
 }
 
-class _JoinPageState extends State<JoinPage> {
+class _CreatePageState extends State<CreatePage> {
   var _isSpectatorSelected = false;
-  final _roomIdFieldController = TextEditingController(text: "");
+  var _teamsCounter = 1;
+  final _teamsCounterFieldController = TextEditingController(text: "1");
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +36,15 @@ class _JoinPageState extends State<JoinPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Join room",
+                "Game details",
                 style: AppStyle.pageHeaderTextStyle,
               ),
               const SizedBox(height: 48),
               SizedBox(
                 width: 200,
                 child: TextInput(
-                  placeholder: "Enter room id",
-                  controller: _roomIdFieldController,
+                  placeholder: "How many teams?",
+                  controller: _teamsCounterFieldController,
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -66,8 +67,8 @@ class _JoinPageState extends State<JoinPage> {
                 width: 200,
                 height: 48,
                 child: AppButton(
-                  "Join waiting room",
-                  onPressed: () => _onJoinWaitingRoomPressed(context),
+                  "Create waiting room",
+                  onPressed: () => _onCreateWaitingRoomPressed(context),
                 ),
               ),
             ],
@@ -77,29 +78,29 @@ class _JoinPageState extends State<JoinPage> {
     );
   }
 
-  void _onJoinWaitingRoomPressed(BuildContext context) async {
+  void _onCreateWaitingRoomPressed(BuildContext context) async {
     String username = await CacheService.getUsername();
     if (username == AppConst.unnamed) {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
-    String roomIdString = _roomIdFieldController.text;
-    if (!_validateRoomId(roomIdString)) {
-      AppUi.toast(context, AppRes.incorrectRoomId);
+    String teamsCounter = _teamsCounterFieldController.text;
+    if (!_validateTeamsCounter(teamsCounter)) {
+      AppUi.toast(context, AppRes.incorrectTeamsCounter);
       return;
     }
-    int roomId = int.parse(roomIdString);
-    RoomModel? roomJoined = await Api.joinRoom(
+    RoomModel? roomCreated = await Api.createRoom(
       username,
       _isSpectatorSelected,
-      roomId,
+      int.parse(teamsCounter),
     );
-    CacheService.store("userId", roomJoined!.player!.id);
-    print('room just joined: ${roomJoined.toJson().toString()}');
+    int roomId = roomCreated!.id!;
+    CacheService.store("userId", roomCreated.player!.id);
+    print('room just created: ${roomCreated.toJson().toString()}');
     print("user id set: ${await CacheService.getUserId()}");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (routeContext) => LobbyPage(roomModel: roomJoined),
+        builder: (routeContext) => LobbyPage(roomModel: roomCreated),
       ),
     );
   }
@@ -110,13 +111,13 @@ class _JoinPageState extends State<JoinPage> {
     });
   }
 
-  bool _validateRoomId(String s) {
+  bool _validateTeamsCounter(String s) {
     int t = 0;
     try {
       t = int.parse(s);
     } catch (e) {
       return false;
     }
-    return t > 0 && t < 32768;
+    return t > 0 && t < 16;
   }
 }

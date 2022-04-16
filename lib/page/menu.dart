@@ -8,7 +8,7 @@ import 'package:kanban/widget/app_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'join.dart';
-import 'lobby.dart';
+import 'create.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({
@@ -116,7 +116,7 @@ class _MenupageState extends State<MenuPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LobbyPage(),
+        builder: (context) => CreatePage(),
       ),
     );
   }

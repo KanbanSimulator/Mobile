@@ -78,8 +78,8 @@ class _LobbyPageState extends State<LobbyPage> {
                         style: AppStyle.textFieldStyle,
                       ),
                     const SizedBox(height: 32),
-                    const Text(
-                      "Connected players:",
+                    Text(
+                      "Connected players (${_roomState.players!.length}):",
                       textAlign: TextAlign.start,
                       style: AppStyle.textFieldStyle,
                     ),

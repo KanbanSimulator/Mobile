@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kanban/model/player/player_model.dart';
 import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 
@@ -96,6 +97,16 @@ class _Api {
     });
   }
 
+  static Future<Response> postRoomStart(
+    String name,
+    int roomId,
+    List<PlayerModel> players,
+  ) async {
+    return _dio.post("$baseUrl/room/$roomId/start", data: {
+      "players": players,
+    });
+  }
+
   static Future<Response> getRoom(int playerId, int roomId) async {
     return _dio.get("$baseUrl/room/$roomId", queryParameters: {
       "playerId": playerId,
@@ -130,6 +141,21 @@ class Api {
     int roomId,
   ) async {
     Response response = await _Api.postRoomJoin(username, isSpectator, roomId);
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      RoomModel room = RoomModel.fromJson(data);
+      return room;
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+  }
+
+  static Future<RoomModel?> startRoom(
+    String username,
+    int roomId,
+    List<PlayerModel> players,
+  ) async {
+    Response response = await _Api.postRoomStart(username, roomId, players);
     try {
       Map<String, dynamic> data = response.data['payload'];
       RoomModel room = RoomModel.fromJson(data);

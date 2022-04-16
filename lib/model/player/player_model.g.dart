@@ -12,6 +12,8 @@ _$_PlayerModel _$$_PlayerModelFromJson(Map<String, dynamic> json) =>
       creator: json['creator'] as bool?,
       name: json['name'] as String?,
       teamNumber: json['teamNumber'] as int?,
+      teamId: json['teamId'] as int?,
+      spectator: json['spectator'] as bool?,
     );
 
 Map<String, dynamic> _$$_PlayerModelToJson(_$_PlayerModel instance) =>
@@ -20,4 +22,6 @@ Map<String, dynamic> _$$_PlayerModelToJson(_$_PlayerModel instance) =>
       'creator': instance.creator,
       'name': instance.name,
       'teamNumber': instance.teamNumber,
+      'teamId': instance.teamId,
+      'spectator': instance.spectator,
     };

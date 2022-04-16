@@ -12,6 +12,8 @@ import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
+import 'game.dart';
+
 class WaitingRoomPage extends StatefulWidget {
   final RoomModel roomModel;
 
@@ -26,13 +28,14 @@ class WaitingRoomPage extends StatefulWidget {
 
 class _WaitingRoomPageState extends State<WaitingRoomPage> {
   late int _playerId; // pulled from cache
-  late RoomModel roomState; // passed from prev page
+  late RoomModel _roomState; // passed from prev page
+  late Timer _timer; // timer for LP
 
   @override
   void initState() {
-    roomState = widget.roomModel;
-    initCachedFields();
-    initLongPolling();
+    _roomState = widget.roomModel;
+    _initCachedFields();
+    _startLongPolling();
     super.initState();
   }
 
@@ -53,7 +56,7 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
                 child: Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: Text(
-                    "Room ID: ${roomState.id}",
+                    "Room ID: ${_roomState.id}",
                     textAlign: TextAlign.end,
                     style: AppStyle.h2,
                   ),
@@ -67,6 +70,13 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
                       "Waiting room",
                       style: AppStyle.pageHeaderTextStyle,
                     ),
+                    if (_roomState.player!.creator!) const SizedBox(height: 32),
+                    if (_roomState.player!.creator!)
+                      const Text(
+                        "You created this room",
+                        textAlign: TextAlign.start,
+                        style: AppStyle.textFieldStyle,
+                      ),
                     const SizedBox(height: 32),
                     const Text(
                       "Connected players:",
@@ -74,18 +84,32 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
                       style: AppStyle.textFieldStyle,
                     ),
                     const SizedBox(height: 16),
-                    for (var player in roomState.players!)
+                    for (var player in _roomState.players!)
                       SizedBox(
-                        width: 200,
-                        height: 24,
-                        child: Text(
-                          player.name!,
-                          textAlign: TextAlign.start,
-                          style: AppStyle.labelTextStyle,
+                        width: 350,
+                        height: 36,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              player.name!,
+                              textAlign: TextAlign.start,
+                              style: AppStyle.labelTextStyle,
+                            ),
+                            Spacer(),
+                            const Text("Spectator? ",
+                                style: AppStyle.labelTextStyle),
+                            CupertinoSwitch(
+                              value: true,
+                              onChanged: (val) {},
+                              activeColor: Colors.redAccent,
+                            ),
+                          ],
                         ),
                       ),
                     const SizedBox(height: 32),
-                    if (roomState.player!.creator!)
+                    if (_roomState.player!.creator!)
                       SizedBox(
                         width: 200,
                         height: 48,
@@ -110,23 +134,39 @@ class _WaitingRoomPageState extends State<WaitingRoomPage> {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
+    // start room api request
+    _stopLongPolling();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext routeContext) => GamePage(),
+      ),
+    );
   }
 
-  void initLongPolling() {
-    Timer.periodic(const Duration(seconds: 3), (timer) async {
-      RoomModel? roomFromServer = await Api.checkRoom(_playerId, roomState.id!);
-      if (roomFromServer != null) {
-        setState(() {
-          roomState = roomFromServer;
-        });
-        print("LP: players list from server: ${roomState.players}");
-      } else {
-        print("something went wrong: this room is null!");
-      }
+  void _startLongPolling() {
+    setState(() {
+      _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
+        RoomModel? roomFromServer =
+            await Api.checkRoom(_playerId, _roomState.id!);
+        if (roomFromServer != null) {
+          setState(() {
+            _roomState = roomFromServer;
+          });
+          print("LP: players list from server: ${_roomState.players}");
+        } else {
+          print("something went wrong: this room is null!");
+        }
+      });
     });
   }
 
-  void initCachedFields() async {
+  void _stopLongPolling() {
+    setState(() {
+      _timer.cancel();
+    });
+  }
+
+  void _initCachedFields() async {
     _playerId = await CacheService.getUserId();
   }
 }

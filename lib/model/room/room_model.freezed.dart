@@ -26,12 +26,14 @@ class _$RoomModelTearOff {
       {int? id,
       PlayerModel? player,
       List<PlayerModel>? players,
-      bool? started}) {
+      bool? started,
+      List<TeamDto>? teams}) {
     return _RoomModel(
       id: id,
       player: player,
       players: players,
       started: started,
+      teams: teams,
     );
   }
 
@@ -49,6 +51,7 @@ mixin _$RoomModel {
   PlayerModel? get player => throw _privateConstructorUsedError;
   List<PlayerModel>? get players => throw _privateConstructorUsedError;
   bool? get started => throw _privateConstructorUsedError;
+  List<TeamDto>? get teams => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,7 +67,8 @@ abstract class $RoomModelCopyWith<$Res> {
       {int? id,
       PlayerModel? player,
       List<PlayerModel>? players,
-      bool? started});
+      bool? started,
+      List<TeamDto>? teams});
 
   $PlayerModelCopyWith<$Res>? get player;
 }
@@ -83,6 +87,7 @@ class _$RoomModelCopyWithImpl<$Res> implements $RoomModelCopyWith<$Res> {
     Object? player = freezed,
     Object? players = freezed,
     Object? started = freezed,
+    Object? teams = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -101,6 +106,10 @@ class _$RoomModelCopyWithImpl<$Res> implements $RoomModelCopyWith<$Res> {
           ? _value.started
           : started // ignore: cast_nullable_to_non_nullable
               as bool?,
+      teams: teams == freezed
+          ? _value.teams
+          : teams // ignore: cast_nullable_to_non_nullable
+              as List<TeamDto>?,
     ));
   }
 
@@ -126,7 +135,8 @@ abstract class _$RoomModelCopyWith<$Res> implements $RoomModelCopyWith<$Res> {
       {int? id,
       PlayerModel? player,
       List<PlayerModel>? players,
-      bool? started});
+      bool? started,
+      List<TeamDto>? teams});
 
   @override
   $PlayerModelCopyWith<$Res>? get player;
@@ -147,6 +157,7 @@ class __$RoomModelCopyWithImpl<$Res> extends _$RoomModelCopyWithImpl<$Res>
     Object? player = freezed,
     Object? players = freezed,
     Object? started = freezed,
+    Object? teams = freezed,
   }) {
     return _then(_RoomModel(
       id: id == freezed
@@ -165,6 +176,10 @@ class __$RoomModelCopyWithImpl<$Res> extends _$RoomModelCopyWithImpl<$Res>
           ? _value.started
           : started // ignore: cast_nullable_to_non_nullable
               as bool?,
+      teams: teams == freezed
+          ? _value.teams
+          : teams // ignore: cast_nullable_to_non_nullable
+              as List<TeamDto>?,
     ));
   }
 }
@@ -172,7 +187,7 @@ class __$RoomModelCopyWithImpl<$Res> extends _$RoomModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_RoomModel implements _RoomModel {
-  _$_RoomModel({this.id, this.player, this.players, this.started});
+  _$_RoomModel({this.id, this.player, this.players, this.started, this.teams});
 
   factory _$_RoomModel.fromJson(Map<String, dynamic> json) =>
       _$$_RoomModelFromJson(json);
@@ -185,10 +200,12 @@ class _$_RoomModel implements _RoomModel {
   final List<PlayerModel>? players;
   @override
   final bool? started;
+  @override
+  final List<TeamDto>? teams;
 
   @override
   String toString() {
-    return 'RoomModel(id: $id, player: $player, players: $players, started: $started)';
+    return 'RoomModel(id: $id, player: $player, players: $players, started: $started, teams: $teams)';
   }
 
   @override
@@ -199,7 +216,8 @@ class _$_RoomModel implements _RoomModel {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.player, player) &&
             const DeepCollectionEquality().equals(other.players, players) &&
-            const DeepCollectionEquality().equals(other.started, started));
+            const DeepCollectionEquality().equals(other.started, started) &&
+            const DeepCollectionEquality().equals(other.teams, teams));
   }
 
   @override
@@ -208,7 +226,8 @@ class _$_RoomModel implements _RoomModel {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(player),
       const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(started));
+      const DeepCollectionEquality().hash(started),
+      const DeepCollectionEquality().hash(teams));
 
   @JsonKey(ignore: true)
   @override
@@ -226,7 +245,8 @@ abstract class _RoomModel implements RoomModel {
       {int? id,
       PlayerModel? player,
       List<PlayerModel>? players,
-      bool? started}) = _$_RoomModel;
+      bool? started,
+      List<TeamDto>? teams}) = _$_RoomModel;
 
   factory _RoomModel.fromJson(Map<String, dynamic> json) =
       _$_RoomModel.fromJson;
@@ -239,6 +259,8 @@ abstract class _RoomModel implements RoomModel {
   List<PlayerModel>? get players;
   @override
   bool? get started;
+  @override
+  List<TeamDto>? get teams;
   @override
   @JsonKey(ignore: true)
   _$RoomModelCopyWith<_RoomModel> get copyWith =>

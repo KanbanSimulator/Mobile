@@ -15,6 +15,9 @@ _$_RoomModel _$$_RoomModelFromJson(Map<String, dynamic> json) => _$_RoomModel(
           ?.map((e) => PlayerModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       started: json['started'] as bool?,
+      teams: (json['teams'] as List<dynamic>?)
+          ?.map((e) => TeamDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_RoomModelToJson(_$_RoomModel instance) =>
@@ -23,4 +26,5 @@ Map<String, dynamic> _$$_RoomModelToJson(_$_RoomModel instance) =>
       'player': instance.player,
       'players': instance.players,
       'started': instance.started,
+      'teams': instance.teams,
     };

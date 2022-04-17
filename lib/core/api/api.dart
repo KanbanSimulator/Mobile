@@ -129,6 +129,7 @@ class Api {
     try {
       Map<String, dynamic> data = response.data['payload'];
       RoomModel room = RoomModel.fromJson(data);
+      print("room on create room response: ${room.toJson().toString()}");
       return room;
     } catch (e) {
       print("something wrong sending /room/create");

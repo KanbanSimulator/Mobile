@@ -107,10 +107,21 @@ class _LobbyPageState extends State<LobbyPage> {
                                     style: AppStyle.labelTextStyle,
                                   ),
                                   const Spacer(),
-                                  DropdownButton<String>(
-                                      items: [], onChanged: (val) {}),
                                   if (_roomState.player!.creator!)
-                                    const Spacer(),
+                                    DropdownButton<String>(
+                                        items: _roomState.teams!
+                                            .map((t) => "${t.teamNumber}")
+                                            .map(
+                                              (s) => DropdownMenuItem<String>(
+                                                child: Text(
+                                                  s,
+                                                  style:
+                                                      AppStyle.labelTextStyle,
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                        onChanged: (val) {}),
                                   if (_roomState.player!.creator!)
                                     const Text("Spectator? ",
                                         style: AppStyle.labelTextStyle),

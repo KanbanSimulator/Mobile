@@ -8,6 +8,7 @@ import 'package:kanban/const/app_style.dart';
 import 'package:kanban/core/api/api.dart';
 import 'package:kanban/core/app_ui.dart';
 import 'package:kanban/core/cache_service.dart';
+import 'package:kanban/model/player/player_model.dart';
 import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
@@ -30,6 +31,7 @@ class _LobbyPageState extends State<LobbyPage> {
   late int _playerId; // pulled from cache
   late RoomModel _roomState; // passed from prev page
   late Timer _timer; // timer for LP
+  // late Map<int, List<dynamic>> _playerState; // id -> [teamNumber, spectator]
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _LobbyPageState extends State<LobbyPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                flex: 2,
+                flex: 1,
                 child: Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: Text(
@@ -63,7 +65,7 @@ class _LobbyPageState extends State<LobbyPage> {
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 6,
                 child: Column(
                   children: [
                     const Text(
@@ -105,20 +107,37 @@ class _LobbyPageState extends State<LobbyPage> {
                                     style: AppStyle.labelTextStyle,
                                   ),
                                   const Spacer(),
-                                  const Text("Spectator? ",
-                                      style: AppStyle.labelTextStyle),
-                                  CupertinoSwitch(
-                                    value: true,
-                                    onChanged: (val) {},
-                                    activeColor: Colors.redAccent,
-                                  ),
+                                  DropdownButton<String>(
+                                      items: [], onChanged: (val) {}),
+                                  if (_roomState.player!.creator!)
+                                    const Spacer(),
+                                  if (_roomState.player!.creator!)
+                                    const Text("Spectator? ",
+                                        style: AppStyle.labelTextStyle),
+                                  if (_roomState.player!.creator!)
+                                    CupertinoSwitch(
+                                      value: player.spectator!,
+                                      onChanged: (val) {
+                                        // because models in freezed are immutable...
+                                        setState(() {
+                                          // ...we replace element in list through deletion
+                                          int index = (_roomState.players
+                                              ?.indexOf(player))!;
+                                          _roomState.players?.removeAt(index);
+                                          _roomState.players?.insert(index,
+                                              player.copyWith(spectator: val));
+                                        });
+                                        print(player.spectator);
+                                      },
+                                      activeColor: Colors.redAccent,
+                                    ),
                                 ],
                               ),
                             ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    if (_roomState.player!.creator!) const SizedBox(height: 32),
                     if (_roomState.player!.creator!)
                       SizedBox(
                         width: 200,
@@ -160,9 +179,25 @@ class _LobbyPageState extends State<LobbyPage> {
             await Api.checkRoom(_playerId, _roomState.id!);
         if (roomFromServer != null) {
           setState(() {
-            _roomState = roomFromServer;
+            // add only newly gotten players
+            List<PlayerModel> newPlayers = [];
+            List<PlayerModel> serverPlayers = roomFromServer.players!;
+            for (var pServer in serverPlayers) {
+              print("server player: ${pServer.toJson().toString()}");
+              int? found = _roomState.players
+                  ?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
+              print(found ?? "NULL");
+              if (found == null || found == -1) {
+                newPlayers.add(pServer);
+              }
+            }
+            print("new players: ${newPlayers.length}: ${newPlayers}");
+            // copy all fields except the players
+            _roomState = roomFromServer.copyWith(
+              players: [..._roomState.players!, ...newPlayers],
+            );
           });
-          print("LP: players list from server: ${_roomState.players}");
+          print("LP: new playerList in state: ${_roomState.players}");
         } else {
           print("something went wrong: this room is null!");
         }

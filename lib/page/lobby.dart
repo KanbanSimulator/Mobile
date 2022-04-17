@@ -42,7 +42,23 @@ class _LobbyPageState extends State<LobbyPage> {
   }
 
   @override
+  void dispose() {
+    _stopLongPolling();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var _teamsDropItems = _roomState.teams!
+        .map((t) => "${t.teamNumber}")
+        .map((t) => DropdownMenuItem<String>(
+              value: t,
+              child: Text(
+                t,
+              ),
+            ))
+        .toList();
+
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: Center(
@@ -108,20 +124,24 @@ class _LobbyPageState extends State<LobbyPage> {
                                   ),
                                   const Spacer(),
                                   if (_roomState.player!.creator!)
-                                    DropdownButton<String>(
-                                        items: _roomState.teams!
-                                            .map((t) => "${t.teamNumber}")
-                                            .map(
-                                              (s) => DropdownMenuItem<String>(
-                                                child: Text(
-                                                  s,
-                                                  style:
-                                                      AppStyle.labelTextStyle,
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
+                                    DropdownButton(
+                                        items: _teamsDropItems,
+                                        // value: "${player.teamNumber ?? "no team"}",
+                                        //   items: _roomState.teams!
+                                        //       .map((t) => "${t.teamNumber}")
+                                        //       .map(
+                                        //         (s) => DropdownMenuItem<String>(
+                                        //           child: Text(
+                                        //             s,
+                                        //             style:
+                                        //                 AppStyle.labelTextStyle,
+                                        //           ),
+                                        //         ),
+                                        //       )
+                                        //       .toList(),
                                         onChanged: (val) {}),
+                                  if (_roomState.player!.creator!)
+                                    const SizedBox(width: 32),
                                   if (_roomState.player!.creator!)
                                     const Text("Spectator? ",
                                         style: AppStyle.labelTextStyle),
@@ -194,21 +214,18 @@ class _LobbyPageState extends State<LobbyPage> {
             List<PlayerModel> newPlayers = [];
             List<PlayerModel> serverPlayers = roomFromServer.players!;
             for (var pServer in serverPlayers) {
-              print("server player: ${pServer.toJson().toString()}");
               int? found = _roomState.players
                   ?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
-              print(found ?? "NULL");
               if (found == null || found == -1) {
                 newPlayers.add(pServer);
               }
             }
-            print("new players: ${newPlayers.length}: ${newPlayers}");
             // copy all fields except the players
             _roomState = roomFromServer.copyWith(
               players: [..._roomState.players!, ...newPlayers],
             );
           });
-          print("LP: new playerList in state: ${_roomState.players}");
+          print("LP: new list of players: ${_roomState.players}");
         } else {
           print("something went wrong: this room is null!");
         }

@@ -31,11 +31,18 @@ class _LobbyPageState extends State<LobbyPage> {
   late int _playerId; // pulled from cache
   late RoomModel _roomState; // passed from prev page
   late Timer _timer; // timer for LP
+  late final Map<int, int> teamIdByNumber;
+
   // late Map<int, List<dynamic>> _playerState; // id -> [teamNumber, spectator]
 
   @override
   void initState() {
     _roomState = widget.roomModel;
+    teamIdByNumber = {};
+    // populate mapping team id -> team number
+    for (int i = 0; i < _roomState.teams!.length; i++) {
+      teamIdByNumber[_roomState.teams![i].teamId!] = _roomState.teams![i].teamNumber!;
+    }
     _initCachedFields();
     _startLongPolling();
     super.initState();
@@ -49,16 +56,6 @@ class _LobbyPageState extends State<LobbyPage> {
 
   @override
   Widget build(BuildContext context) {
-    var _teamsDropItems = _roomState.teams!
-        .map((t) => "${t.teamNumber}")
-        .map((t) => DropdownMenuItem<String>(
-              value: t,
-              child: Text(
-                t,
-              ),
-            ))
-        .toList();
-
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: Center(
@@ -103,7 +100,7 @@ class _LobbyPageState extends State<LobbyPage> {
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 3,
                       height: MediaQuery.of(context).size.height / 3,
                       child: ListView(
                         scrollDirection: Axis.vertical,
@@ -114,8 +111,7 @@ class _LobbyPageState extends State<LobbyPage> {
                               height: 36,
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     player.name!,
@@ -125,26 +121,33 @@ class _LobbyPageState extends State<LobbyPage> {
                                   const Spacer(),
                                   if (_roomState.player!.creator!)
                                     DropdownButton(
-                                        items: _teamsDropItems,
-                                        // value: "${player.teamNumber ?? "no team"}",
-                                        //   items: _roomState.teams!
-                                        //       .map((t) => "${t.teamNumber}")
-                                        //       .map(
-                                        //         (s) => DropdownMenuItem<String>(
-                                        //           child: Text(
-                                        //             s,
-                                        //             style:
-                                        //                 AppStyle.labelTextStyle,
-                                        //           ),
-                                        //         ),
-                                        //       )
-                                        //       .toList(),
-                                        onChanged: (val) {}),
+                                        hint: Text(
+                                          "${player.teamNumber!}",
+                                          style: AppStyle.labelTextStyle,
+                                        ),
+                                        dropdownColor: AppStyle.taskBackgroundColor,
+                                        style: AppStyle.labelTextStyle,
+                                        isDense: true,
+                                        borderRadius: BorderRadius.circular(25),
+                                        items: _roomState.teams!
+                                            .map((t) => t.teamNumber)
+                                            .map((t) => DropdownMenuItem<int>(child: Text("$t"), value: t))
+                                            .toList(),
+                                        onChanged: (int? teamNumberSelected) {
+                                          setState(() {
+                                            int index = (_roomState.players?.indexOf(player))!;
+                                            _roomState.players?.removeAt(index);
+                                            _roomState.players?.insert(
+                                                index,
+                                                player.copyWith(
+                                                  teamNumber: teamNumberSelected!,
+                                                  teamId: teamIdByNumber[teamNumberSelected],
+                                                ));
+                                          });
+                                        }),
+                                  if (_roomState.player!.creator!) const SizedBox(width: 32),
                                   if (_roomState.player!.creator!)
-                                    const SizedBox(width: 32),
-                                  if (_roomState.player!.creator!)
-                                    const Text("Spectator? ",
-                                        style: AppStyle.labelTextStyle),
+                                    const Text("Spectator? ", style: AppStyle.labelTextStyle),
                                   if (_roomState.player!.creator!)
                                     CupertinoSwitch(
                                       value: player.spectator!,
@@ -152,11 +155,9 @@ class _LobbyPageState extends State<LobbyPage> {
                                         // because models in freezed are immutable...
                                         setState(() {
                                           // ...we replace element in list through deletion
-                                          int index = (_roomState.players
-                                              ?.indexOf(player))!;
+                                          int index = (_roomState.players?.indexOf(player))!;
                                           _roomState.players?.removeAt(index);
-                                          _roomState.players?.insert(index,
-                                              player.copyWith(spectator: val));
+                                          _roomState.players?.insert(index, player.copyWith(spectator: val));
                                         });
                                         print(player.spectator);
                                       },
@@ -206,16 +207,14 @@ class _LobbyPageState extends State<LobbyPage> {
   void _startLongPolling() {
     setState(() {
       _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-        RoomModel? roomFromServer =
-            await Api.checkRoom(_playerId, _roomState.id!);
+        RoomModel? roomFromServer = await Api.checkRoom(_playerId, _roomState.id!);
         if (roomFromServer != null) {
           setState(() {
             // add only newly gotten players
             List<PlayerModel> newPlayers = [];
             List<PlayerModel> serverPlayers = roomFromServer.players!;
             for (var pServer in serverPlayers) {
-              int? found = _roomState.players
-                  ?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
+              int? found = _roomState.players?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
               if (found == null || found == -1) {
                 newPlayers.add(pServer);
               }

@@ -151,7 +151,7 @@ class Api {
     }
   }
 
-  static Future<RoomModel?> startRoom(
+  static Future<RoomModel?> startGame(
     String username,
     int roomId,
     List<PlayerModel> players,

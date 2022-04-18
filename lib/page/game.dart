@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/api.dart';
 import 'package:kanban/widget/people_bank.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
@@ -40,8 +41,7 @@ class GamePage extends StatelessWidget {
                       children: const [
                         Text("analysis", style: AppStyle.stageTitleTextStyle),
                         Text("finished", style: AppStyle.stageTitleTextStyle),
-                        Text("development",
-                            style: AppStyle.stageTitleTextStyle),
+                        Text("development", style: AppStyle.stageTitleTextStyle),
                         Text("finished", style: AppStyle.stageTitleTextStyle),
                         Text("testing", style: AppStyle.stageTitleTextStyle),
                         Text("finished", style: AppStyle.stageTitleTextStyle),
@@ -50,7 +50,12 @@ class GamePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(flex: 3, child: TaskTable(day: 0)),
+              Expanded(
+                flex: 3,
+                child: TaskTable(
+                  tasksFuture: Api.getTasks(0),
+                ),
+              ),
             ],
           ),
         ),

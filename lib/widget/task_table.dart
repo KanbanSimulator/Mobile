@@ -9,11 +9,11 @@ import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_column.dart';
 
 class TaskTable extends StatefulWidget {
-  final int day;
+  final Future<List<TaskModel>> tasksFuture;
 
   const TaskTable({
     Key? key,
-    required this.day,
+    required this.tasksFuture,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _TaskTableState extends State<TaskTable> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Api.getTasks(widget.day),
+      future: widget.tasksFuture,
       builder: (context, AsyncSnapshot<List<TaskModel>> snapshot) {
         if (!snapshot.hasData) return ErrorPage(text: "No data for day ${widget.day}");
         List<TaskModel> tasksRaw = snapshot.data!;

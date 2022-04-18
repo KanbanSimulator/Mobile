@@ -189,24 +189,18 @@ class _LobbyPageState extends State<LobbyPage> {
     );
   }
 
+  // only available for room owner
   void _onStartGamePressed(BuildContext context) async {
     String username = await CacheService.getUsername();
     if (username == AppConst.unnamed) {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
-
     // start room api request
     RoomModel? roomStarted = await Api.startGame(username, _roomState.id!, _roomState.players!);
     print("data from server room model (start game) : ${roomStarted!.toJson().toString()}");
-
     // going to the game page
-    _stopLongPolling();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (BuildContext routeContext) => GamePage(),
-      ),
-    );
+    _continueRoomFlow();
   }
 
   void _startLongPolling() {
@@ -230,11 +224,24 @@ class _LobbyPageState extends State<LobbyPage> {
             );
           });
           print("LP: new list of players: ${_roomState.players}");
+          // continue flow if game started
+          if (_roomState.started != null && _roomState.started!) {
+            _continueRoomFlow();
+          }
         } else {
           print("something went wrong: this room is null!");
         }
       });
     });
+  }
+
+  void _continueRoomFlow() {
+    _stopLongPolling();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext routeContext) => GamePage(),
+      ),
+    );
   }
 
   void _stopLongPolling() {

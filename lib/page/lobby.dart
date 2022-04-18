@@ -195,7 +195,12 @@ class _LobbyPageState extends State<LobbyPage> {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
+
     // start room api request
+    RoomModel? roomStarted = await Api.startGame(username, _roomState.id!, _roomState.players!);
+    print("data from server room model (start game) : ${roomStarted!.toJson().toString()}");
+
+    // going to the game page
     _stopLongPolling();
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

@@ -159,10 +159,12 @@ class Api {
     Response response = await _Api.postRoomStart(username, roomId, players);
     try {
       Map<String, dynamic> data = response.data['payload'];
+      print("data raw on receive from server (start game) : $data");
       RoomModel room = RoomModel.fromJson(data);
       return room;
     } catch (e) {
-      print("something wrong sending /room/create");
+      print("err msg: ${e.toString()}");
+      print("something wrong sending /room/{roomid}/start");
     }
   }
 

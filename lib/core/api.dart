@@ -72,11 +72,7 @@ class _Api {
   //   _dio.get("$baseUrl/")
   // }
 
-  static Future<Response> postRoom(
-    String name,
-    bool isSpectator,
-    int teamsAmount,
-  ) async {
+  static Future<Response> postRoom(String name, bool isSpectator, int teamsAmount) async {
     return _dio.post("$baseUrl/room/create", data: {
       "player": {
         "name": name,
@@ -86,22 +82,14 @@ class _Api {
     });
   }
 
-  static Future<Response> postRoomJoin(
-    String name,
-    bool isSpectator,
-    int roomId,
-  ) async {
+  static Future<Response> postRoomJoin(String name, bool isSpectator, int roomId) async {
     return _dio.post("$baseUrl/room/$roomId/join", data: {
       "name": name,
       "spectator": isSpectator,
     });
   }
 
-  static Future<Response> postRoomStart(
-    String name,
-    int roomId,
-    List<PlayerModel> players,
-  ) async {
+  static Future<Response> postRoomStart(String name, int roomId, List<PlayerModel> players) async {
     return _dio.post("$baseUrl/room/$roomId/start", data: {
       "players": players,
     });
@@ -147,7 +135,8 @@ class Api {
       RoomModel room = RoomModel.fromJson(data);
       return room;
     } catch (e) {
-      print("something wrong sending /room/create");
+      print("err msg: ${e.toString()}");
+      print("something wrong sending /room/{roomid}/start");
     }
   }
 

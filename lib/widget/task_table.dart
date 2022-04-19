@@ -21,14 +21,7 @@ class TaskTable extends StatefulWidget {
 }
 
 class _TaskTableState extends State<TaskTable> {
-  final Map<int, int> _stageMapping = {
-    0: 0,
-    1: 2,
-    2: 4,
-    3: 1,
-    4: 3,
-    5: 5,
-  };
+  final Map<int, int> _stageMapping = {0: 0, 1: 2, 2: 4, 3: 1, 4: 3, 5: 5};
 
   late List<List<TaskModel>> _tasksState;
 
@@ -66,9 +59,14 @@ class _TaskTableState extends State<TaskTable> {
           children: [
             for (int i = 0; i < _tasksState.length; i++)
               Expanded(
-                child: TaskColumn(
-                  tasks: _tasksState[i],
-                  swapTasks: _onSwapTasks,
+                child: DragTarget<TaskCardModel>(
+                  onAccept: (TaskCardModel tCard) {
+                    print("${tCard.title} accepted");
+                  },
+                  builder: (dragContext, candidateData, rejectedData) => TaskColumn(
+                    tasks: _tasksState[i],
+                    swapTasks: _onSwapTasks,
+                  ),
                 ),
               ),
           ],

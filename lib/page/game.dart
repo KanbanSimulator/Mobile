@@ -21,11 +21,12 @@ class GamePage extends StatelessWidget {
             children: [
               // Spacer(),
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,6 +36,7 @@ class GamePage extends StatelessWidget {
                         PeopleBank(count: 3, stage: 2),
                       ],
                     ),
+                    const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,

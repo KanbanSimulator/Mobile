@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kanban/const/app_style.dart';
 import 'package:kanban/model/task_card/task_card_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
@@ -18,8 +19,10 @@ class TaskColumn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xff151515),
+        decoration: BoxDecoration(
+          color: const Color(0xff151515),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xff151515)),
         ),
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),

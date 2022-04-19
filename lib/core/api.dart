@@ -13,7 +13,7 @@ class _Api {
       TaskModel(
         title: 'task 1',
         value: 12,
-        stage: 0,
+        stage: 3,
         progress: [
           '12/18',
           '0/24',

@@ -25,7 +25,7 @@ class GamePage extends StatelessWidget {
               SizedBox(
                 width: 200,
                 height: 48,
-                child: AppButton("Complete this day"),
+                child: AppButton("Complete this day", onPressed: _onCompleteDayPressed,),
               ),
               Expanded(
                 flex: 1,
@@ -81,5 +81,9 @@ class GamePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onCompleteDayPressed() {
+    print("complete day");
   }
 }

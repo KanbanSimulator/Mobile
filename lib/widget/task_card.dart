@@ -32,7 +32,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   void initState() {
     // _count = widget.initialCount;
-    _count = widget.taskModel.peopleCount![widget.taskModel.stage!];
+    _count = widget.taskModel.peopleCount![widget.taskModel.stage! % 3];
     super.initState();
   }
 
@@ -79,7 +79,7 @@ class _TaskCardState extends State<TaskCard> {
                           setState(() {
                             _count--;
                             widget.taskModel
-                                .peopleCount![widget.taskModel.stage!] = _count;
+                                .peopleCount![widget.taskModel.stage! % 3] = _count;
                           });
                         },
                         feedback: Container(
@@ -89,7 +89,7 @@ class _TaskCardState extends State<TaskCard> {
                             AppAssets.person,
                             fit: BoxFit.fitWidth,
                             width: 100,
-                            color: AppStyle.stageColor[widget.taskModel.stage!],
+                            color: AppStyle.stageColor[widget.taskModel.stage! % 3],
                           ),
                         ),
                         child: Container(
@@ -97,12 +97,12 @@ class _TaskCardState extends State<TaskCard> {
                               const BoxDecoration(color: Colors.transparent),
                           child: PeopleBankMini(
                             count: _count,
-                            stage: widget.taskModel.stage!,
+                            stage: widget.taskModel.stage! % 3,
                           ),
                         ),
                         childWhenDragging: PeopleBankMini(
                           count: _count - 1,
-                          stage: widget.taskModel.stage!,
+                          stage: widget.taskModel.stage! % 3,
                         ),
                       ),
                     ],
@@ -141,7 +141,7 @@ class _TaskCardState extends State<TaskCard> {
         onAccept: (TaskModel task) {
           setState(() {
             _count++;
-            widget.taskModel.peopleCount![widget.taskModel.stage!] = _count;
+            widget.taskModel.peopleCount![widget.taskModel.stage! % 3] = _count;
           });
         },
       ),

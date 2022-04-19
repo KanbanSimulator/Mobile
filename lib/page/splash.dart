@@ -5,6 +5,7 @@ import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widget/logo.dart';
 import 'auth.dart';
 import 'game.dart';
 import 'menu.dart';
@@ -25,10 +26,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: Center(
-        child: SvgPicture.asset(AppAssets.logo),
+        child: Logo(),
       ),
     );
   }

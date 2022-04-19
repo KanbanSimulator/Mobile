@@ -8,6 +8,7 @@ import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
 
 import '../const/app_res.dart';
+import '../widget/logo.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({Key? key}) : super(key: key);
@@ -17,67 +18,99 @@ class GamePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(
-                width: 200,
-                height: 48,
-                child: AppButton("Complete this day", onPressed: _onCompleteDayPressed,),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: double.infinity,
+                height: 64,
+                decoration: const BoxDecoration(color: Color(0xff151515)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: const Logo(),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        height: 48,
+                        child: AppButton(
+                          "Complete this day",
+                          onPressed: _onCompleteDayPressed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              Expanded(
-                flex: 1,
+            ),
+            Expanded(
+              flex: 12,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        PeopleBank(count: 3, stage: 0),
-                        PeopleBank(count: 3, stage: 1),
-                        PeopleBank(count: 3, stage: 2),
-                      ],
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              PeopleBank(count: 3, stage: 0),
+                              PeopleBank(count: 3, stage: 1),
+                              PeopleBank(count: 3, stage: 2),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
+                              Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
+                              Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
-                        Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
-                        Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
-                      ],
+                    Expanded(
+                      flex: 2,
+                      child: TaskTable(
+                        tasksFuture: Api.getTasks(0),
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
                   ],
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: TaskTable(
-                  tasksFuture: Api.getTasks(0),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

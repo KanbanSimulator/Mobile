@@ -37,8 +37,7 @@ class TaskColumn extends StatelessWidget {
               data: TaskCardModel.fromTaskModel(tasks[index], index),
 
               child: DragTarget<TaskCardModel>(
-                builder: (BuildContext context, List<Object?> candidateData,
-                    List rejectedData) {
+                builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
                   return taskCardWidget;
                 },
                 onWillAccept: (TaskCardModel? task) {

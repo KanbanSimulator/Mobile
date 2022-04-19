@@ -42,16 +42,7 @@ class _TaskTableState extends State<TaskTable> {
           return ErrorPage(text: "No tasks for this day");
         }
 
-        if (_tasksState.isEmpty) {
-          _tasksState = [
-            tasksRaw.where((e) => e.stage == 0).toList(),
-            tasksRaw.where((e) => e.stage == 3).toList(),
-            tasksRaw.where((e) => e.stage == 1).toList(),
-            tasksRaw.where((e) => e.stage == 4).toList(),
-            tasksRaw.where((e) => e.stage == 2).toList(),
-            tasksRaw.where((e) => e.stage == 5).toList(),
-          ];
-        }
+        _initTasksState(tasksRaw);
 
         return Row(
           mainAxisSize: MainAxisSize.max,
@@ -61,7 +52,7 @@ class _TaskTableState extends State<TaskTable> {
               Expanded(
                 child: DragTarget<TaskCardModel>(
                   onAccept: (TaskCardModel tCard) {
-                    print("${tCard.title} accepted");
+                    print("${tCard.title} accepted for move into this column");
                   },
                   builder: (dragContext, candidateData, rejectedData) => TaskColumn(
                     tasks: _tasksState[i],
@@ -89,5 +80,24 @@ class _TaskTableState extends State<TaskTable> {
       // _tasksState[c1].removeAt(index);
       // _tasksState[c1].insert(index, player.copyWith(spectator: val));
     });
+  }
+
+  void _initTasksState(tasksRaw) {
+    if (_tasksState.isEmpty) {
+      _tasksState = [
+        tasksRaw.where((e) => e.stage == 0).toList(),
+        tasksRaw.where((e) => e.stage == 3).toList(),
+        tasksRaw.where((e) => e.stage == 1).toList(),
+        tasksRaw.where((e) => e.stage == 4).toList(),
+        tasksRaw.where((e) => e.stage == 2).toList(),
+        tasksRaw.where((e) => e.stage == 5).toList(),
+      ];
+      print(_tasksState[0]);
+      print(_tasksState[1]);
+      print(_tasksState[2]);
+      print(_tasksState[3]);
+      print(_tasksState[4]);
+      print(_tasksState[5]);
+    }
   }
 }

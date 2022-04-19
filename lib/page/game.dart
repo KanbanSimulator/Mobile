@@ -21,7 +21,7 @@ class GamePage extends StatelessWidget {
             children: [
               // Spacer(),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

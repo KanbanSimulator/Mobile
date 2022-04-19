@@ -61,6 +61,7 @@ class GamePage extends StatelessWidget {
                         Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
                       ],
                     ),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),

@@ -9,15 +9,18 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (routeContext) => const SplashPage(),
-          ),
-        );
-      },
-      child: SvgPicture.asset(AppAssets.logo),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (routeContext) => const SplashPage(),
+            ),
+          );
+        },
+        child: SvgPicture.asset(AppAssets.logo),
+      ),
     );
   }
 }

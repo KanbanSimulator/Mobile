@@ -27,6 +27,11 @@ class AppStyle {
     color: Colors.white,
     letterSpacing: 1.2,
   );
+  static const stageSubTitleTextStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+    letterSpacing: 1.2,
+  );
 
   // task card
   static const taskBackgroundColor =

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_style.dart';
 import 'package:kanban/core/api.dart';
+import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/people_bank.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
@@ -21,7 +22,11 @@ class GamePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              // Spacer(),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: AppButton("Complete this day"),
+              ),
               Expanded(
                 flex: 1,
                 child: Column(
@@ -66,7 +71,7 @@ class GamePage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: TaskTable(
                   tasksFuture: Api.getTasks(0),
                 ),

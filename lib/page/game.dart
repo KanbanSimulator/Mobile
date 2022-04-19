@@ -6,6 +6,8 @@ import 'package:kanban/widget/people_bank.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
 
+import '../const/app_res.dart';
+
 class GamePage extends StatelessWidget {
   const GamePage({Key? key}) : super(key: key);
 
@@ -41,12 +43,12 @@ class GamePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
-                        Text("Analysis", style: AppStyle.stageTitleTextStyle),
-                        Text("Finished", style: AppStyle.stageTitleTextStyle),
-                        Text("Development", style: AppStyle.stageTitleTextStyle),
-                        Text("Finished", style: AppStyle.stageTitleTextStyle),
-                        Text("Testing", style: AppStyle.stageTitleTextStyle),
-                        Text("Finished", style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.inProgress, style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.finished, style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.inProgress, style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.finished, style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.inProgress, style: AppStyle.stageTitleTextStyle),
+                        Text(AppRes.finished, style: AppStyle.stageTitleTextStyle),
                       ],
                     ),
                   ],

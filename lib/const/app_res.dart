@@ -11,6 +11,12 @@ class AppRes {
   static const String checkLoggedIn = "Something went wrong: Check if you're logged in.";
 
   static const String incorrectTeamsCounter = "You cannot have this number of teams in the game.";
+
   static const String incorrectRoomId = "This room id does not exist.";
+
+
+  static const String inProgress = "In progress";
+
+  static const String finished = "Finished";
 
 }

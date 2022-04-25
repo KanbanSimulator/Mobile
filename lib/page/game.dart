@@ -37,6 +37,7 @@ class GamePage extends StatelessWidget {
                         height: 48,
                         child: Logo(),
                       ),
+                      const Text("test"),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,

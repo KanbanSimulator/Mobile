@@ -22,6 +22,7 @@ class TaskTable extends StatefulWidget {
 
 class _TaskTableState extends State<TaskTable> {
   final Map<int, int> _stageMapping = {0: 0, 1: 2, 2: 4, 3: 1, 4: 3, 5: 5};
+  final Map<int, int> _stageIMapping = {0: 0, 2: 1, 4: 2, 1: 3, 3: 4, 5: 5};
 
   late List<List<TaskModel>> _tasksState;
 
@@ -74,8 +75,14 @@ class _TaskTableState extends State<TaskTable> {
     print("swapping r$r1;c$c1 and r$r2;c$c2");
     setState(() {
       TaskModel taskTemp = _tasksState[c1][r1].copyWith();
-      _tasksState[c1][r1] = _tasksState[c2][r2].copyWith();
-      _tasksState[c2][r2] = taskTemp.copyWith();
+      print("before swap tasks:");
+      print("1: ${_tasksState[c1][r1]}");
+      print("2: ${_tasksState[c2][r2]}");
+      _tasksState[c1][r1] = _tasksState[c2][r2].copyWith(stage: _stageIMapping[c1]);
+      _tasksState[c2][r2] = taskTemp.copyWith(stage: _stageIMapping[c2]);
+      print("after swap tasks:");
+      print("1: ${_tasksState[c1][r1]}");
+      print("2: ${_tasksState[c2][r2]}");
       // int index = (_tasksState[c1].indexOf(_tasksState[c2][r2]));
       // _tasksState[c1].removeAt(index);
       // _tasksState[c1].insert(index, player.copyWith(spectator: val));

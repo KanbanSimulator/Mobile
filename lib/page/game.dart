@@ -22,7 +22,33 @@ class GamePage extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: _buildHeader(),
+              child: Container(
+                width: double.infinity,
+                height: 64,
+                decoration: const BoxDecoration(color: Color(0xff151515)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: Logo(),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        height: 48,
+                        child: AppButton(
+                          "Complete this day",
+                          onPressed: _onCompleteDayPressed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             Expanded(
               flex: 12,
@@ -92,35 +118,5 @@ class GamePage extends StatelessWidget {
 
   _onCompleteDayPressed() {
     print("complete day");
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      width: double.infinity,
-      height: 64,
-      decoration: const BoxDecoration(color: Color(0xff151515)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(
-              width: 48,
-              height: 48,
-              child: Logo(),
-            ),
-            SizedBox(
-              width: 200,
-              height: 48,
-              child: AppButton(
-                "Complete this day",
-                onPressed: _onCompleteDayPressed,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

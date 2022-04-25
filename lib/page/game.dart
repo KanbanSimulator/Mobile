@@ -46,11 +46,11 @@ class GamePage extends StatelessWidget {
                                 width: 140,
                                 height: 48,
                                 child: AppButton(
-                                  "",
-                                  leading: const Icon(
-                                    Icons.my_library_books_rounded,
-                                    color: AppStyle.iconColor,
-                                  ),
+                                  "Backlog",
+                                  // leading: const Icon(
+                                  //   Icons.my_library_books_rounded,
+                                  //   color: AppStyle.iconColor,
+                                  // ),
                                   onPressed: () => _onBacklogPressed(builderContext),
                                 ),
                               ),
@@ -60,10 +60,10 @@ class GamePage extends StatelessWidget {
                                 height: 48,
                                 child: AppButton(
                                   "Complete this day",
-                                  leading: const Icon(
-                                    Icons.done_outline_rounded,
-                                    color: AppStyle.iconColor,
-                                  ),
+                                  // leading: const Icon(
+                                  //   Icons.done_outline_rounded,
+                                  //   color: AppStyle.iconColor,
+                                  // ),
                                   onPressed: _onCompleteDayPressed,
                                 ),
                               ),

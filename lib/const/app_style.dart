@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class AppStyle {
   static const backgroundColor = Color(0xff222222);
 
+  static const columnBgColor = Color(0xff1d1d1d);
+
   // menu page
   static const pageHeaderTextStyle = TextStyle(
     fontSize: 24,
@@ -34,8 +36,7 @@ class AppStyle {
   );
 
   // task card
-  static const taskBackgroundColor =
-      Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
+  static const taskBackgroundColor = Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
   static const taskBorderColor = Color(0xff9E9E9E);
   static const taskTitleTextStyle = TextStyle(
     // task card > title text > style
@@ -65,6 +66,8 @@ class AppStyle {
     fontSize: 15,
     fontWeight: FontWeight.w800,
   );
+
+  static const iconColor = Color(0xff5e5e5e);
 
   static final buttonDecoration = ButtonStyle(
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

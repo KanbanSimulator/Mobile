@@ -25,7 +25,7 @@ class GamePage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: 64,
-                decoration: const BoxDecoration(color: Color(0xff151515)),
+                decoration: const BoxDecoration(color: AppStyle.columnBgColor),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
                   child: Row(
@@ -37,12 +37,36 @@ class GamePage extends StatelessWidget {
                         height: 48,
                         child: Logo(),
                       ),
-                      SizedBox(
-                        width: 200,
-                        height: 48,
-                        child: AppButton(
-                          "Complete this day",
-                          onPressed: _onCompleteDayPressed,
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 140,
+                              height: 48,
+                              child: AppButton(
+                                "Backlog",
+                                leading: const Icon(
+                                  Icons.my_library_books_rounded,
+                                  color: AppStyle.iconColor,
+                                ),
+                                onPressed: _onBacklogPressed,
+                              ),
+                            ),
+                            const SizedBox(width: 48),
+                            SizedBox(
+                              width: 200,
+                              height: 48,
+                              child: AppButton(
+                                "Complete this day",
+                                leading: const Icon(
+                                  Icons.done_outline_rounded,
+                                  color: AppStyle.iconColor,
+                                ),
+                                onPressed: _onCompleteDayPressed,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -114,6 +138,10 @@ class GamePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onBacklogPressed() {
+    print("backlog show");
   }
 
   _onCompleteDayPressed() {

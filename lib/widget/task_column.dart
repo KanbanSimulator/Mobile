@@ -27,9 +27,9 @@ class _TaskColumnState extends State<TaskColumn> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xff151515),
+          color: AppStyle.columnBgColor,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          border: Border.all(color: const Color(0xff151515)),
+          border: Border.all(color: AppStyle.columnBgColor),
         ),
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),

@@ -24,11 +24,11 @@ class _TaskTableState extends State<TaskTable> {
   final Map<int, int> _stageMapping = {0: 0, 1: 2, 2: 4, 3: 1, 4: 3, 5: 5};
   final Map<int, int> _stageIMapping = {0: 0, 2: 1, 4: 2, 1: 3, 3: 4, 5: 5};
 
-  late List<List<TaskModel>> _tasksState;
+  late List<List<TaskModel>> _taskTable;
 
   @override
   void initState() {
-    _tasksState = [];
+    _taskTable = [];
     super.initState();
   }
 
@@ -37,10 +37,10 @@ class _TaskTableState extends State<TaskTable> {
     return FutureBuilder(
       future: widget.tasksFuture,
       builder: (context, AsyncSnapshot<List<TaskModel>> snapshot) {
-        if (!snapshot.hasData) return ErrorPage(text: "No data for this day");
+        if (!snapshot.hasData) return const ErrorPage(text: "No data for this day");
         List<TaskModel> tasksRaw = snapshot.data!;
         if (tasksRaw.isEmpty) {
-          return ErrorPage(text: "No tasks for this day");
+          return const ErrorPage(text: "No tasks for this day");
         }
 
         _initTasksState(tasksRaw);
@@ -49,14 +49,14 @@ class _TaskTableState extends State<TaskTable> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            for (int i = 0; i < _tasksState.length; i++)
+            for (int i = 0; i < _taskTable.length; i++)
               Expanded(
                 child: DragTarget<TaskCardModel>(
                   onAccept: (TaskCardModel tCard) {
                     print("${tCard.title} accepted for move into this column");
                   },
                   builder: (dragContext, candidateData, rejectedData) => TaskColumn(
-                    tasks: _tasksState[i],
+                    tasks: _taskTable[i],
                     swapTasks: _onSwapTasks,
                   ),
                 ),
@@ -74,12 +74,12 @@ class _TaskTableState extends State<TaskTable> {
     final int r2 = t2.inColumnIndex!;
     print("swapping r$r1;c$c1 and r$r2;c$c2");
     setState(() {
-      TaskModel taskTemp = _tasksState[c1][r1].copyWith();
+      TaskModel taskTemp = _taskTable[c1][r1].copyWith();
       // print("before swap tasks:");
       // print("1: ${_tasksState[c1][r1]}");
       // print("2: ${_tasksState[c2][r2]}");
-      _tasksState[c1][r1] = _tasksState[c2][r2].copyWith(stage: _stageIMapping[c1]);
-      _tasksState[c2][r2] = taskTemp.copyWith(stage: _stageIMapping[c2]);
+      _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: _stageIMapping[c1]);
+      _taskTable[c2][r2] = taskTemp.copyWith(stage: _stageIMapping[c2]);
       // print("after swap tasks:");
       // print("1: ${_tasksState[c1][r1]}");
       // print("2: ${_tasksState[c2][r2]}");
@@ -87,8 +87,8 @@ class _TaskTableState extends State<TaskTable> {
   }
 
   void _initTasksState(tasksRaw) {
-    if (_tasksState.isEmpty) {
-      _tasksState = [
+    if (_taskTable.isEmpty) {
+      _taskTable = [
         tasksRaw.where((e) => e.stage == 0).toList(),
         tasksRaw.where((e) => e.stage == 3).toList(),
         tasksRaw.where((e) => e.stage == 1).toList(),
@@ -96,12 +96,12 @@ class _TaskTableState extends State<TaskTable> {
         tasksRaw.where((e) => e.stage == 2).toList(),
         tasksRaw.where((e) => e.stage == 5).toList(),
       ];
-      print(_tasksState[0]);
-      print(_tasksState[1]);
-      print(_tasksState[2]);
-      print(_tasksState[3]);
-      print(_tasksState[4]);
-      print(_tasksState[5]);
+      print(_taskTable[0]);
+      print(_taskTable[1]);
+      print(_taskTable[2]);
+      print(_taskTable[3]);
+      print(_taskTable[4]);
+      print(_taskTable[5]);
     }
   }
 }

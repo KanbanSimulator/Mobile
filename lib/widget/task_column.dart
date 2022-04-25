@@ -4,7 +4,7 @@ import 'package:kanban/model/task_card/task_card_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
 
-class TaskColumn extends StatelessWidget {
+class TaskColumn extends StatefulWidget {
   final List<TaskModel> tasks;
   final Function swapTasks;
 
@@ -13,6 +13,13 @@ class TaskColumn extends StatelessWidget {
     required this.tasks,
     required this.swapTasks,
   }) : super(key: key);
+
+  @override
+  State<TaskColumn> createState() => _TaskColumnState();
+}
+
+class _TaskColumnState extends State<TaskColumn> {
+  bool _childrenNotifierValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,34 +33,39 @@ class TaskColumn extends StatelessWidget {
         ),
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),
-          itemCount: tasks.length,
+          itemCount: widget.tasks.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 4),
           itemBuilder: (context, index) {
-            Widget taskCardWidget;
-            taskCardWidget = TaskCard(
-              taskModel: tasks[index],
+            Widget taskCardWidget = TaskCard(
+              taskModel: widget.tasks[index],
+              notifier: ValueNotifier(_childrenNotifierValue),
             );
             return Draggable<TaskCardModel>(
               // delay: Duration(seconds: 2), // for mobile use longdraggable
-              data: TaskCardModel.fromTaskModel(tasks[index], index),
-
+              data: TaskCardModel.fromTaskModel(widget.tasks[index], index),
               child: DragTarget<TaskCardModel>(
                 builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
                   return taskCardWidget;
                 },
                 onWillAccept: (TaskCardModel? task) {
+                  // todo logic on how we swap tasks between stages
                   if (task == null) return false;
                   return true;
                   // return (task.stage == tasks[index].stage);
                 },
                 onAccept: (TaskCardModel task) {
                   print("accepted $task");
-                  swapTasks(task, TaskCardModel.fromTaskModel(tasks[index], index));
+                  widget.swapTasks(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
+                  setState(() {
+                    // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
+                    _childrenNotifierValue = !_childrenNotifierValue;
+                  });
                 },
               ),
-
               childWhenDragging: TaskCard(
-                taskModel: tasks[index],
+                taskModel: widget.tasks[index],
                 isGhost: true,
+                notifier: ValueNotifier(_childrenNotifierValue),
               ),
               feedback: Card(
                 color: Colors.transparent,
@@ -63,11 +75,6 @@ class TaskColumn extends StatelessWidget {
                   child: taskCardWidget,
                 ),
               ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 4,
             );
           },
         ),

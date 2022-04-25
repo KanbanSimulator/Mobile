@@ -19,7 +19,7 @@ class GamePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppStyle.backgroundColor,
         body: Builder(
-          builder: (context) => Column(
+          builder: (builderContext) => Column(
             children: [
               Expanded(
                 flex: 1,
@@ -51,7 +51,7 @@ class GamePage extends StatelessWidget {
                                     Icons.my_library_books_rounded,
                                     color: AppStyle.iconColor,
                                   ),
-                                  onPressed: () => _onBacklogPressed(context),
+                                  onPressed: () => _onBacklogPressed(builderContext),
                                 ),
                               ),
                               const SizedBox(width: 48),

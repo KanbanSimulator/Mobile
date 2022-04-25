@@ -4,6 +4,8 @@ import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/page/splash.dart';
 
+import 'const/app_style.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
       //   primarySwatch: Colors.blue,
       // ),
       //
+      theme: ThemeData(
+        canvasColor: AppStyle.backgroundColor,
+      ),
       home: GamePage(),
       // home: SplashPage(),
     );

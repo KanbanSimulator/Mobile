@@ -46,7 +46,7 @@ class GamePage extends StatelessWidget {
                                 width: 140,
                                 height: 48,
                                 child: AppButton(
-                                  "Backlog",
+                                  "",
                                   leading: const Icon(
                                     Icons.my_library_books_rounded,
                                     color: AppStyle.iconColor,

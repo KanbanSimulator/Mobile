@@ -75,17 +75,14 @@ class _TaskTableState extends State<TaskTable> {
     print("swapping r$r1;c$c1 and r$r2;c$c2");
     setState(() {
       TaskModel taskTemp = _tasksState[c1][r1].copyWith();
-      print("before swap tasks:");
-      print("1: ${_tasksState[c1][r1]}");
-      print("2: ${_tasksState[c2][r2]}");
+      // print("before swap tasks:");
+      // print("1: ${_tasksState[c1][r1]}");
+      // print("2: ${_tasksState[c2][r2]}");
       _tasksState[c1][r1] = _tasksState[c2][r2].copyWith(stage: _stageIMapping[c1]);
       _tasksState[c2][r2] = taskTemp.copyWith(stage: _stageIMapping[c2]);
-      print("after swap tasks:");
-      print("1: ${_tasksState[c1][r1]}");
-      print("2: ${_tasksState[c2][r2]}");
-      // int index = (_tasksState[c1].indexOf(_tasksState[c2][r2]));
-      // _tasksState[c1].removeAt(index);
-      // _tasksState[c1].insert(index, player.copyWith(spectator: val));
+      // print("after swap tasks:");
+      // print("1: ${_tasksState[c1][r1]}");
+      // print("2: ${_tasksState[c2][r2]}");
     });
   }
 

@@ -28,7 +28,7 @@ class _TaskColumnState extends State<TaskColumn> {
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xff151515),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
           border: Border.all(color: const Color(0xff151515)),
         ),
         child: ListView.separated(

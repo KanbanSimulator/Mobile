@@ -4,11 +4,13 @@ import 'package:kanban/const/app_style.dart';
 class AppButton extends StatelessWidget {
   final onPressed;
   final String text;
+  final Widget? leading;
 
   AppButton(
       this.text, {
         Key? key,
         this.onPressed,
+        this.leading,
       }) : super(key: key);
 
   @override
@@ -16,9 +18,16 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
       style: AppStyle.buttonDecoration,
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: AppStyle.buttonTextStyle,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          leading ?? const SizedBox.shrink(),
+          if (leading != null && text.isNotEmpty) const SizedBox(width: 12),
+          Text(
+            text,
+            style: AppStyle.buttonTextStyle,
+          ),
+        ],
       ),
     );
   }

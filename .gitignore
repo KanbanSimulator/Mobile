@@ -29,13 +29,13 @@
 .packages
 .pub-cache/
 .pub/
-/build/9bcd22ed984b23c8aea5a4d1d3824614
-/build/app
-/build/flutter_assets
-/build/kotlin
-/build/shared_preferences_android
-/build/c075001b96339384a97db4862b8ab8db.cache.dill.track.dill
-/build/last_build_run.json
+#/build/9bcd22ed984b23c8aea5a4d1d3824614
+#/build/app
+#/build/flutter_assets
+#/build/kotlin
+#/build/shared_preferences_android
+#/build/c075001b96339384a97db4862b8ab8db.cache.dill.track.dill
+#/build/last_build_run.json
 
 # Web related
 lib/generated_plugin_registrant.dart

@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
       //   primarySwatch: Colors.blue,
       // ),
       //
-      theme: ThemeData(
-        canvasColor: AppStyle.backgroundColor,
-      ),
+      // theme: ThemeData(
+      //   canvasColor: AppStyle.backgroundColor,
+      // ),
       // home: GamePage(),
       home: SplashPage(),
     );

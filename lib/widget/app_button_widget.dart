@@ -23,8 +23,8 @@ class AppButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            leading ?? const SizedBox.shrink(),
-            if (leading != null && text.isNotEmpty) const SizedBox(width: 12),
+            // leading ?? const SizedBox.shrink(),
+            // if (leading != null && text.isNotEmpty) const SizedBox(width: 12),
             Text(
               text,
               style: AppStyle.buttonTextStyle,

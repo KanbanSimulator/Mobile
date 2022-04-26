@@ -15,137 +15,139 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppStyle.backgroundColor,
-        body: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: double.infinity,
-                height: 64,
-                decoration: const BoxDecoration(color: AppStyle.columnBgColor),
+    return Scaffold(
+      backgroundColor: AppStyle.backgroundColor,
+      body: SafeArea(
+        child: Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: 64,
+                  decoration: const BoxDecoration(color: AppStyle.columnBgColor),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: Logo(),
+                        ),
+                        const Text("test"),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                width: 140,
+                                height: 48,
+                                child: AppButton(
+                                  "Backlog",
+                                  leading: const Icon(
+                                    Icons.my_library_books_rounded,
+                                    color: AppStyle.iconColor,
+                                  ),
+                                  onPressed: () => _onBacklogPressed(context),
+                                ),
+                              ),
+                              const SizedBox(width: 48),
+                              SizedBox(
+                                width: 200,
+                                height: 48,
+                                child: AppButton(
+                                  "Complete this day",
+                                  leading: const Icon(
+                                    Icons.done_outline_rounded,
+                                    color: AppStyle.iconColor,
+                                  ),
+                                  onPressed: _onCompleteDayPressed,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 12,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
-                  child: Row(
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                  child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: Logo(),
-                      ),
-                      const Text("test"),
                       Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        flex: 1,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              width: 140,
-                              height: 48,
-                              child: AppButton(
-                                "Backlog",
-                                leading: const Icon(
-                                  Icons.my_library_books_rounded,
-                                  color: AppStyle.iconColor,
-                                ),
-                                onPressed: () => _onBacklogPressed(context),
-                              ),
+                            const SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                PeopleBank(count: 3, stage: 0),
+                                PeopleBank(count: 3, stage: 1),
+                                PeopleBank(count: 3, stage: 2),
+                              ],
                             ),
-                            const SizedBox(width: 48),
-                            SizedBox(
-                              width: 200,
-                              height: 48,
-                              child: AppButton(
-                                "Complete this day",
-                                leading: const Icon(
-                                  Icons.done_outline_rounded,
-                                  color: AppStyle.iconColor,
-                                ),
-                                onPressed: _onCompleteDayPressed,
-                              ),
+                            const SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
+                                Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
+                                Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
+                              ],
                             ),
+                            const SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
                           ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TaskTable(
+                          tasksFuture: Api.getTasks(0),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 12,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const SizedBox(height: 24),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              PeopleBank(count: 3, stage: 0),
-                              PeopleBank(count: 3, stage: 1),
-                              PeopleBank(count: 3, stage: 2),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
-                              Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
-                              Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                              Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                              Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: TaskTable(
-                        tasksFuture: Api.getTasks(0),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        endDrawer: Container(
-          width: 500,
-          child: Drawer(
-            child: ListView.builder(
-              itemBuilder: (context, index) => Text("$index"),
-            ),
+            ],
           ),
         ),
       ),
+      // endDrawer: Container(
+      //   width: 500,
+      //   child: Drawer(
+      //     child: ListView.builder(
+      //       itemBuilder: (context, index) => Text("$index"),
+      //     ),
+      //   ),
+      // ),
     );
   }
 

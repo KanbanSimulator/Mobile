@@ -15,11 +15,11 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppStyle.backgroundColor,
-      body: SafeArea(
-        child: Expanded(
-          child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppStyle.backgroundColor,
+        body: Builder(
+          builder: (context) => Column(
             children: [
               Expanded(
                 flex: 1,
@@ -38,7 +38,6 @@ class GamePage extends StatelessWidget {
                           height: 48,
                           child: Logo(),
                         ),
-                        const Text("test"),
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -139,15 +138,18 @@ class GamePage extends StatelessWidget {
             ],
           ),
         ),
+        endDrawer: Container(
+          width: 500,
+          decoration: const BoxDecoration(
+            color: Colors.redAccent,
+          ),
+          child: Drawer(
+            child: ListView.builder(
+              itemBuilder: (context, index) => Text("$index"),
+            ),
+          ),
+        ),
       ),
-      // endDrawer: Container(
-      //   width: 500,
-      //   child: Drawer(
-      //     child: ListView.builder(
-      //       itemBuilder: (context, index) => Text("$index"),
-      //     ),
-      //   ),
-      // ),
     );
   }
 

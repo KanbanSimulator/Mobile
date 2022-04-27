@@ -13,6 +13,7 @@ import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
+import '../model/task/task_model.dart';
 import 'game.dart';
 
 class LobbyPage extends StatefulWidget {
@@ -235,11 +236,16 @@ class _LobbyPageState extends State<LobbyPage> {
     });
   }
 
-  void _continueRoomFlow() {
+  void _continueRoomFlow() async {
+    print("this player's team id: ${_roomState.player!.teamId}");
     _stopLongPolling();
-    Navigator.of(context).pushReplacement(
+    List<TaskModel> tasksFromServer = await Api.getTasks(_roomState.player!.teamId!);
+    await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (BuildContext routeContext) => GamePage(),
+        builder: (BuildContext routeContext) => GamePage(
+          teamId: _roomState.player!.teamId!,
+          tasks: tasksFromServer,
+        ),
       ),
     );
   }

@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(
       //   canvasColor: AppStyle.backgroundColor,
       // ),
-      home: GamePage(),
-      // home: SplashPage(),
+      // home: GamePage(),
+      home: SplashPage(),
     );
   }
 }

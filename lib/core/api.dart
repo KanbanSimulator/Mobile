@@ -7,7 +7,7 @@ class _Api {
   static final Dio _dio = new Dio();
   static const String baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
 
-  static Future<List<TaskModel>> getTasksMock(int day) async {
+  static List<TaskModel> getTasksMock(int day) {
     // mock
     return [
       TaskModel(
@@ -43,34 +43,12 @@ class _Api {
         ],
         peopleCount: [0, 0, 0],
       ),
-      TaskModel(
-        title: 'task 4',
-        value: 12,
-        stage: 0,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
-      TaskModel(
-        title: 'task 5',
-        value: 12,
-        stage: 1,
-        progress: [
-          '0/18',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
     ];
   }
 
-  // static Future<List<TaskModel>> getTasks(int day) async {
-  //   _dio.get("$baseUrl/")
-  // }
+  static Future<Response> getPostBoard(int teamId) async {
+    return _dio.post("$baseUrl/board/$teamId");
+  }
 
   static Future<Response> postRoom(String name, bool isSpectator, int teamsAmount) async {
     return _dio.post("$baseUrl/room/create", data: {
@@ -103,9 +81,20 @@ class _Api {
 }
 
 class Api {
-  static Future<List<TaskModel>> getTasks(int day) async {
-    List<TaskModel> tasks = await _Api.getTasksMock(day);
-    return tasks;
+  static Future<List<TaskModel>> getTasks(int teamId) async {
+    List<TaskModel>? tasks;
+
+    // Response response = await _Api.getPostBoard(teamId);
+    // try {
+    //   Map<String, dynamic> data = response.data['payload'];
+    //   print("data on get tasks: $data");
+    // } catch (e) {
+    //   print("something wrong sending /room/create");
+    // }
+
+    return _Api.getTasksMock(0);
+
+    return tasks ?? [];
   }
 
   static Future<RoomModel?> createRoom(
@@ -122,6 +111,7 @@ class Api {
     } catch (e) {
       print("something wrong sending /room/create");
     }
+    return null;
   }
 
   static Future<RoomModel?> joinRoom(
@@ -138,6 +128,7 @@ class Api {
       print("err msg: ${e.toString()}");
       print("something wrong sending /room/{roomid}/start");
     }
+    return null;
   }
 
   static Future<RoomModel?> startGame(
@@ -155,6 +146,7 @@ class Api {
       print("err msg: ${e.toString()}");
       print("something wrong sending /room/{roomid}/start");
     }
+    return null;
   }
 
   static Future<RoomModel?> checkRoom(
@@ -170,5 +162,6 @@ class Api {
     } catch (e) {
       print("something wrong sending /room/create");
     }
+    return null;
   }
 }

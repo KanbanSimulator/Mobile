@@ -7,11 +7,15 @@ import 'package:kanban/widget/task_card.dart';
 class TaskColumn extends StatefulWidget {
   final List<TaskModel> tasks;
   final Function swapTasks;
+  final Function moveTasks;
+  final int correspondingStage;
 
   const TaskColumn({
     Key? key,
+    required this.correspondingStage,
     required this.tasks,
     required this.swapTasks,
+    required this.moveTasks,
   }) : super(key: key);
 
   @override
@@ -25,58 +29,73 @@ class _TaskColumnState extends State<TaskColumn> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppStyle.columnBgColor,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          border: Border.all(color: AppStyle.columnBgColor),
-        ),
-        child: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          itemCount: widget.tasks.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 4),
-          itemBuilder: (context, index) {
-            Widget taskCardWidget = TaskCard(
-              taskModel: widget.tasks[index],
-              notifier: ValueNotifier(_childrenNotifierValue),
-            );
-            return Draggable<TaskCardModel>(
-              // delay: Duration(seconds: 2), // for mobile use longdraggable
-              data: TaskCardModel.fromTaskModel(widget.tasks[index], index),
-              child: DragTarget<TaskCardModel>(
-                builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
-                  return taskCardWidget;
-                },
-                onWillAccept: (TaskCardModel? task) {
-                  // todo logic on how we swap tasks between stages
-                  if (task == null) return false;
-                  return true;
-                  // return (task.stage == tasks[index].stage);
-                },
-                onAccept: (TaskCardModel task) {
-                  print("accepted $task");
-                  widget.swapTasks(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
-                  setState(() {
-                    // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
-                    _childrenNotifierValue = !_childrenNotifierValue;
-                  });
-                },
-              ),
-              childWhenDragging: TaskCard(
+      child: DragTarget<TaskCardModel>(
+        onWillAccept: (TaskCardModel? task) {
+          // todo logic on how we move tasks into stages
+          if (task == null) return false;
+          return true;
+        },
+        onAccept: (TaskCardModel task) {
+          print("accepted $task");
+          widget.moveTasks(task, widget.correspondingStage);
+          setState(() {
+            // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
+            // _childrenNotifierValue = !_childrenNotifierValue;
+          });
+        },
+        builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
+          decoration: BoxDecoration(
+            color: AppStyle.columnBgColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            border: Border.all(color: AppStyle.columnBgColor),
+          ),
+          child: ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemCount: widget.tasks.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 4),
+            itemBuilder: (context, index) {
+              Widget taskCardWidget = TaskCard(
                 taskModel: widget.tasks[index],
-                isGhost: true,
                 notifier: ValueNotifier(_childrenNotifierValue),
-              ),
-              feedback: Card(
-                color: Colors.transparent,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 6 - 16,
-                  height: 138,
-                  child: taskCardWidget,
+              );
+              return Draggable<TaskCardModel>(
+                // delay: Duration(seconds: 2), // for mobile use longdraggable
+                data: TaskCardModel.fromTaskModel(widget.tasks[index], index),
+                child: DragTarget<TaskCardModel>(
+                  builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
+                    return taskCardWidget;
+                  },
+                  onWillAccept: (TaskCardModel? task) {
+                    // todo logic on how we swap tasks between stages
+                    if (task == null) return false;
+                    return true;
+                    // return (task.stage == tasks[index].stage);
+                  },
+                  onAccept: (TaskCardModel task) {
+                    print("accepted $task");
+                    widget.swapTasks(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
+                    setState(() {
+                      // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
+                      _childrenNotifierValue = !_childrenNotifierValue;
+                    });
+                  },
                 ),
-              ),
-            );
-          },
+                childWhenDragging: TaskCard(
+                  taskModel: widget.tasks[index],
+                  isGhost: true,
+                  notifier: ValueNotifier(_childrenNotifierValue),
+                ),
+                feedback: Card(
+                  color: Colors.transparent,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 6 - 16,
+                    height: 138,
+                    child: taskCardWidget,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

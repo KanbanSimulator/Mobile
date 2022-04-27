@@ -56,8 +56,10 @@ class _TaskTableState extends State<TaskTable> {
                     print("${tCard.title} accepted for move into this column");
                   },
                   builder: (dragContext, candidateData, rejectedData) => TaskColumn(
+                    correspondingStage: i,
                     tasks: _taskTable[i],
                     swapTasks: _onSwapTasks,
+                    moveTasks: _onMoveTasks,
                   ),
                 ),
               ),
@@ -83,6 +85,20 @@ class _TaskTableState extends State<TaskTable> {
       // print("after swap tasks:");
       // print("1: ${_tasksState[c1][r1]}");
       // print("2: ${_tasksState[c2][r2]}");
+    });
+  }
+
+  _onMoveTasks(TaskCardModel task, int toStage) {
+    print("moving $task to $toStage");
+    setState(() {
+      int fromStage = _stageMapping[task.stage!]!;
+      // find by title in fromStage column
+      int taskIndex = _taskTable[fromStage].indexWhere((t) => t.title == TaskModel.fromTaskCardModel(task).title);
+      if (taskIndex != -1) {
+        print("column $fromStage: ${_taskTable[fromStage]}");
+        _taskTable[fromStage].removeAt(taskIndex);
+      }
+      _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: _stageIMapping[toStage]));
     });
   }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +52,11 @@ class _LobbyPageState extends State<LobbyPage> {
 
   @override
   void dispose() {
-    _stopLongPolling();
+    try {
+      _stopLongPolling();
+    } catch (e) {
+      log("stop long polling failed :c");
+    }
     super.dispose();
   }
 
@@ -205,55 +210,59 @@ class _LobbyPageState extends State<LobbyPage> {
   }
 
   void _startLongPolling() {
-    setState(() {
-      _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-        RoomModel? roomFromServer = await Api.checkRoom(_playerId, _roomState.id!);
-        if (roomFromServer != null) {
-          setState(() {
-            // add only newly gotten players
-            List<PlayerModel> newPlayers = [];
-            List<PlayerModel> serverPlayers = roomFromServer.players!;
-            for (var pServer in serverPlayers) {
-              int? found = _roomState.players?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
-              if (found == null || found == -1) {
-                newPlayers.add(pServer);
+    if (mounted) {
+      setState(() {
+        _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
+          RoomModel? roomFromServer = await Api.checkRoom(_playerId, _roomState.id!);
+          if (roomFromServer != null) {
+            setState(() {
+              // add only newly gotten players
+              List<PlayerModel> newPlayers = [];
+              List<PlayerModel> serverPlayers = roomFromServer.players!;
+              for (var pServer in serverPlayers) {
+                int? found = _roomState.players?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
+                if (found == null || found == -1) {
+                  newPlayers.add(pServer);
+                }
               }
+              // copy all fields except the players
+              _roomState = roomFromServer.copyWith(
+                players: [..._roomState.players!, ...newPlayers],
+              );
+            });
+            print("LP: new list of players: ${_roomState.players}");
+            // continue flow if game started
+            if (_roomState.started != null && _roomState.started!) {
+              _continueRoomFlow();
             }
-            // copy all fields except the players
-            _roomState = roomFromServer.copyWith(
-              players: [..._roomState.players!, ...newPlayers],
-            );
-          });
-          print("LP: new list of players: ${_roomState.players}");
-          // continue flow if game started
-          if (_roomState.started != null && _roomState.started!) {
-            _continueRoomFlow();
+          } else {
+            print("something went wrong: this room is null!");
           }
-        } else {
-          print("something went wrong: this room is null!");
-        }
+        });
       });
-    });
+    }
   }
 
   void _continueRoomFlow() async {
     print("this player's team id: ${_roomState.player!.teamId}");
     _stopLongPolling();
-    List<TaskModel> tasksFromServer = await Api.getTasks(_roomState.player!.teamId!);
-    await Navigator.of(context).pushReplacement(
+    // List<TaskModel> tasksFromServer = await Api.getTasks(_roomState.player!.teamId!);
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(
           teamId: _roomState.player!.teamId!,
-          tasks: tasksFromServer,
+          tasks: [],
         ),
       ),
     );
   }
 
   void _stopLongPolling() {
-    setState(() {
-      _timer.cancel();
-    });
+    if (mounted) {
+      setState(() {
+        _timer.cancel();
+      });
+    }
   }
 
   void _initCachedFields() async {

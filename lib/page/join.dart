@@ -89,7 +89,7 @@ class _JoinPageState extends State<JoinPage> {
       return;
     }
     int roomId = int.parse(roomIdString);
-    RoomModel? roomJoined = await Api.joinRoom(
+    RoomModel? roomJoined = await RoomApi.joinRoom(
       username,
       _isSpectatorSelected,
       roomId,

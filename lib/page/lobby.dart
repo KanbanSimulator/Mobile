@@ -203,7 +203,7 @@ class _LobbyPageState extends State<LobbyPage> {
       return;
     }
     // start room api request
-    RoomModel? roomStarted = await Api.startGame(username, _roomState.id!, _roomState.players!);
+    RoomModel? roomStarted = await RoomApi.startGame(username, _roomState.id!, _roomState.players!);
     print("data from server room model (start game) : ${roomStarted!.toJson().toString()}");
     // going to the game page
     _continueRoomFlow();
@@ -213,7 +213,7 @@ class _LobbyPageState extends State<LobbyPage> {
     if (mounted) {
       setState(() {
         _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-          RoomModel? roomFromServer = await Api.checkRoom(_playerId, _roomState.id!);
+          RoomModel? roomFromServer = await RoomApi.checkRoom(_playerId, _roomState.id!);
           if (roomFromServer != null) {
             setState(() {
               // add only newly gotten players
@@ -246,12 +246,12 @@ class _LobbyPageState extends State<LobbyPage> {
   void _continueRoomFlow() async {
     print("this player's team id: ${_roomState.player!.teamId}");
     _stopLongPolling();
-    // List<TaskModel> tasksFromServer = await Api.getTasks(_roomState.player!.teamId!);
+    List<TaskModel> tasksFromServer = await BoardApi.getTasks(_roomState.player!.teamId!);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(
           teamId: _roomState.player!.teamId!,
-          tasks: [],
+          tasks: tasksFromServer,
         ),
       ),
     );

@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:kanban/model/player/player_model.dart';
 import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 
+import '../model/card_dto/card_model.dart';
+
 class _Api {
   static final Dio _dio = new Dio();
   static const String baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
 
+  // BOARD
   static List<TaskModel> getTasksMock(int day) {
     // mock
     return [
@@ -50,6 +55,7 @@ class _Api {
     return _dio.post("$baseUrl/board/$teamId");
   }
 
+  // ROOM
   static Future<Response> postRoom(String name, bool isSpectator, int teamsAmount) async {
     return _dio.post("$baseUrl/room/create", data: {
       "player": {
@@ -80,23 +86,7 @@ class _Api {
   }
 }
 
-class Api {
-  static Future<List<TaskModel>> getTasks(int teamId) async {
-    List<TaskModel>? tasks;
-
-    // Response response = await _Api.getPostBoard(teamId);
-    // try {
-    //   Map<String, dynamic> data = response.data['payload'];
-    //   print("data on get tasks: $data");
-    // } catch (e) {
-    //   print("something wrong sending /room/create");
-    // }
-
-    return _Api.getTasksMock(0);
-
-    return tasks ?? [];
-  }
-
+class RoomApi {
   static Future<RoomModel?> createRoom(
     String username,
     bool isSpectator,
@@ -163,5 +153,31 @@ class Api {
       print("something wrong sending /room/create");
     }
     return null;
+  }
+}
+
+class BoardApi {
+  static Future<List<TaskModel>> getTasks(int teamId) async {
+    List<TaskModel>? tasks;
+
+    Response response = await _Api.getPostBoard(teamId);
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      List cards = data['cards'];
+      tasks = [];
+      for (var c in cards) {
+        CardModel cardModel = CardModel.fromJson(c);
+        tasks.add(TaskModel.fromCardModel(cardModel));
+        print(tasks.last);
+      }
+      // log("data on get tasks: cards: $cards ${cards.runtimeType}");
+      // log("data on get tasks: tasks: $tasks ${tasks.runtimeType}");
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+
+    // return _Api.getTasksMock(0);
+
+    return tasks ?? [];
   }
 }

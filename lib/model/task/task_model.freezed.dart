@@ -162,9 +162,10 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TaskModel implements _TaskModel {
+class _$_TaskModel extends _TaskModel {
   _$_TaskModel(
-      {this.title, this.progress, this.value, this.stage, this.peopleCount});
+      {this.title, this.progress, this.value, this.stage, this.peopleCount})
+      : super._();
 
   @override
   final String? title;
@@ -210,13 +211,14 @@ class _$_TaskModel implements _TaskModel {
       __$TaskModelCopyWithImpl<_TaskModel>(this, _$identity);
 }
 
-abstract class _TaskModel implements TaskModel {
+abstract class _TaskModel extends TaskModel {
   factory _TaskModel(
       {String? title,
       List<String>? progress,
       int? value,
       int? stage,
       List<int>? peopleCount}) = _$_TaskModel;
+  _TaskModel._() : super._();
 
   @override
   String? get title;

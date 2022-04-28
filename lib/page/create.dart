@@ -89,7 +89,7 @@ class _CreatePageState extends State<CreatePage> {
       AppUi.toast(context, AppRes.incorrectTeamsCounter);
       return;
     }
-    RoomModel? roomCreated = await Api.createRoom(
+    RoomModel? roomCreated = await RoomApi.createRoom(
       username,
       _isSpectatorSelected,
       int.parse(teamsCounter),

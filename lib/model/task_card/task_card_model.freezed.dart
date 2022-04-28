@@ -19,13 +19,15 @@ class _$TaskCardModelTearOff {
   const _$TaskCardModelTearOff();
 
   _TaskCardModel call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
       List<int>? peopleCount,
       int? inColumnIndex}) {
     return _TaskCardModel(
+      id: id,
       title: title,
       progress: progress,
       value: value,
@@ -41,6 +43,7 @@ const $TaskCardModel = _$TaskCardModelTearOff();
 
 /// @nodoc
 mixin _$TaskCardModel {
+  int? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<String>? get progress =>
       throw _privateConstructorUsedError; // list of progresses
@@ -61,7 +64,8 @@ abstract class $TaskCardModelCopyWith<$Res> {
           TaskCardModel value, $Res Function(TaskCardModel) then) =
       _$TaskCardModelCopyWithImpl<$Res>;
   $Res call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
@@ -80,6 +84,7 @@ class _$TaskCardModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? progress = freezed,
     Object? value = freezed,
@@ -88,6 +93,10 @@ class _$TaskCardModelCopyWithImpl<$Res>
     Object? inColumnIndex = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -124,7 +133,8 @@ abstract class _$TaskCardModelCopyWith<$Res>
       __$TaskCardModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
@@ -145,6 +155,7 @@ class __$TaskCardModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? progress = freezed,
     Object? value = freezed,
@@ -153,6 +164,10 @@ class __$TaskCardModelCopyWithImpl<$Res>
     Object? inColumnIndex = freezed,
   }) {
     return _then(_TaskCardModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -185,7 +200,8 @@ class __$TaskCardModelCopyWithImpl<$Res>
 
 class _$_TaskCardModel extends _TaskCardModel {
   _$_TaskCardModel(
-      {this.title,
+      {this.id,
+      this.title,
       this.progress,
       this.value,
       this.stage,
@@ -193,6 +209,8 @@ class _$_TaskCardModel extends _TaskCardModel {
       this.inColumnIndex})
       : super._();
 
+  @override
+  final int? id;
   @override
   final String? title;
   @override
@@ -208,7 +226,7 @@ class _$_TaskCardModel extends _TaskCardModel {
 
   @override
   String toString() {
-    return 'TaskCardModel(title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, inColumnIndex: $inColumnIndex)';
+    return 'TaskCardModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, inColumnIndex: $inColumnIndex)';
   }
 
   @override
@@ -216,6 +234,7 @@ class _$_TaskCardModel extends _TaskCardModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TaskCardModel &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.progress, progress) &&
             const DeepCollectionEquality().equals(other.value, value) &&
@@ -229,6 +248,7 @@ class _$_TaskCardModel extends _TaskCardModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(progress),
       const DeepCollectionEquality().hash(value),
@@ -244,7 +264,8 @@ class _$_TaskCardModel extends _TaskCardModel {
 
 abstract class _TaskCardModel extends TaskCardModel {
   factory _TaskCardModel(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
@@ -252,6 +273,8 @@ abstract class _TaskCardModel extends TaskCardModel {
       int? inColumnIndex}) = _$_TaskCardModel;
   _TaskCardModel._() : super._();
 
+  @override
+  int? get id;
   @override
   String? get title;
   @override

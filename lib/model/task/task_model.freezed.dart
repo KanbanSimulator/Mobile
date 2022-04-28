@@ -19,12 +19,14 @@ class _$TaskModelTearOff {
   const _$TaskModelTearOff();
 
   _TaskModel call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
       List<int>? peopleCount}) {
     return _TaskModel(
+      id: id,
       title: title,
       progress: progress,
       value: value,
@@ -39,6 +41,7 @@ const $TaskModel = _$TaskModelTearOff();
 
 /// @nodoc
 mixin _$TaskModel {
+  int? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<String>? get progress =>
       throw _privateConstructorUsedError; // list of progresses
@@ -56,7 +59,8 @@ abstract class $TaskModelCopyWith<$Res> {
   factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
       _$TaskModelCopyWithImpl<$Res>;
   $Res call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
@@ -73,6 +77,7 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? progress = freezed,
     Object? value = freezed,
@@ -80,6 +85,10 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
     Object? peopleCount = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -111,7 +120,8 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       __$TaskModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
@@ -129,6 +139,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = freezed,
     Object? progress = freezed,
     Object? value = freezed,
@@ -136,6 +147,10 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
     Object? peopleCount = freezed,
   }) {
     return _then(_TaskModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -164,9 +179,16 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
 
 class _$_TaskModel extends _TaskModel {
   _$_TaskModel(
-      {this.title, this.progress, this.value, this.stage, this.peopleCount})
+      {this.id,
+      this.title,
+      this.progress,
+      this.value,
+      this.stage,
+      this.peopleCount})
       : super._();
 
+  @override
+  final int? id;
   @override
   final String? title;
   @override
@@ -180,7 +202,7 @@ class _$_TaskModel extends _TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount)';
+    return 'TaskModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount)';
   }
 
   @override
@@ -188,6 +210,7 @@ class _$_TaskModel extends _TaskModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TaskModel &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.progress, progress) &&
             const DeepCollectionEquality().equals(other.value, value) &&
@@ -199,6 +222,7 @@ class _$_TaskModel extends _TaskModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(progress),
       const DeepCollectionEquality().hash(value),
@@ -213,13 +237,16 @@ class _$_TaskModel extends _TaskModel {
 
 abstract class _TaskModel extends TaskModel {
   factory _TaskModel(
-      {String? title,
+      {int? id,
+      String? title,
       List<String>? progress,
       int? value,
       int? stage,
       List<int>? peopleCount}) = _$_TaskModel;
   _TaskModel._() : super._();
 
+  @override
+  int? get id;
   @override
   String? get title;
   @override

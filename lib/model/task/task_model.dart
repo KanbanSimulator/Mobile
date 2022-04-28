@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../const/app_const.dart';
 import '../card_dto/card_model.dart';
 import '../task_card/task_card_model.dart';
 
@@ -10,6 +11,7 @@ class TaskModel with _$TaskModel {
   const TaskModel._(); // Added constructor
 
   factory TaskModel({
+    int? id,
     String? title,
     List<String>? progress, // list of progresses
     int? value,
@@ -19,6 +21,7 @@ class TaskModel with _$TaskModel {
 
   static TaskModel fromTaskCardModel(TaskCardModel task) {
     return TaskModel(
+      id: task.id ?? -1,
       title: task.title ?? "",
       progress: task.progress ?? [],
       value: task.value ?? -1,
@@ -58,7 +61,6 @@ class TaskModel with _$TaskModel {
     7 Completed           Backlog
      */
 
-    const stageBackToFrontMapping = {0: 7, 1: 0, 2: 3, 3: 1, 4: 4, 5: 2, 6: 5, 7: 6};
 
     final List<int> completed = [
       card.analyticCompleted!,
@@ -76,10 +78,11 @@ class TaskModel with _$TaskModel {
     }
 
     return TaskModel(
+      id: card.id ?? -1,
       title: card.title ?? "",
       progress: progress,
       value: card.businessValue ?? -1,
-      stage: stageBackToFrontMapping[card.frontColumnType],
+      stage: AppConst.stageBackToFrontMapping[card.frontColumnType],
       peopleCount: [0, 0, 0], // todo когда бек сделает добавлю
     );
   }

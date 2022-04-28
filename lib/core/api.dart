@@ -5,7 +5,10 @@ import 'package:kanban/model/player/player_model.dart';
 import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 
+import '../const/app_const.dart';
 import '../model/card_dto/card_model.dart';
+import '../model/move_card_dto/move_card_dto.dart';
+import '../model/task_card/task_card_model.dart';
 
 class _Api {
   static final Dio _dio = new Dio();
@@ -16,6 +19,7 @@ class _Api {
     // mock
     return [
       TaskModel(
+        id: 55,
         title: 'task 1',
         value: 12,
         stage: 3,
@@ -27,6 +31,7 @@ class _Api {
         peopleCount: [0, 0, 0],
       ),
       TaskModel(
+        id: 66,
         title: 'task 2',
         value: 12,
         stage: 1,
@@ -38,6 +43,7 @@ class _Api {
         peopleCount: [0, 0, 0],
       ),
       TaskModel(
+        id: 77,
         title: 'task 2',
         value: 12,
         stage: 1,
@@ -49,6 +55,7 @@ class _Api {
         peopleCount: [0, 0, 0],
       ),
       TaskModel(
+        id: 88,
         title: 'task 3',
         value: 12,
         stage: 2,
@@ -64,6 +71,10 @@ class _Api {
 
   static Future<Response> getPostBoard(int teamId) async {
     return _dio.post("$baseUrl/board/$teamId");
+  }
+
+  static Future<Response> postMoveCard(MoveCardDto moveCardDto) async {
+    return _dio.post("$baseUrl/board/move-card", data: moveCardDto);
   }
 
   // ROOM
@@ -187,8 +198,19 @@ class BoardApi {
       print("something wrong sending /room/create");
     }
 
-    return _Api.getTasksMock(0);
-
+    // return _Api.getTasksMock(0);
     return tasks ?? [];
+  }
+
+  static void moveTask(int taskId, int toOrdering, int toStage) async {
+    toStage = AppConst.stageFrontToBackMapping[toStage]!;
+    final moveCardDto = MoveCardDto(
+      cardId: taskId,
+      ordering: toOrdering,
+      columnNumber: toStage,
+    );
+    print("sending move card dto : $moveCardDto");
+    Response response = await _Api.postMoveCard(moveCardDto);
+    print(response.data['payload']);
   }
 }

@@ -8,6 +8,7 @@ class TaskCardModel with _$TaskCardModel {
   const TaskCardModel._(); // Added constructor
 
   factory TaskCardModel({
+    int? id,
     String? title,
     List<String>? progress, // list of progresses
     int? value,
@@ -18,6 +19,7 @@ class TaskCardModel with _$TaskCardModel {
 
   static TaskCardModel fromTaskModel(TaskModel task, int inColumnIndex) {
     return TaskCardModel(
+      id: task.id ?? -1,
       title: task.title ?? "",
       progress: task.progress ?? [], // list of progresses
       value: task.value ?? -1,

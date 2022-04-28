@@ -81,6 +81,7 @@ class _TaskTableState extends State<TaskTable> {
           _taskTable[fromStage].removeAt(taskIndex);
         }
         _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
+        BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
       });
     }
   }

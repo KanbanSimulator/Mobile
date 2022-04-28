@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kanban/model/task/task_model.dart';
 
 part 'card_model.freezed.dart';
 

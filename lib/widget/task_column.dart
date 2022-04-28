@@ -4,6 +4,8 @@ import 'package:kanban/model/task_card/task_card_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
 
+import '../const/app_const.dart';
+
 class TaskColumn extends StatefulWidget {
   final List<TaskModel> tasks;
   final Function swapTasks;
@@ -31,17 +33,19 @@ class _TaskColumnState extends State<TaskColumn> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: DragTarget<TaskCardModel>(
         onWillAccept: (TaskCardModel? task) {
-          // todo logic on how we move tasks into stages
+          // logic on how we move tasks into stages
           if (task == null) return false;
+          if (task.stage == null) return false;
+          if (task.stage != AppConst.stageIMapping[widget.correspondingStage]! % 3) return false;
           return true;
         },
         onAccept: (TaskCardModel task) {
           print("accepted $task");
           widget.moveTasks(task, widget.correspondingStage);
-          setState(() {
+          // setState(() {
             // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
             // _childrenNotifierValue = !_childrenNotifierValue;
-          });
+          // });
         },
         builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
           decoration: BoxDecoration(

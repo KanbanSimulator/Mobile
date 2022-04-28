@@ -8,6 +8,8 @@ import 'package:kanban/page/error.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_column.dart';
 
+import '../const/app_const.dart';
+
 class TaskTable extends StatefulWidget {
   final List<TaskModel> tasksRaw;
 
@@ -21,9 +23,6 @@ class TaskTable extends StatefulWidget {
 }
 
 class _TaskTableState extends State<TaskTable> {
-  final Map<int, int> _stageMapping = {0: 0, 1: 2, 2: 4, 3: 1, 4: 3, 5: 5};
-  final Map<int, int> _stageIMapping = {0: 0, 2: 1, 4: 2, 1: 3, 3: 4, 5: 5};
-
   List<List<TaskModel>> _taskTable = [];
 
   @override
@@ -61,16 +60,16 @@ class _TaskTableState extends State<TaskTable> {
   }
 
   _onSwapTasks(TaskCardModel t1, TaskCardModel t2) {
-    final int c1 = _stageMapping[t1.stage!]!;
-    final int c2 = _stageMapping[t2.stage!]!;
+    final int c1 = AppConst.stageMapping[t1.stage!]!;
+    final int c2 = AppConst.stageMapping[t2.stage!]!;
     final int r1 = t1.inColumnIndex!;
     final int r2 = t2.inColumnIndex!;
     print("swapping r$r1;c$c1 and r$r2;c$c2");
     if (mounted) {
       setState(() {
         TaskModel taskTemp = _taskTable[c1][r1].copyWith();
-        _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: _stageIMapping[c1]);
-        _taskTable[c2][r2] = taskTemp.copyWith(stage: _stageIMapping[c2]);
+        _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: AppConst.stageIMapping[c1]);
+        _taskTable[c2][r2] = taskTemp.copyWith(stage: AppConst.stageIMapping[c2]);
       });
     }
   }
@@ -79,14 +78,14 @@ class _TaskTableState extends State<TaskTable> {
     print("moving $task to $toStage");
     if (mounted) {
       setState(() {
-        int fromStage = _stageMapping[task.stage!]!;
+        int fromStage = AppConst.stageMapping[task.stage!]!;
         // find by title in fromStage column
         int taskIndex = _taskTable[fromStage].indexWhere((t) => t.title == TaskModel.fromTaskCardModel(task).title);
         if (taskIndex != -1) {
           print("column $fromStage: ${_taskTable[fromStage]}");
           _taskTable[fromStage].removeAt(taskIndex);
         }
-        _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: _stageIMapping[toStage]));
+        _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
       });
     }
   }

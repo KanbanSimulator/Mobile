@@ -38,6 +38,17 @@ class _Api {
         peopleCount: [0, 0, 0],
       ),
       TaskModel(
+        title: 'task 2',
+        value: 12,
+        stage: 1,
+        progress: [
+          '1/18',
+          '0/24',
+          '0/13',
+        ],
+        peopleCount: [0, 0, 0],
+      ),
+      TaskModel(
         title: 'task 3',
         value: 12,
         stage: 2,

@@ -43,16 +43,11 @@ class _TaskTableState extends State<TaskTable> {
       children: [
         for (int i = 0; i < _taskTable.length; i++)
           Expanded(
-            child: DragTarget<TaskCardModel>(
-              onAccept: (TaskCardModel tCard) {
-                print("${tCard.title} accepted for move into this column");
-              },
-              builder: (dragContext, candidateData, rejectedData) => TaskColumn(
-                correspondingStage: i,
-                tasks: _taskTable[i],
-                swapTasks: _onSwapTasks,
-                moveTasks: _onMoveTasks,
-              ),
+            child: TaskColumn(
+              correspondingStage: i,
+              tasks: _taskTable[i],
+              swapTasks: _onSwapTasks,
+              moveTasks: _onMoveTasks,
             ),
           ),
       ],

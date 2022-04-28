@@ -36,11 +36,13 @@ class _TaskColumnState extends State<TaskColumn> {
           // logic on how we move tasks into stages
           if (task == null) return false;
           if (task.stage == null) return false;
-          if (task.stage != AppConst.stageIMapping[widget.correspondingStage]! % 3) return false;
+          final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
+          // if stages not correspond
+          if (task.stage! % 3 != toStage % 3) return false;
+          print("accept move!");
           return true;
         },
         onAccept: (TaskCardModel task) {
-          print("accepted $task");
           widget.moveTasks(task, widget.correspondingStage);
           // setState(() {
             // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
@@ -72,8 +74,12 @@ class _TaskColumnState extends State<TaskColumn> {
                   onWillAccept: (TaskCardModel? task) {
                     // todo logic on how we swap tasks between stages
                     if (task == null) return false;
+                    if (task.stage == null) return false;
+                    final toStage = widget.tasks[index].stage!;
+                    // if stages not correspond
+                    if (task.stage! % 3 != toStage % 3) return false;
+                    print("accept swap!");
                     return true;
-                    // return (task.stage == tasks[index].stage);
                   },
                   onAccept: (TaskCardModel task) {
                     print("accepted $task");

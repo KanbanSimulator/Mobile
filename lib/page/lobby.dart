@@ -247,6 +247,7 @@ class _LobbyPageState extends State<LobbyPage> {
     print("this player's team id: ${_roomState.player!.teamId}");
     _stopLongPolling();
     List<TaskModel> tasksFromServer = await BoardApi.getTasks(_roomState.player!.teamId!);
+    print("tasks from server: $tasksFromServer ${tasksFromServer.length}");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(

@@ -80,7 +80,7 @@ class TaskModel with _$TaskModel {
       progress: progress,
       value: card.businessValue ?? -1,
       stage: stageBackToFrontMapping[card.frontColumnType],
-      peopleCount: [], // todo когда бек сделает добавлю
+      peopleCount: [0, 0, 0], // todo когда бек сделает добавлю
     );
   }
 }

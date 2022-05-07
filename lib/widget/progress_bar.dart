@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/app_style.dart';
 
 class ProgressBar extends StatelessWidget {
   String? progress;

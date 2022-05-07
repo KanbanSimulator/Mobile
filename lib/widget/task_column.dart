@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/app_style.dart';
 import 'package:kanban/model/task_card/task_card_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
@@ -44,10 +44,6 @@ class _TaskColumnState extends State<TaskColumn> {
         },
         onAccept: (TaskCardModel task) {
           widget.moveTasks(task, widget.correspondingStage);
-          // setState(() {
-            // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
-            // _childrenNotifierValue = !_childrenNotifierValue;
-          // });
         },
         builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
           decoration: BoxDecoration(

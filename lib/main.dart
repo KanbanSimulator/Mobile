@@ -4,7 +4,7 @@ import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/page/splash.dart';
 
-import 'const/app_style.dart';
+import 'core/app_style.dart';
 
 void main() {
   runApp(const MyApp());

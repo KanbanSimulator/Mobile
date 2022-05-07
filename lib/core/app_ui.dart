@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const/app_style.dart';
+import 'app_style.dart';
 
 class AppUi {
   static void toast(context, text) {

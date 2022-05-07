@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppStyle {
   static const backgroundColor = Color(0xff222222);
+  static const backlogBackgroundColor = Color(0xB9525252);
 
   static const columnBgColor = Color(0xff1d1d1d);
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_res.dart';
-import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/app_style.dart';
 import 'package:kanban/core/app_ui.dart';
 import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/page/game.dart';

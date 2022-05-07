@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/const/app_const.dart';
-import 'package:kanban/const/app_style.dart';
+import 'package:kanban/core/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/logo.dart';

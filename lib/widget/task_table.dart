@@ -27,7 +27,6 @@ class _TaskTableState extends State<TaskTable> {
 
   @override
   void initState() {
-    _distributeTasksIntoColumns();
     super.initState();
   }
 
@@ -36,6 +35,8 @@ class _TaskTableState extends State<TaskTable> {
     if (widget.tasksRaw.isEmpty) {
       return const ErrorPage(text: "No tasks for this day");
     }
+
+    _distributeTasksIntoColumns();
 
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -66,20 +67,21 @@ class _TaskTableState extends State<TaskTable> {
         _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: AppConst.stageIMapping[c1]);
         _taskTable[c2][r2] = taskTemp.copyWith(stage: AppConst.stageIMapping[c2]);
       });
+      // todo отправлять два запроса на мув
+      // BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
+      // BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
     }
   }
 
   _onMoveTasks(TaskCardModel task, int toStage) {
-    print("moving $task to $toStage");
     if (mounted) {
       setState(() {
-        int fromStage = AppConst.stageMapping[task.stage!]!;
+        // int fromStage = AppConst.stageMapping[task.stage!]!;
         // find by title in fromStage column
-        int taskIndex = _taskTable[fromStage].indexWhere((t) => t.title == TaskModel.fromTaskCardModel(task).title);
-        if (taskIndex != -1) {
-          print("column $fromStage: ${_taskTable[fromStage]}");
-          _taskTable[fromStage].removeAt(taskIndex);
-        }
+        // int taskIndex = _taskTable[fromStage].indexWhere((t) => t.title == TaskModel.fromTaskCardModel(task).title);
+        // if (taskIndex != -1) {
+          // _taskTable[fromStage].removeAt(taskIndex);
+        // }
         _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
         BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
       });
@@ -87,21 +89,13 @@ class _TaskTableState extends State<TaskTable> {
   }
 
   void _distributeTasksIntoColumns() {
-    if (_taskTable.isEmpty) {
-      _taskTable = [
-        widget.tasksRaw.where((e) => e.stage == 0).toList(),
-        widget.tasksRaw.where((e) => e.stage == 3).toList(),
-        widget.tasksRaw.where((e) => e.stage == 1).toList(),
-        widget.tasksRaw.where((e) => e.stage == 4).toList(),
-        widget.tasksRaw.where((e) => e.stage == 2).toList(),
-        widget.tasksRaw.where((e) => e.stage == 5).toList(),
-      ];
-      // print(_taskTable[0]);
-      // print(_taskTable[1]);
-      // print(_taskTable[2]);
-      // print(_taskTable[3]);
-      // print(_taskTable[4]);
-      // print(_taskTable[5]);
-    }
+    _taskTable = [
+      widget.tasksRaw.where((e) => e.stage == 0).toList(),
+      widget.tasksRaw.where((e) => e.stage == 3).toList(),
+      widget.tasksRaw.where((e) => e.stage == 1).toList(),
+      widget.tasksRaw.where((e) => e.stage == 4).toList(),
+      widget.tasksRaw.where((e) => e.stage == 2).toList(),
+      widget.tasksRaw.where((e) => e.stage == 5).toList(),
+    ];
   }
 }

@@ -15,6 +15,7 @@ import '../const/app_const.dart';
 import '../const/app_res.dart';
 import '../model/task/task_model.dart';
 import '../widget/logo.dart';
+import '../widget/task_column.dart';
 
 class GamePage extends StatefulWidget {
   final int teamId;
@@ -205,14 +206,17 @@ class _GamePageState extends State<GamePage> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
             child: Container(
-              width: 500,
+              width: 300,
               decoration: const BoxDecoration(
                 color: AppStyle.backlogBackgroundColor,
               ),
               child: Drawer(
                 backgroundColor: Colors.transparent,
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Text("$index"),
+                child: TaskColumn(
+                  tasks: _tasks.where((e) => e.stage == 7).toList(),
+                  correspondingStage: 7,
+                  swapTasks: () {},
+                  moveTasks: () {},
                 ),
               ),
             ),
@@ -235,7 +239,7 @@ class _GamePageState extends State<GamePage> {
     if (mounted) {
       setState(() {
         _timer = Timer.periodic(const Duration(milliseconds: AppConst.gameUpdateFrequency), (timer) async {
-          print("getting tasks...");
+          // print("getting tasks...");
           List<TaskModel> tasksFromServer = await BoardApi.getTasks(widget.teamId);
           setState(() {
             _tasks = [...tasksFromServer];

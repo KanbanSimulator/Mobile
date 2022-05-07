@@ -11,6 +11,7 @@ class TaskColumn extends StatefulWidget {
   final Function swapTasks;
   final Function moveTasks;
   final int correspondingStage;
+  final bool columnBackground;
 
   const TaskColumn({
     Key? key,
@@ -18,6 +19,7 @@ class TaskColumn extends StatefulWidget {
     required this.tasks,
     required this.swapTasks,
     required this.moveTasks,
+    this.columnBackground = true,
   }) : super(key: key);
 
   @override
@@ -38,7 +40,7 @@ class _TaskColumnState extends State<TaskColumn> {
           if (task.stage == null) return false;
           final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
           // if stages not correspond
-          if (task.stage! % 3 != toStage % 3) return false;
+          // if (task.stage! % 3 != toStage % 3) return false;
           print("accept move!");
           return true;
         },
@@ -47,11 +49,12 @@ class _TaskColumnState extends State<TaskColumn> {
         },
         builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
           decoration: BoxDecoration(
-            color: AppStyle.columnBgColor,
+            color: widget.columnBackground ? AppStyle.columnBgColor : Colors.transparent,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             border: Border.all(color: AppStyle.columnBgColor),
           ),
           child: ListView.separated(
+            controller: ScrollController(),
             physics: const BouncingScrollPhysics(),
             itemCount: widget.tasks.length,
             separatorBuilder: (context, index) => const SizedBox(height: 4),
@@ -73,7 +76,7 @@ class _TaskColumnState extends State<TaskColumn> {
                     if (task.stage == null) return false;
                     final toStage = widget.tasks[index].stage!;
                     // if stages not correspond
-                    if (task.stage! % 3 != toStage % 3) return false;
+                    // if (task.stage! % 3 != toStage % 3) return false;
                     print("accept swap!");
                     return true;
                   },

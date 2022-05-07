@@ -190,7 +190,7 @@ class BoardApi {
       for (var c in cards) {
         CardModel cardModel = CardModel.fromJson(c);
         tasks.add(TaskModel.fromCardModel(cardModel));
-        print(tasks.last);
+        // print(tasks.last);
       }
       // log("data on get tasks: cards: $cards ${cards.runtimeType}");
       // log("data on get tasks: tasks: $tasks ${tasks.runtimeType}");

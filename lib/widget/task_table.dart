@@ -24,6 +24,7 @@ class TaskTable extends StatefulWidget {
 
 class _TaskTableState extends State<TaskTable> {
   List<List<TaskModel>> _taskTable = [];
+  bool _backlogOpened = false;
 
   @override
   void initState() {
@@ -64,8 +65,8 @@ class _TaskTableState extends State<TaskTable> {
     if (mounted) {
       setState(() {
         TaskModel taskTemp = _taskTable[c1][r1].copyWith();
-        _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: AppConst.stageIMapping[c1]);
-        _taskTable[c2][r2] = taskTemp.copyWith(stage: AppConst.stageIMapping[c2]);
+        // _taskTable[c1][r1] = _taskTable[c2][r2].copyWith(stage: AppConst.stageIMapping[c1]);
+        // _taskTable[c2][r2] = taskTemp.copyWith(stage: AppConst.stageIMapping[c2]);
       });
       // todo отправлять два запроса на мув
       // BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
@@ -82,7 +83,7 @@ class _TaskTableState extends State<TaskTable> {
         // if (taskIndex != -1) {
           // _taskTable[fromStage].removeAt(taskIndex);
         // }
-        _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
+        // _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
         BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
       });
     }
@@ -90,6 +91,7 @@ class _TaskTableState extends State<TaskTable> {
 
   void _distributeTasksIntoColumns() {
     _taskTable = [
+      // widget.tasksRaw.where((e) => e.stage == 7).toList(),
       widget.tasksRaw.where((e) => e.stage == 0).toList(),
       widget.tasksRaw.where((e) => e.stage == 3).toList(),
       widget.tasksRaw.where((e) => e.stage == 1).toList(),

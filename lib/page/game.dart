@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/core/api.dart';
 import 'package:kanban/widget/app_button_widget.dart';
+import 'package:kanban/widget/backlog_view.dart';
 import 'package:kanban/widget/people_bank.dart';
 import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
@@ -15,6 +16,7 @@ import '../const/app_const.dart';
 import '../const/app_res.dart';
 import '../model/task/task_model.dart';
 import '../widget/logo.dart';
+import '../widget/task_column.dart';
 
 class GamePage extends StatefulWidget {
   final int teamId;
@@ -211,8 +213,13 @@ class _GamePageState extends State<GamePage> {
               ),
               child: Drawer(
                 backgroundColor: Colors.transparent,
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Text("$index"),
+                child: Expanded(
+                  child: TaskColumn(
+                    tasks: _tasks.where((e) => e.stage == 7).toList(),
+                    correspondingStage: 7,
+                    swapTasks: () {},
+                    moveTasks: () {},
+                  ),
                 ),
               ),
             ),

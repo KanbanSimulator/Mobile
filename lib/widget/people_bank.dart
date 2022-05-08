@@ -40,7 +40,7 @@ class _PeopleBankState extends State<PeopleBank> {
       child: SvgPicture.asset(
         AppAssets.person,
         width: _personWidth,
-        color: AppStyle.stageColor[widget.stage % 3],
+        color: AppStyle.stageColor[(widget.stage - 1) % 3],
       ),
     );
     return Draggable<TaskModel>(

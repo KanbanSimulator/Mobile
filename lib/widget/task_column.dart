@@ -8,18 +8,20 @@ import '../const/app_const.dart';
 
 class TaskColumn extends StatefulWidget {
   final List<TaskModel> tasks;
-  final Function swapTasks;
-  final Function moveTasks;
   final int correspondingStage;
   final bool columnBackground;
+  final Function swapTasksHandler;
+  final Function moveTasksHandler;
+  final void Function()? dragTaskHandler;
 
   const TaskColumn({
     Key? key,
     required this.correspondingStage,
     required this.tasks,
-    required this.swapTasks,
-    required this.moveTasks,
+    required this.swapTasksHandler,
+    required this.moveTasksHandler,
     this.columnBackground = true,
+    this.dragTaskHandler,
   }) : super(key: key);
 
   @override
@@ -38,14 +40,14 @@ class _TaskColumnState extends State<TaskColumn> {
           // logic on how we move tasks into stages
           if (task == null) return false;
           if (task.stage == null) return false;
-          final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
+          // final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
           // if stages not correspond
-          // if (task.stage! % 3 != toStage % 3) return false;
+          // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;
           print("accept move!");
           return true;
         },
         onAccept: (TaskCardModel task) {
-          widget.moveTasks(task, widget.correspondingStage);
+          widget.moveTasksHandler(task, widget.correspondingStage);
         },
         builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
           decoration: BoxDecoration(
@@ -54,10 +56,9 @@ class _TaskColumnState extends State<TaskColumn> {
             border: Border.all(color: AppStyle.columnBgColor),
           ),
           child: ListView.separated(
-            controller: ScrollController(),
-            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(bottom: 100),
             itemCount: widget.tasks.length,
-            separatorBuilder: (context, index) => const SizedBox(height: 4),
+            separatorBuilder: (context, index) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               Widget taskCardWidget = TaskCard(
                 taskModel: widget.tasks[index],
@@ -65,6 +66,7 @@ class _TaskColumnState extends State<TaskColumn> {
               );
               return Draggable<TaskCardModel>(
                 // delay: Duration(seconds: 2), // for mobile use longdraggable
+                onDragStarted: widget.dragTaskHandler,
                 data: TaskCardModel.fromTaskModel(widget.tasks[index], index),
                 child: DragTarget<TaskCardModel>(
                   builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
@@ -74,15 +76,15 @@ class _TaskColumnState extends State<TaskColumn> {
                     // todo logic on how we swap tasks between stages
                     if (task == null) return false;
                     if (task.stage == null) return false;
-                    final toStage = widget.tasks[index].stage!;
+                    // final toStage = widget.tasks[index].stage!;
                     // if stages not correspond
-                    // if (task.stage! % 3 != toStage % 3) return false;
+                    // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;
                     print("accept swap!");
                     return true;
                   },
                   onAccept: (TaskCardModel task) {
                     print("accepted $task");
-                    widget.swapTasks(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
+                    widget.swapTasksHandler(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
                     setState(() {
                       // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
                       _childrenNotifierValue = !_childrenNotifierValue;

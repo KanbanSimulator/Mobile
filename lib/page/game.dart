@@ -36,6 +36,7 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   late Timer _timer; // timer for LP
   late List<TaskModel> _tasks;
+  bool _isBacklogOpen = false;
 
   @override
   void initState() {
@@ -192,6 +193,7 @@ class _GamePageState extends State<GamePage> {
                         flex: 2,
                         child: TaskTable(
                           tasksRaw: _tasks,
+                          isBacklogOpen: ValueNotifier(_isBacklogOpen),
                         ),
                       ),
                     ],
@@ -215,8 +217,8 @@ class _GamePageState extends State<GamePage> {
                 child: TaskColumn(
                   tasks: _tasks.where((e) => e.stage == 7).toList(),
                   correspondingStage: 7,
-                  swapTasks: () {},
-                  moveTasks: () {},
+                  swapTasksHandler: () {},
+                  moveTasksHandler: () {},
                 ),
               ),
             ),
@@ -227,8 +229,9 @@ class _GamePageState extends State<GamePage> {
   }
 
   _onBacklogPressed(context) {
-    print("backlog show");
-    Scaffold.of(context).openEndDrawer();
+    setState(() {
+      _isBacklogOpen = !_isBacklogOpen;
+    });
   }
 
   _onCompleteDayPressed() {

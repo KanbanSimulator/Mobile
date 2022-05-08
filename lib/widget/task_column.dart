@@ -12,6 +12,7 @@ class TaskColumn extends StatefulWidget {
   final bool columnBackground;
   final Function swapTasksHandler;
   final Function moveTasksHandler;
+  final Function movePersonHandler;
   final void Function()? dragTaskHandler;
 
   const TaskColumn({
@@ -20,6 +21,7 @@ class TaskColumn extends StatefulWidget {
     required this.tasks,
     required this.swapTasksHandler,
     required this.moveTasksHandler,
+    required this.movePersonHandler,
     this.columnBackground = true,
     this.dragTaskHandler,
   }) : super(key: key);
@@ -63,6 +65,7 @@ class _TaskColumnState extends State<TaskColumn> {
               Widget taskCardWidget = TaskCard(
                 taskModel: widget.tasks[index],
                 notifier: ValueNotifier(_childrenNotifierValue),
+                movePersonHandler: widget.movePersonHandler,
               );
               return Draggable<TaskCardModel>(
                 // delay: Duration(seconds: 2), // for mobile use longdraggable
@@ -95,6 +98,7 @@ class _TaskColumnState extends State<TaskColumn> {
                   taskModel: widget.tasks[index],
                   isGhost: true,
                   notifier: ValueNotifier(_childrenNotifierValue),
+                  movePersonHandler: widget.movePersonHandler,
                 ),
                 feedback: Card(
                   color: Colors.transparent,

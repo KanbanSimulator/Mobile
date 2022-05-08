@@ -8,11 +8,13 @@ import 'package:simple_shadow/simple_shadow.dart';
 class PeopleBank extends StatefulWidget {
   final int count;
   final int stage;
+  final Function movePersonHandler;
 
   const PeopleBank({
     Key? key,
     required this.count,
     required this.stage,
+    required this.movePersonHandler,
   }) : super(key: key);
 
   @override
@@ -46,7 +48,6 @@ class _PeopleBankState extends State<PeopleBank> {
     return Draggable<TaskModel>(
       feedback: person,
       onDragCompleted: () {
-        print("drag completed");
         setState(() {
           _count--;
         });
@@ -67,6 +68,8 @@ class _PeopleBankState extends State<PeopleBank> {
           return (task.stage == widget.stage);
         },
         onAccept: (TaskModel task) {
+          print("on accept: task: $task ; widget stage: ${widget.stage}");
+          widget.movePersonHandler(from: task.id, to: null);
           setState(() {
             _count++;
           });

@@ -156,10 +156,10 @@ class _GamePageState extends State<GamePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                PeopleBank(count: 3, stage: 0),
-                                PeopleBank(count: 3, stage: 1),
-                                PeopleBank(count: 3, stage: 2),
+                              children: [
+                                PeopleBank(count: 3, stage: 0, movePersonHandler: _onMovePerson),
+                                PeopleBank(count: 3, stage: 1, movePersonHandler: _onMovePerson),
+                                PeopleBank(count: 3, stage: 2, movePersonHandler: _onMovePerson),
                               ],
                             ),
                             const SizedBox(height: 24),
@@ -194,6 +194,7 @@ class _GamePageState extends State<GamePage> {
                         child: TaskTable(
                           tasksRaw: _tasks,
                           isBacklogOpen: ValueNotifier(_isBacklogOpen),
+                          movePersonHandler: _onMovePerson,
                         ),
                       ),
                     ],
@@ -203,28 +204,16 @@ class _GamePageState extends State<GamePage> {
             ],
           ),
         ),
-        endDrawer: ClipRRect(
-          borderRadius: BorderRadius.zero,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-            child: Container(
-              width: 300,
-              decoration: const BoxDecoration(
-                color: AppStyle.backlogBackgroundColor,
-              ),
-              child: Drawer(
-                backgroundColor: Colors.transparent,
-                child: TaskColumn(
-                  tasks: _tasks.where((e) => e.stage == 7).toList(),
-                  correspondingStage: 7,
-                  swapTasksHandler: () {},
-                  moveTasksHandler: () {},
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
+    );
+  }
+
+  _onMovePerson({int? from, int? to}) {
+    print("move person from: $from to: $to");
+    BoardApi.movePerson(
+      teamId: widget.teamId,
+      taskPrevId: from,
+      taskNewId: to,
     );
   }
 
@@ -241,13 +230,16 @@ class _GamePageState extends State<GamePage> {
   void _startLongPolling() {
     if (mounted) {
       setState(() {
-        _timer = Timer.periodic(const Duration(milliseconds: AppConst.gameUpdateFrequency), (timer) async {
-          // print("getting tasks...");
-          List<TaskModel> tasksFromServer = await BoardApi.getTasks(widget.teamId);
-          setState(() {
-            _tasks = [...tasksFromServer];
-          });
-        });
+        _timer = Timer.periodic(
+          const Duration(milliseconds: AppConst.gameUpdateFrequency),
+          (timer) async {
+            // print("getting tasks...");
+            List<TaskModel> tasksFromServer = await BoardApi.getTasks(widget.teamId);
+            setState(() {
+              _tasks = [...tasksFromServer];
+            });
+          },
+        );
       });
     }
   }

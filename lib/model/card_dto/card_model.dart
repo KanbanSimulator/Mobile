@@ -15,6 +15,7 @@ class CardModel with _$CardModel {
     String? team,
     bool? isExpedite,
     int? ordering,
+    int? personsAmount,
     int? readyDay,
     int? analyticRemaining,
     int? analyticCompleted,

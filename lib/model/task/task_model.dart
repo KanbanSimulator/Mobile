@@ -37,6 +37,7 @@ class TaskModel with _$TaskModel {
      team: null,
      isExpedite: false,
       ordering: 0,
+      personsAmount: 0,
       readyDay: -1,
        analyticRemaining: 9,
         analyticCompleted: 0,
@@ -77,13 +78,19 @@ class TaskModel with _$TaskModel {
       progress.add("${completed[i]}/${all[i]}");
     }
 
+    List<int> peopleCount = [0, 0, 0];
+    peopleCount[AppConst.stageBackToFrontMapping[card.frontColumnType]! % 3] = card.personsAmount!;
+    // if (peopleCount != [0, 0, 0]) {
+    //   print("task ${card.id} people count: ${peopleCount} personsAmount: ${card.personsAmount}");
+    // }
+
     return TaskModel(
       id: card.id ?? -1,
       title: card.title ?? "",
       progress: progress,
       value: card.businessValue ?? -1,
       stage: AppConst.stageBackToFrontMapping[card.frontColumnType],
-      peopleCount: [0, 0, 0], // todo когда бек сделает добавлю
+      peopleCount: peopleCount, // todo когда бек сделает добавлю
     );
   }
 }

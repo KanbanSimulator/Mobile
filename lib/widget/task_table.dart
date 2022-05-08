@@ -14,11 +14,13 @@ import '../const/app_const.dart';
 class TaskTable extends StatefulWidget {
   final List<TaskModel> tasksRaw;
   ValueNotifier<bool> isBacklogOpen;
+  final Function movePersonHandler;
 
   TaskTable({
     Key? key,
     required this.tasksRaw,
     required this.isBacklogOpen,
+    required this.movePersonHandler,
   }) : super(key: key);
 
   @override
@@ -53,6 +55,7 @@ class _TaskTableState extends State<TaskTable> {
             tasks: _taskTable[0],
             swapTasksHandler: _onSwapTasks,
             moveTasksHandler: _onMoveTasks,
+            movePersonHandler: widget.movePersonHandler,
           );
           List<Widget> columnWidgets = [
             backlogColumn,
@@ -62,6 +65,7 @@ class _TaskTableState extends State<TaskTable> {
                 tasks: _taskTable[i],
                 swapTasksHandler: _onSwapTasks,
                 moveTasksHandler: _onMoveTasks,
+                movePersonHandler: widget.movePersonHandler,
               )
           ];
           if (!isBacklogOpen) backlogColumn = columnWidgets.removeAt(0);

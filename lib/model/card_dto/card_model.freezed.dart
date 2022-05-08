@@ -28,6 +28,7 @@ class _$CardModelTearOff {
       String? team,
       bool? isExpedite,
       int? ordering,
+      int? personsAmount,
       int? readyDay,
       int? analyticRemaining,
       int? analyticCompleted,
@@ -44,6 +45,7 @@ class _$CardModelTearOff {
       team: team,
       isExpedite: isExpedite,
       ordering: ordering,
+      personsAmount: personsAmount,
       readyDay: readyDay,
       analyticRemaining: analyticRemaining,
       analyticCompleted: analyticCompleted,
@@ -72,6 +74,7 @@ mixin _$CardModel {
   String? get team => throw _privateConstructorUsedError;
   bool? get isExpedite => throw _privateConstructorUsedError;
   int? get ordering => throw _privateConstructorUsedError;
+  int? get personsAmount => throw _privateConstructorUsedError;
   int? get readyDay => throw _privateConstructorUsedError;
   int? get analyticRemaining => throw _privateConstructorUsedError;
   int? get analyticCompleted => throw _privateConstructorUsedError;
@@ -99,6 +102,7 @@ abstract class $CardModelCopyWith<$Res> {
       String? team,
       bool? isExpedite,
       int? ordering,
+      int? personsAmount,
       int? readyDay,
       int? analyticRemaining,
       int? analyticCompleted,
@@ -126,6 +130,7 @@ class _$CardModelCopyWithImpl<$Res> implements $CardModelCopyWith<$Res> {
     Object? team = freezed,
     Object? isExpedite = freezed,
     Object? ordering = freezed,
+    Object? personsAmount = freezed,
     Object? readyDay = freezed,
     Object? analyticRemaining = freezed,
     Object? analyticCompleted = freezed,
@@ -157,6 +162,10 @@ class _$CardModelCopyWithImpl<$Res> implements $CardModelCopyWith<$Res> {
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
+              as int?,
+      personsAmount: personsAmount == freezed
+          ? _value.personsAmount
+          : personsAmount // ignore: cast_nullable_to_non_nullable
               as int?,
       readyDay: readyDay == freezed
           ? _value.readyDay
@@ -214,6 +223,7 @@ abstract class _$CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
       String? team,
       bool? isExpedite,
       int? ordering,
+      int? personsAmount,
       int? readyDay,
       int? analyticRemaining,
       int? analyticCompleted,
@@ -242,6 +252,7 @@ class __$CardModelCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res>
     Object? team = freezed,
     Object? isExpedite = freezed,
     Object? ordering = freezed,
+    Object? personsAmount = freezed,
     Object? readyDay = freezed,
     Object? analyticRemaining = freezed,
     Object? analyticCompleted = freezed,
@@ -273,6 +284,10 @@ class __$CardModelCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res>
       ordering: ordering == freezed
           ? _value.ordering
           : ordering // ignore: cast_nullable_to_non_nullable
+              as int?,
+      personsAmount: personsAmount == freezed
+          ? _value.personsAmount
+          : personsAmount // ignore: cast_nullable_to_non_nullable
               as int?,
       readyDay: readyDay == freezed
           ? _value.readyDay
@@ -327,6 +342,7 @@ class _$_CardModel extends _CardModel {
       this.team,
       this.isExpedite,
       this.ordering,
+      this.personsAmount,
       this.readyDay,
       this.analyticRemaining,
       this.analyticCompleted,
@@ -353,6 +369,8 @@ class _$_CardModel extends _CardModel {
   @override
   final int? ordering;
   @override
+  final int? personsAmount;
+  @override
   final int? readyDay;
   @override
   final int? analyticRemaining;
@@ -375,7 +393,7 @@ class _$_CardModel extends _CardModel {
 
   @override
   String toString() {
-    return 'CardModel(id: $id, title: $title, team: $team, isExpedite: $isExpedite, ordering: $ordering, readyDay: $readyDay, analyticRemaining: $analyticRemaining, analyticCompleted: $analyticCompleted, developRemaining: $developRemaining, developCompleted: $developCompleted, testingRemaining: $testingRemaining, testingCompleted: $testingCompleted, columnType: $columnType, businessValue: $businessValue, frontColumnType: $frontColumnType)';
+    return 'CardModel(id: $id, title: $title, team: $team, isExpedite: $isExpedite, ordering: $ordering, personsAmount: $personsAmount, readyDay: $readyDay, analyticRemaining: $analyticRemaining, analyticCompleted: $analyticCompleted, developRemaining: $developRemaining, developCompleted: $developCompleted, testingRemaining: $testingRemaining, testingCompleted: $testingCompleted, columnType: $columnType, businessValue: $businessValue, frontColumnType: $frontColumnType)';
   }
 
   @override
@@ -389,6 +407,8 @@ class _$_CardModel extends _CardModel {
             const DeepCollectionEquality()
                 .equals(other.isExpedite, isExpedite) &&
             const DeepCollectionEquality().equals(other.ordering, ordering) &&
+            const DeepCollectionEquality()
+                .equals(other.personsAmount, personsAmount) &&
             const DeepCollectionEquality().equals(other.readyDay, readyDay) &&
             const DeepCollectionEquality()
                 .equals(other.analyticRemaining, analyticRemaining) &&
@@ -418,6 +438,7 @@ class _$_CardModel extends _CardModel {
       const DeepCollectionEquality().hash(team),
       const DeepCollectionEquality().hash(isExpedite),
       const DeepCollectionEquality().hash(ordering),
+      const DeepCollectionEquality().hash(personsAmount),
       const DeepCollectionEquality().hash(readyDay),
       const DeepCollectionEquality().hash(analyticRemaining),
       const DeepCollectionEquality().hash(analyticCompleted),
@@ -447,6 +468,7 @@ abstract class _CardModel extends CardModel {
       String? team,
       bool? isExpedite,
       int? ordering,
+      int? personsAmount,
       int? readyDay,
       int? analyticRemaining,
       int? analyticCompleted,
@@ -472,6 +494,8 @@ abstract class _CardModel extends CardModel {
   bool? get isExpedite;
   @override
   int? get ordering;
+  @override
+  int? get personsAmount;
   @override
   int? get readyDay;
   @override

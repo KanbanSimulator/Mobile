@@ -43,9 +43,18 @@ class _TaskTableState extends State<TaskTable> {
     if (widget.tasksRaw.isEmpty) {
       return const ErrorPage(text: "No tasks for this day");
     }
+    _taskTable = [
+          widget.tasksRaw.where((e) => e.stage == 7).toList(),
+          widget.tasksRaw.where((e) => e.stage == 0).toList(),
+          widget.tasksRaw.where((e) => e.stage == 3).toList(),
+          widget.tasksRaw.where((e) => e.stage == 1).toList(),
+          widget.tasksRaw.where((e) => e.stage == 4).toList(),
+          widget.tasksRaw.where((e) => e.stage == 2).toList(),
+          widget.tasksRaw.where((e) => e.stage == 5).toList(),
+        ];
+    // _taskTable = boardController.taskTable;
 
     return Obx(() {
-      _distributeTasksIntoColumns();
       Widget backlogColumn = TaskColumn(
         // key: Key("columnUnfolded"),
         correspondingStage: 0,
@@ -109,17 +118,5 @@ class _TaskTableState extends State<TaskTable> {
       });
       // todo отправлять два запроса на мув
     }
-  }
-
-  void _distributeTasksIntoColumns() {
-    _taskTable = [
-      widget.tasksRaw.where((e) => e.stage == 7).toList(),
-      widget.tasksRaw.where((e) => e.stage == 0).toList(),
-      widget.tasksRaw.where((e) => e.stage == 3).toList(),
-      widget.tasksRaw.where((e) => e.stage == 1).toList(),
-      widget.tasksRaw.where((e) => e.stage == 4).toList(),
-      widget.tasksRaw.where((e) => e.stage == 2).toList(),
-      widget.tasksRaw.where((e) => e.stage == 5).toList(),
-    ];
   }
 }

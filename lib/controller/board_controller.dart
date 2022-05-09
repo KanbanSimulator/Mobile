@@ -14,6 +14,16 @@ class BoardController extends GetxController {
 
   get isBacklogOpen => _isBacklogOpen.value;
 
+  // get taskTable => [
+  //       tasks.where((e) => e.stage == 7).toList(),
+  //       tasks.where((e) => e.stage == 0).toList(),
+  //       tasks.where((e) => e.stage == 3).toList(),
+  //       tasks.where((e) => e.stage == 1).toList(),
+  //       tasks.where((e) => e.stage == 4).toList(),
+  //       tasks.where((e) => e.stage == 2).toList(),
+  //       tasks.where((e) => e.stage == 5).toList(),
+  //     ];
+
   fetch() async {
     tasks.value = await BoardApi.getTasks(roomController.teamId);
     tasks.refresh();
@@ -24,12 +34,12 @@ class BoardController extends GetxController {
     _isBacklogOpen.refresh();
   }
 
-  void moveTask({required int taskId, required int toStage}) async {
+  moveTask({required int taskId, required int toStage}) async {
     tasks.value = (await BoardApi.moveTask(taskId, 0, toStage)) ?? tasks;
     tasks.refresh();
   }
 
-  void movePerson({int? from, int? to}) async {
+  movePerson({int? from, int? to}) async {
     print("move person from $from to $to");
     tasks.value = await BoardApi.movePerson(
       teamId: roomController.teamId,

@@ -151,7 +151,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                           style: AppStyle.labelTextStyle,
                                           isDense: true,
                                           borderRadius: BorderRadius.circular(25),
-                                          items: roomController.teams
+                                          items: roomController.room.value.teams!
                                               .map((t) => t.teamNumber)
                                               .map((t) => DropdownMenuItem<int>(child: Text("$t"), value: t))
                                               .toList(),

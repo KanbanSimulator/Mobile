@@ -11,7 +11,6 @@ class RoomController extends GetxController {
   get isOwner => room.value.player!.creator!;
   get roomId => room.value.id!;
   get teamId => room.value.player!.teamId;
-  get teams => room.value.teams!;
 
   fetch({
     required int playerId,

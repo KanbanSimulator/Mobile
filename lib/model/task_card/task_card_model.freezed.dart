@@ -24,7 +24,7 @@ class _$TaskCardModelTearOff {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount,
+      int? peopleCount,
       int? inColumnIndex}) {
     return _TaskCardModel(
       id: id,
@@ -49,7 +49,7 @@ mixin _$TaskCardModel {
       throw _privateConstructorUsedError; // list of progresses
   int? get value => throw _privateConstructorUsedError;
   int? get stage => throw _privateConstructorUsedError;
-  List<int>? get peopleCount =>
+  int? get peopleCount =>
       throw _privateConstructorUsedError; // list of people on each stage
   int? get inColumnIndex => throw _privateConstructorUsedError;
 
@@ -69,7 +69,7 @@ abstract class $TaskCardModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount,
+      int? peopleCount,
       int? inColumnIndex});
 }
 
@@ -116,7 +116,7 @@ class _$TaskCardModelCopyWithImpl<$Res>
       peopleCount: peopleCount == freezed
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as int?,
       inColumnIndex: inColumnIndex == freezed
           ? _value.inColumnIndex
           : inColumnIndex // ignore: cast_nullable_to_non_nullable
@@ -138,7 +138,7 @@ abstract class _$TaskCardModelCopyWith<$Res>
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount,
+      int? peopleCount,
       int? inColumnIndex});
 }
 
@@ -187,7 +187,7 @@ class __$TaskCardModelCopyWithImpl<$Res>
       peopleCount: peopleCount == freezed
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as int?,
       inColumnIndex: inColumnIndex == freezed
           ? _value.inColumnIndex
           : inColumnIndex // ignore: cast_nullable_to_non_nullable
@@ -220,7 +220,7 @@ class _$_TaskCardModel extends _TaskCardModel {
   @override
   final int? stage;
   @override
-  final List<int>? peopleCount;
+  final int? peopleCount;
   @override // list of people on each stage
   final int? inColumnIndex;
 
@@ -269,7 +269,7 @@ abstract class _TaskCardModel extends TaskCardModel {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount,
+      int? peopleCount,
       int? inColumnIndex}) = _$_TaskCardModel;
   _TaskCardModel._() : super._();
 
@@ -284,7 +284,7 @@ abstract class _TaskCardModel extends TaskCardModel {
   @override
   int? get stage;
   @override
-  List<int>? get peopleCount;
+  int? get peopleCount;
   @override // list of people on each stage
   int? get inColumnIndex;
   @override

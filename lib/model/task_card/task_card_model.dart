@@ -13,7 +13,7 @@ class TaskCardModel with _$TaskCardModel {
     List<String>? progress, // list of progresses
     int? value,
     int? stage,
-    List<int>? peopleCount, // list of people on each stage
+    int? peopleCount, // list of people on each stage
     int? inColumnIndex,
   }) = _TaskCardModel;
 
@@ -24,7 +24,7 @@ class TaskCardModel with _$TaskCardModel {
       progress: task.progress ?? [], // list of progresses
       value: task.value ?? -1,
       stage: task.stage ?? -1,
-      peopleCount: task.peopleCount ?? [],
+      peopleCount: task.peopleCount ?? 0,
       inColumnIndex: inColumnIndex,
     );
   }

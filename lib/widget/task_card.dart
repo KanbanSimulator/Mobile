@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/core/api.dart';
 import 'package:kanban/core/app_style.dart';
@@ -10,18 +11,18 @@ import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/people_bank_mini.dart';
 import 'package:kanban/widget/progress_bar.dart';
 
+import '../controller/board_controller.dart';
+
 class TaskCard extends StatefulWidget {
   TaskModel taskModel;
   final bool isGhost;
   ValueNotifier<bool> notifier;
-  final Function movePersonHandler;
 
   TaskCard({
     Key? key,
     required this.taskModel,
     this.isGhost = false,
     required this.notifier,
-    required this.movePersonHandler,
   }) : super(key: key);
 
   @override
@@ -32,9 +33,14 @@ class _TaskCardState extends State<TaskCard> {
   late int _count;
   bool _prevVal = false; // это костыль для прокидывания обновления вниз в карточку
 
+  BoardController boardController = Get.find<BoardController>();
+
   @override
   void initState() {
-    _count = widget.taskModel.peopleCount![(widget.taskModel.stage! - 1) % 3];
+    _count = widget.taskModel.peopleCount!;
+    if (widget.taskModel.title == 'Story 0') {
+      print("story 0 : widget.taskModel.peopleCount! : ${widget.taskModel.peopleCount!}");
+    }
     super.initState();
   }
 
@@ -45,7 +51,7 @@ class _TaskCardState extends State<TaskCard> {
       builder: (valueListenableContext, bool newVal, _) {
         if (_prevVal != newVal) { // если пришел newVal (значит произошло прокидывание по свапу)
           _prevVal = newVal; // то сохраним чтобы в следующий раз отличать новый от старого
-          _count = widget.taskModel.peopleCount![widget.taskModel.stage! % 3]; // и обновим counter людей
+          _count = widget.taskModel.peopleCount!; // и обновим counter людей
         }
         return Container(
           width: double.infinity,
@@ -87,7 +93,7 @@ class _TaskCardState extends State<TaskCard> {
                             onDragCompleted: () {
                               setState(() {
                                 _count--;
-                                widget.taskModel.peopleCount![(widget.taskModel.stage! - 1) % 3] = _count;
+                                widget.taskModel = widget.taskModel.copyWith(peopleCount: _count);
                               });
                             },
                             feedback: Container(
@@ -145,10 +151,10 @@ class _TaskCardState extends State<TaskCard> {
               return (task.stage == widget.taskModel.stage);
             },
             onAccept: (TaskModel task) {
-              widget.movePersonHandler(from: task.id, to: widget.taskModel.id);
+              boardController.movePerson(from: task.id, to: widget.taskModel.id);
               setState(() {
                 _count++;
-                widget.taskModel.peopleCount![(widget.taskModel.stage! - 1) % 3] = _count;
+                widget.taskModel = widget.taskModel.copyWith(peopleCount: _count);
               });
             },
           ),

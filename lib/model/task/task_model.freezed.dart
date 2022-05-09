@@ -24,7 +24,7 @@ class _$TaskModelTearOff {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount}) {
+      int? peopleCount}) {
     return _TaskModel(
       id: id,
       title: title,
@@ -47,7 +47,7 @@ mixin _$TaskModel {
       throw _privateConstructorUsedError; // list of progresses
   int? get value => throw _privateConstructorUsedError;
   int? get stage => throw _privateConstructorUsedError;
-  List<int>? get peopleCount => throw _privateConstructorUsedError;
+  int? get peopleCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskModelCopyWith<TaskModel> get copyWith =>
@@ -64,7 +64,7 @@ abstract class $TaskModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount});
+      int? peopleCount});
 }
 
 /// @nodoc
@@ -108,7 +108,7 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
       peopleCount: peopleCount == freezed
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as int?,
     ));
   }
 }
@@ -125,7 +125,7 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount});
+      int? peopleCount});
 }
 
 /// @nodoc
@@ -170,7 +170,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
       peopleCount: peopleCount == freezed
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as int?,
     ));
   }
 }
@@ -198,7 +198,7 @@ class _$_TaskModel extends _TaskModel {
   @override
   final int? stage;
   @override
-  final List<int>? peopleCount;
+  final int? peopleCount;
 
   @override
   String toString() {
@@ -242,7 +242,7 @@ abstract class _TaskModel extends TaskModel {
       List<String>? progress,
       int? value,
       int? stage,
-      List<int>? peopleCount}) = _$_TaskModel;
+      int? peopleCount}) = _$_TaskModel;
   _TaskModel._() : super._();
 
   @override
@@ -256,7 +256,7 @@ abstract class _TaskModel extends TaskModel {
   @override
   int? get stage;
   @override
-  List<int>? get peopleCount;
+  int? get peopleCount;
   @override
   @JsonKey(ignore: true)
   _$TaskModelCopyWith<_TaskModel> get copyWith =>

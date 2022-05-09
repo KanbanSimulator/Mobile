@@ -99,8 +99,6 @@ class _JoinPageState extends State<JoinPage> {
     );
 
     CacheService.store("userId", roomJoined!.player!.id);
-    print('room just joined: ${roomJoined.toJson().toString()}');
-    print("user id set: ${await CacheService.getUserId()}");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (routeContext) => LobbyPage(roomModel: roomJoined),

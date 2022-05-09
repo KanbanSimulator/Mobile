@@ -13,9 +13,10 @@ class LPController extends GetxController {
   }
 
   stop() {
-    if (timer != null) {
+    if (timer == null) {
       printError(info: "You cannot stop LP before you start it!");
     }
     timer!.cancel();
+    timer = null;
   }
 }

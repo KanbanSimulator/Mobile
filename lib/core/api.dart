@@ -33,7 +33,7 @@ class _Api {
     });
   }
 
-  static Future<Response> postRoomStart(String name, int roomId, List<PlayerModel> players) async {
+  static Future<Response> postRoomStart(int roomId, List<PlayerModel> players) async {
     return _dio.post("$baseUrl/room/$roomId/start", data: {
       "players": players,
     });
@@ -46,59 +46,59 @@ class _Api {
   }
 
   // BOARD
-  static List<TaskModel> getTasksMock(int day) {
-    // mock
-    return [
-      TaskModel(
-        id: 55,
-        title: 'task 1',
-        value: 12,
-        stage: 3,
-        progress: [
-          '12/18',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
-      TaskModel(
-        id: 66,
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '1/18',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
-      TaskModel(
-        id: 77,
-        title: 'task 2',
-        value: 12,
-        stage: 1,
-        progress: [
-          '1/18',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
-      TaskModel(
-        id: 88,
-        title: 'task 3',
-        value: 12,
-        stage: 2,
-        progress: [
-          '12/19',
-          '0/24',
-          '0/13',
-        ],
-        peopleCount: [0, 0, 0],
-      ),
-    ];
-  }
+  // static List<TaskModel> getTasksMock(int day) {
+  //   // mock
+  //   return [
+  //     TaskModel(
+  //       id: 55,
+  //       title: 'task 1',
+  //       value: 12,
+  //       stage: 3,
+  //       progress: [
+  //         '12/18',
+  //         '0/24',
+  //         '0/13',
+  //       ],
+  //       peopleCount: [0, 0, 0],
+  //     ),
+  //     TaskModel(
+  //       id: 66,
+  //       title: 'task 2',
+  //       value: 12,
+  //       stage: 1,
+  //       progress: [
+  //         '1/18',
+  //         '0/24',
+  //         '0/13',
+  //       ],
+  //       peopleCount: [0, 0, 0],
+  //     ),
+  //     TaskModel(
+  //       id: 77,
+  //       title: 'task 2',
+  //       value: 12,
+  //       stage: 1,
+  //       progress: [
+  //         '1/18',
+  //         '0/24',
+  //         '0/13',
+  //       ],
+  //       peopleCount: [0, 0, 0],
+  //     ),
+  //     TaskModel(
+  //       id: 88,
+  //       title: 'task 3',
+  //       value: 12,
+  //       stage: 2,
+  //       progress: [
+  //         '12/19',
+  //         '0/24',
+  //         '0/13',
+  //       ],
+  //       peopleCount: [0, 0, 0],
+  //     ),
+  //   ];
+  // }
 
   static Future<Response> getPostBoard(int teamId) async {
     return _dio.post("$baseUrl/board/$teamId");
@@ -149,11 +149,10 @@ class RoomApi {
   }
 
   static Future<RoomModel?> startGame(
-    String username,
     int roomId,
     List<PlayerModel> players,
   ) async {
-    Response response = await _Api.postRoomStart(username, roomId, players);
+    Response response = await _Api.postRoomStart(roomId, players);
     try {
       Map<String, dynamic> data = response.data['payload'];
       print("data raw on receive from server (start game) : $data");
@@ -173,7 +172,6 @@ class RoomApi {
     Response response = await _Api.getRoom(playerId, roomId);
     try {
       Map<String, dynamic> data = response.data['payload'];
-      print("data on get room: $data");
       RoomModel room = RoomModel.fromJson(data);
       return room;
     } catch (e) {
@@ -185,29 +183,11 @@ class RoomApi {
 
 class BoardApi {
   static Future<List<TaskModel>> getTasks(int teamId) async {
-    List<TaskModel>? tasks;
-
     Response response = await _Api.getPostBoard(teamId);
-    try {
-      Map<String, dynamic> data = response.data['payload'];
-      List cards = data['cards'];
-      tasks = [];
-      for (var c in cards) {
-        CardModel cardModel = CardModel.fromJson(c);
-        tasks.add(TaskModel.fromCardModel(cardModel));
-        // print(tasks.last);
-      }
-      // log("data on get tasks: cards: $cards ${cards.runtimeType}");
-      // log("data on get tasks: tasks: $tasks ${tasks.runtimeType}");
-    } catch (e) {
-      print("something wrong sending /room/create");
-    }
-
-    // return _Api.getTasksMock(0);
-    return tasks ?? [];
+    return _extractTasks(response);
   }
 
-  static void moveTask(int taskId, int toOrdering, int toStage) async {
+  static Future<List<TaskModel>?> moveTask(int taskId, int toOrdering, int toStage) async {
     toStage = AppConst.stageFrontToBackMapping[toStage]!;
     final moveCardDto = MoveCardDto(
       cardId: taskId,
@@ -215,15 +195,32 @@ class BoardApi {
       columnNumber: toStage,
     );
     Response response = await _Api.postMoveCard(moveCardDto);
+    return _extractTasks(response);
   }
 
   // if any of those args null it means it's from/to the PeopleBank
-  static void movePerson({required int teamId, int? taskPrevId, int? taskNewId}) async {
+  static Future<List<TaskModel>> movePerson({required int teamId, int? taskPrevId, int? taskNewId}) async {
     final movePersonDto = MovePersonDto(
       prevCard: taskPrevId,
       currentCard: taskNewId,
     );
     Response response = await _Api.postMovePerson(teamId, movePersonDto);
-    // print("RESPONSE: $response");
+    return _extractTasks(response);
+  }
+
+  static List<TaskModel> _extractTasks(Response<dynamic> response) {
+    List<TaskModel>? tasks;
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      List cards = data['cards'];
+      tasks = [];
+      for (var c in cards) {
+        CardModel cardModel = CardModel.fromJson(c);
+        tasks.add(TaskModel.fromCardModel(cardModel));
+      }
+    } catch (e) {
+      print("something wrong sending /room/create");
+    }
+    return tasks ?? [];
   }
 }

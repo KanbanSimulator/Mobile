@@ -16,7 +16,7 @@ class TaskModel with _$TaskModel {
     List<String>? progress, // list of progresses
     int? value,
     int? stage,
-    List<int>? peopleCount, // list of people on each stage
+    int? peopleCount, // list of people on each stage
   }) = _TaskModel;
 
   static TaskModel fromTaskCardModel(TaskCardModel task) {
@@ -26,7 +26,7 @@ class TaskModel with _$TaskModel {
       progress: task.progress ?? [],
       value: task.value ?? -1,
       stage: task.stage ?? -1,
-      peopleCount: task.peopleCount ?? [],
+      peopleCount: task.peopleCount ?? 0,
     );
   }
 
@@ -78,19 +78,13 @@ class TaskModel with _$TaskModel {
       progress.add("${completed[i]}/${all[i]}");
     }
 
-    List<int> peopleCount = [0, 0, 0];
-    peopleCount[AppConst.stageBackToFrontMapping[card.frontColumnType]! % 3] = card.personsAmount!;
-    // if (peopleCount != [0, 0, 0]) {
-    //   print("task ${card.id} people count: ${peopleCount} personsAmount: ${card.personsAmount}");
-    // }
-
     return TaskModel(
       id: card.id ?? -1,
       title: card.title ?? "",
       progress: progress,
       value: card.businessValue ?? -1,
       stage: AppConst.stageBackToFrontMapping[card.frontColumnType],
-      peopleCount: peopleCount, // todo когда бек сделает добавлю
+      peopleCount: card.personsAmount ?? 0,
     );
   }
 }

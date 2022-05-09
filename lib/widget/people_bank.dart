@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:kanban/const/app_assets.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
+import '../controller/board_controller.dart';
+
 class PeopleBank extends StatefulWidget {
   final int count;
   final int stage;
-  final Function movePersonHandler;
 
   const PeopleBank({
     Key? key,
     required this.count,
     required this.stage,
-    required this.movePersonHandler,
   }) : super(key: key);
 
   @override
@@ -25,6 +26,8 @@ class _PeopleBankState extends State<PeopleBank> {
   final double _maxWidth = 80;
   late int _count;
   final double _personWidth = 104;
+
+  BoardController boardController = Get.find<BoardController>();
 
   @override
   void initState() {
@@ -68,8 +71,7 @@ class _PeopleBankState extends State<PeopleBank> {
           return (task.stage == widget.stage);
         },
         onAccept: (TaskModel task) {
-          print("on accept: task: $task ; widget stage: ${widget.stage}");
-          widget.movePersonHandler(from: task.id, to: null);
+          boardController.movePerson(from: task.id, to: null);
           setState(() {
             _count++;
           });

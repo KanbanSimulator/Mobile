@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/model/task_card/task_card_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/task_card.dart';
 
 import '../const/app_const.dart';
+import '../controller/board_controller.dart';
 
 class TaskColumn extends StatefulWidget {
   final List<TaskModel> tasks;
   final int correspondingStage;
   final bool columnBackground;
   final Function swapTasksHandler;
-  final Function moveTasksHandler;
-  final Function movePersonHandler;
   final void Function()? dragTaskHandler;
 
   const TaskColumn({
@@ -20,8 +20,6 @@ class TaskColumn extends StatefulWidget {
     required this.correspondingStage,
     required this.tasks,
     required this.swapTasksHandler,
-    required this.moveTasksHandler,
-    required this.movePersonHandler,
     this.columnBackground = true,
     this.dragTaskHandler,
   }) : super(key: key);
@@ -32,6 +30,8 @@ class TaskColumn extends StatefulWidget {
 
 class _TaskColumnState extends State<TaskColumn> {
   bool _childrenNotifierValue = false;
+
+  BoardController boardController = Get.find<BoardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,10 @@ class _TaskColumnState extends State<TaskColumn> {
           // final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
           // if stages not correspond
           // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;
-          print("accept move!");
           return true;
         },
         onAccept: (TaskCardModel task) {
-          widget.moveTasksHandler(task, widget.correspondingStage);
+          boardController.moveTask(taskId: task.id!, toStage: AppConst.stageIMapping[widget.correspondingStage]!);
         },
         builder: (BuildContext context, List<Object?> candidateData, List rejectedData) => Container(
           decoration: BoxDecoration(
@@ -65,7 +64,6 @@ class _TaskColumnState extends State<TaskColumn> {
               Widget taskCardWidget = TaskCard(
                 taskModel: widget.tasks[index],
                 notifier: ValueNotifier(_childrenNotifierValue),
-                movePersonHandler: widget.movePersonHandler,
               );
               return Draggable<TaskCardModel>(
                 // delay: Duration(seconds: 2), // for mobile use longdraggable
@@ -82,7 +80,6 @@ class _TaskColumnState extends State<TaskColumn> {
                     // final toStage = widget.tasks[index].stage!;
                     // if stages not correspond
                     // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;
-                    print("accept swap!");
                     return true;
                   },
                   onAccept: (TaskCardModel task) {
@@ -98,7 +95,6 @@ class _TaskColumnState extends State<TaskColumn> {
                   taskModel: widget.tasks[index],
                   isGhost: true,
                   notifier: ValueNotifier(_childrenNotifierValue),
-                  movePersonHandler: widget.movePersonHandler,
                 ),
                 feedback: Card(
                   color: Colors.transparent,

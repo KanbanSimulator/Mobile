@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/core/app_style.dart';
-import 'package:kanban/core/api.dart';
 import 'package:kanban/core/app_ui.dart';
 import 'package:kanban/core/cache_service.dart';
 import 'package:kanban/model/player/player_model.dart';
@@ -36,11 +35,9 @@ class LobbyPage extends StatefulWidget {
 class _LobbyPageState extends State<LobbyPage> {
   late int _playerId; // pulled from cache
 
+  LPController lp = LPController();
   RoomController roomController = Get.find<RoomController>();
-  LPController lp = Get.find<LPController>();
   BoardController boardController = Get.find<BoardController>();
-
-  // late Map<int, List<dynamic>> _playerState; // id -> [teamNumber, spectator]
 
   @override
   void initState() {
@@ -207,9 +204,8 @@ class _LobbyPageState extends State<LobbyPage> {
       AppUi.toast(context, AppRes.checkLoggedIn);
       return;
     }
-    // start room api request
-    // todo roomcontroller start game method
-    await RoomApi.startGame(username, roomController.getRoom.id!, roomController.getRoom.players!);
+    // start game in room on backend
+    await roomController.startGame();
     // going to the game page
     _continueRoomFlow();
   }
@@ -218,13 +214,12 @@ class _LobbyPageState extends State<LobbyPage> {
   void _continueRoomFlow() async {
     lp.stop();
     await boardController.fetch();
-    List<TaskModel> tasksFromServer = boardController.tasks;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(
           roomId: roomController.getRoom.id!,
           teamId: roomController.getRoom.player!.teamId!,
-          tasks: tasksFromServer,
+          // tasks: boardController.tasks,
         ),
       ),
     );

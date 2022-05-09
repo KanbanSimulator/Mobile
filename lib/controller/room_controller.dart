@@ -86,4 +86,10 @@ class RoomController extends GetxController {
     }
     return mapping;
   }
+
+  // starts game, pulls new room state with started=true, refreshes the state
+  startGame() async {
+    room.value = (await RoomApi.startGame(roomId, getRoom.players!))!;
+    room.refresh();
+  }
 }

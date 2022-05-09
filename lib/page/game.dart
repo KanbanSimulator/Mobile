@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/core/api.dart';
 import 'package:kanban/widget/app_button_widget.dart';
@@ -10,19 +11,20 @@ import 'package:kanban/widget/task_table.dart';
 
 import '../const/app_const.dart';
 import '../const/app_res.dart';
+import '../controller/board_controller.dart';
+import '../controller/lp_controller.dart';
+import '../controller/room_controller.dart';
 import '../model/task/task_model.dart';
 import '../widget/logo.dart';
 
 class GamePage extends StatefulWidget {
   final int teamId;
   final int roomId;
-  final List<TaskModel> tasks;
 
   const GamePage({
     Key? key,
     required this.teamId,
     required this.roomId,
-    required this.tasks,
   }) : super(key: key);
 
   @override
@@ -30,21 +32,33 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  late Timer _timer; // timer for LP
-  late List<TaskModel> _tasks;
-  bool _isBacklogOpen = false;
+  RoomController roomController = Get.find<RoomController>();
+  LPController lp = LPController();
+  BoardController boardController = Get.find<BoardController>();
 
   @override
   void initState() {
-    _tasks = widget.tasks;
     _startLongPolling();
     super.initState();
+  }
+
+  void _startLongPolling() {
+    lp.start(
+      duration: const Duration(milliseconds: AppConst.gameUpdateFrequency),
+      worker: (timer) async {
+        boardController.fetch();
+        // print("=== task Story 2 people count ===");
+        // print(tasksFromServer.firstWhere((element) => element.title == "Story 2").peopleCount);
+        // print("=== task Story 2 people count ===");
+        setState(() {});
+      },
+    );
   }
 
   @override
   void dispose() {
     try {
-      _stopLongPolling();
+      lp.stop();
     } catch (e) {
       log("stop long polling failed :c");
     }
@@ -153,9 +167,9 @@ class _GamePageState extends State<GamePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                PeopleBank(count: 3, stage: 0, movePersonHandler: _onMovePerson),
-                                PeopleBank(count: 3, stage: 1, movePersonHandler: _onMovePerson),
-                                PeopleBank(count: 3, stage: 2, movePersonHandler: _onMovePerson),
+                                PeopleBank(count: 3, stage: 0),
+                                PeopleBank(count: 3, stage: 1),
+                                PeopleBank(count: 3, stage: 2),
                               ],
                             ),
                             const SizedBox(height: 24),
@@ -188,9 +202,8 @@ class _GamePageState extends State<GamePage> {
                       Expanded(
                         flex: 2,
                         child: TaskTable(
-                          tasksRaw: _tasks,
-                          isBacklogOpen: ValueNotifier(_isBacklogOpen),
-                          movePersonHandler: _onMovePerson,
+                          tasksRaw: boardController.tasks,
+                          // isBacklogOpen: ValueNotifier(boardController.isBacklogOpen),
                         ),
                       ),
                     ],
@@ -205,48 +218,14 @@ class _GamePageState extends State<GamePage> {
   }
 
   _onMovePerson({int? from, int? to}) {
-    print("move person from: $from to: $to");
-    BoardApi.movePerson(
-      teamId: widget.teamId,
-      taskPrevId: from,
-      taskNewId: to,
-    );
+    boardController.movePerson(from: from, to: to);
   }
 
   _onBacklogPressed(context) {
-    setState(() {
-      _isBacklogOpen = !_isBacklogOpen;
-    });
+    boardController.switchBacklog();
   }
 
   _onCompleteDayPressed() {
     print("complete day");
-  }
-
-  void _startLongPolling() {
-    if (mounted) {
-      setState(() {
-        _timer = Timer.periodic(
-          const Duration(milliseconds: AppConst.gameUpdateFrequency),
-          (timer) async {
-            List<TaskModel> tasksFromServer = await BoardApi.getTasks(widget.teamId);
-            print("=== task Story 2 people count ===");
-            print(tasksFromServer.firstWhere((element) => element.title == "Story 2").peopleCount);
-            print("=== task Story 2 people count ===");
-            setState(() {
-              _tasks = [...tasksFromServer];
-            });
-          },
-        );
-      });
-    }
-  }
-
-  void _stopLongPolling() {
-    if (mounted) {
-      setState(() {
-        _timer.cancel();
-      });
-    }
   }
 }

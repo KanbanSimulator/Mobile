@@ -1,23 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/core/api.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/people_bank.dart';
-import 'package:kanban/widget/task_card.dart';
 import 'package:kanban/widget/task_table.dart';
 
 import '../const/app_const.dart';
 import '../const/app_res.dart';
-import '../controller/room_controller.dart';
 import '../model/task/task_model.dart';
 import '../widget/logo.dart';
-import '../widget/task_column.dart';
 
 class GamePage extends StatefulWidget {
   final int teamId;
@@ -59,9 +53,6 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final roomController = Get.put(RoomController());
-    // final roomController = Get.find<RoomController>();
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppStyle.backgroundColor,

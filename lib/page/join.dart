@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/core/app_style.dart';
@@ -10,6 +11,8 @@ import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/page/lobby.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
+
+import '../controller/room_controller.dart';
 
 class JoinPage extends StatefulWidget {
   const JoinPage({Key? key}) : super(key: key);
@@ -94,6 +97,7 @@ class _JoinPageState extends State<JoinPage> {
       _isSpectatorSelected,
       roomId,
     );
+
     CacheService.store("userId", roomJoined!.player!.id);
     print('room just joined: ${roomJoined.toJson().toString()}');
     print("user id set: ${await CacheService.getUserId()}");

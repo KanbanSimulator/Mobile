@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/core/app_style.dart';
@@ -14,6 +15,9 @@ import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
 
+import '../controller/board_controller.dart';
+import '../controller/lp_controller.dart';
+import '../controller/room_controller.dart';
 import '../model/task/task_model.dart';
 import 'game.dart';
 
@@ -31,29 +35,43 @@ class LobbyPage extends StatefulWidget {
 
 class _LobbyPageState extends State<LobbyPage> {
   late int _playerId; // pulled from cache
-  late RoomModel _roomState; // passed from prev page
-  late Timer _timer; // timer for LP
-  late final Map<int, int> teamIdByNumber;
+
+  RoomController roomController = Get.find<RoomController>();
+  LPController lp = Get.find<LPController>();
+  BoardController boardController = Get.find<BoardController>();
 
   // late Map<int, List<dynamic>> _playerState; // id -> [teamNumber, spectator]
 
   @override
   void initState() {
-    _roomState = widget.roomModel;
-    teamIdByNumber = {};
-    // populate mapping team id -> team number
-    for (int i = 0; i < _roomState.teams!.length; i++) {
-      teamIdByNumber[_roomState.teams![i].teamId!] = _roomState.teams![i].teamNumber!;
-    }
+    roomController.room.value = widget.roomModel;
+    roomController.room.refresh();
     _initCachedFields();
     _startLongPolling();
     super.initState();
   }
 
+  void _initCachedFields() async {
+    _playerId = await CacheService.getUserId();
+  }
+
+  void _startLongPolling() {
+    lp.start(
+      duration: const Duration(seconds: AppConst.lobbyUpdateFrequency),
+      worker: (timer) async {
+        await roomController.fetch(playerId: _playerId);
+        if (roomController.getRoom.started != null && roomController.getRoom.started!) {
+          // continue flow if game started
+          _continueRoomFlow();
+        }
+      },
+    );
+  }
+
   @override
   void dispose() {
     try {
-      _stopLongPolling();
+      lp.stop();
     } catch (e) {
       log("stop long polling failed :c");
     }
@@ -67,134 +85,121 @@ class _LobbyPageState extends State<LobbyPage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(80.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: Text(
-                    "Room ID: ${_roomState.id}",
-                    textAlign: TextAlign.end,
-                    style: AppStyle.h2,
+          child: Obx(() {
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Text(
+                      "Room ID: ${roomController.getRoom.id}",
+                      textAlign: TextAlign.end,
+                      style: AppStyle.h2,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 6,
-                child: Column(
-                  children: [
-                    const Text(
-                      "Lobby",
-                      style: AppStyle.pageHeaderTextStyle,
-                    ),
-                    if (_roomState.player!.creator!) const SizedBox(height: 32),
-                    if (_roomState.player!.creator!)
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    children: [
                       const Text(
-                        "You created this room",
+                        "Lobby",
+                        style: AppStyle.pageHeaderTextStyle,
+                      ),
+                      if (roomController.isOwner) const SizedBox(height: 32),
+                      if (roomController.isOwner)
+                        const Text(
+                          "You created this room",
+                          textAlign: TextAlign.start,
+                          style: AppStyle.textFieldStyle,
+                        ),
+                      const SizedBox(height: 32),
+                      Text(
+                        "Connected players (${roomController.getRoom.players!.length}):",
                         textAlign: TextAlign.start,
                         style: AppStyle.textFieldStyle,
                       ),
-                    const SizedBox(height: 32),
-                    Text(
-                      "Connected players (${_roomState.players!.length}):",
-                      textAlign: TextAlign.start,
-                      style: AppStyle.textFieldStyle,
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 3,
-                      height: MediaQuery.of(context).size.height / 3,
-                      child: ListView(
-                        scrollDirection: Axis.vertical,
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          for (var player in _roomState.players!)
-                            SizedBox(
-                              height: 36,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    player.name!,
-                                    textAlign: TextAlign.start,
-                                    style: AppStyle.labelTextStyle,
-                                  ),
-                                  const Spacer(),
-                                  if (_roomState.player!.creator!)
-                                    DropdownButton(
-                                        hint: Text(
-                                          "${player.teamNumber!}",
-                                          style: AppStyle.labelTextStyle,
-                                        ),
-                                        dropdownColor: AppStyle.taskBackgroundColor,
-                                        style: AppStyle.labelTextStyle,
-                                        isDense: true,
-                                        borderRadius: BorderRadius.circular(25),
-                                        items: _roomState.teams!
-                                            .map((t) => t.teamNumber)
-                                            .map((t) => DropdownMenuItem<int>(child: Text("$t"), value: t))
-                                            .toList(),
-                                        onChanged: (int? teamNumberSelected) {
-                                          setState(() {
-                                            int index = (_roomState.players?.indexOf(player))!;
-                                            _roomState.players?.removeAt(index);
-                                            _roomState.players?.insert(
-                                                index,
-                                                player.copyWith(
-                                                  teamNumber: teamNumberSelected!,
-                                                  teamId: teamIdByNumber[teamNumberSelected],
-                                                ));
-                                          });
-                                        }),
-                                  if (_roomState.player!.creator!) const SizedBox(width: 32),
-                                  if (_roomState.player!.creator!)
-                                    const Text("Spectator? ", style: AppStyle.labelTextStyle),
-                                  if (_roomState.player!.creator!)
-                                    CupertinoSwitch(
-                                      value: player.spectator!,
-                                      onChanged: (val) {
-                                        // because models in freezed are immutable...
-                                        setState(() {
-                                          // ...we replace element in list through deletion
-                                          int index = (_roomState.players?.indexOf(player))!;
-                                          _roomState.players?.removeAt(index);
-                                          _roomState.players?.insert(index, player.copyWith(spectator: val));
-                                        });
-                                        print(player.spectator);
-                                      },
-                                      activeColor: Colors.redAccent,
-                                    ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    if (_roomState.player!.creator!) const SizedBox(height: 32),
-                    if (_roomState.player!.creator!)
+                      const SizedBox(height: 16),
                       SizedBox(
-                        width: 200,
-                        height: 48,
-                        child: AppButton(
-                          "Start game",
-                          onPressed: () => _onStartGamePressed(context),
+                        width: MediaQuery.of(context).size.width / 3,
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            for (var player in roomController.getRoom.players!)
+                              SizedBox(
+                                height: 36,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      player.name!,
+                                      textAlign: TextAlign.start,
+                                      style: AppStyle.labelTextStyle,
+                                    ),
+                                    const Spacer(),
+                                    if (roomController.isOwner)
+                                      DropdownButton(
+                                          hint: Text(
+                                            "${player.teamNumber!}",
+                                            style: AppStyle.labelTextStyle,
+                                          ),
+                                          dropdownColor: AppStyle.taskBackgroundColor,
+                                          style: AppStyle.labelTextStyle,
+                                          isDense: true,
+                                          borderRadius: BorderRadius.circular(25),
+                                          items: roomController.teams
+                                              .map((t) => t.teamNumber)
+                                              .map((t) => DropdownMenuItem<int>(child: Text("$t"), value: t))
+                                              .toList(),
+                                          onChanged: (int? teamNumberSelected) {
+                                            changePlayerTeamNumber(player, teamNumberSelected);
+                                          }),
+                                    if (roomController.isOwner) const SizedBox(width: 32),
+                                    if (roomController.isOwner)
+                                      const Text("Spectator? ", style: AppStyle.labelTextStyle),
+                                    if (roomController.isOwner)
+                                      CupertinoSwitch(
+                                        value: player.spectator!,
+                                        onChanged: (val) {
+                                          changePlayerSpectator(player, val);
+                                        },
+                                        activeColor: Colors.redAccent,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                      if (roomController.isOwner) const SizedBox(height: 32),
+                      if (roomController.isOwner)
+                        SizedBox(
+                          width: 200,
+                          height: 48,
+                          child: AppButton(
+                            "Start game",
+                            onPressed: () => _onStartGamePressed(context),
+                          ),
+                        ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          }),
         ),
       ),
     );
   }
 
+  // this starts the game on the server
   // only available for room owner
   void _onStartGamePressed(BuildContext context) async {
     String username = await CacheService.getUsername();
@@ -203,71 +208,33 @@ class _LobbyPageState extends State<LobbyPage> {
       return;
     }
     // start room api request
-    RoomModel? roomStarted = await RoomApi.startGame(username, _roomState.id!, _roomState.players!);
-    print("data from server room model (start game) : ${roomStarted!.toJson().toString()}");
+    // todo roomcontroller start game method
+    await RoomApi.startGame(username, roomController.getRoom.id!, roomController.getRoom.players!);
     // going to the game page
     _continueRoomFlow();
   }
 
-  void _startLongPolling() {
-    if (mounted) {
-      setState(() {
-        _timer = Timer.periodic(const Duration(seconds: AppConst.lobbyUpdateFrequency), (timer) async {
-          RoomModel? roomFromServer = await RoomApi.checkRoom(_playerId, _roomState.id!);
-          if (roomFromServer != null) {
-            setState(() {
-              // add only newly gotten players
-              List<PlayerModel> newPlayers = [];
-              List<PlayerModel> serverPlayers = roomFromServer.players!;
-              for (var pServer in serverPlayers) {
-                int? found = _roomState.players?.indexWhere((PlayerModel p) => p.id! == pServer.id!);
-                if (found == null || found == -1) {
-                  newPlayers.add(pServer);
-                }
-              }
-              // copy all fields except the players
-              _roomState = roomFromServer.copyWith(
-                players: [..._roomState.players!, ...newPlayers],
-              );
-            });
-            print("LP: new list of players: ${_roomState.players}");
-            // continue flow if game started
-            if (_roomState.started != null && _roomState.started!) {
-              _continueRoomFlow();
-            }
-          } else {
-            print("something went wrong: this room is null!");
-          }
-        });
-      });
-    }
-  }
-
+  // this navigates to GamePage
   void _continueRoomFlow() async {
-    print("this player's team id: ${_roomState.player!.teamId}");
-    _stopLongPolling();
-    List<TaskModel> tasksFromServer = await BoardApi.getTasks(_roomState.player!.teamId!);
-    print("tasks from server: $tasksFromServer ${tasksFromServer.length}");
+    lp.stop();
+    await boardController.fetch();
+    List<TaskModel> tasksFromServer = boardController.tasks;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(
-          roomId: _roomState.id!,
-          teamId: _roomState.player!.teamId!,
+          roomId: roomController.getRoom.id!,
+          teamId: roomController.getRoom.player!.teamId!,
           tasks: tasksFromServer,
         ),
       ),
     );
   }
 
-  void _stopLongPolling() {
-    if (mounted) {
-      setState(() {
-        _timer.cancel();
-      });
-    }
+  void changePlayerTeamNumber(player, teamNumberSelected) {
+    roomController.changePlayerTeam(player: player, teamNumberSelected: teamNumberSelected);
   }
 
-  void _initCachedFields() async {
-    _playerId = await CacheService.getUserId();
+  void changePlayerSpectator(player, val) {
+    roomController.changePlayerSpectatorMode(player: player, newValue: val);
   }
 }

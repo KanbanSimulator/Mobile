@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:kanban/controller/board_controller.dart';
+import 'package:kanban/controller/lp_controller.dart';
 import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/page/splash.dart';
 
+import 'controller/room_controller.dart';
 import 'core/app_style.dart';
 
 void main() {
+  Get.put(RoomController());
+  Get.put(LPController());
+  Get.put(BoardController());
+
   runApp(const MyApp());
 }
 
@@ -22,13 +30,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kanban',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      //
-      // theme: ThemeData(
-      //   canvasColor: AppStyle.backgroundColor,
-      // ),
       // home: GamePage(),
       home: SplashPage(),
     );

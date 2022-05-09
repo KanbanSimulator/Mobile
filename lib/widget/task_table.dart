@@ -131,13 +131,6 @@ class _TaskTableState extends State<TaskTable> {
   _onMoveTasks(TaskCardModel task, int toStage) {
     if (mounted) {
       setState(() {
-        // int fromStage = AppConst.stageMapping[task.stage!]!;
-        // find by title in fromStage column
-        // int taskIndex = _taskTable[fromStage].indexWhere((t) => t.title == TaskModel.fromTaskCardModel(task).title);
-        // if (taskIndex != -1) {
-        // _taskTable[fromStage].removeAt(taskIndex);
-        // }
-        // _taskTable[toStage].add(TaskModel.fromTaskCardModel(task).copyWith(stage: AppConst.stageIMapping[toStage]));
         BoardApi.moveTask(task.id!, _taskTable[toStage].length - 1, AppConst.stageIMapping[toStage]!);
       });
     }

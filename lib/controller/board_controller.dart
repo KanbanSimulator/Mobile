@@ -14,19 +14,26 @@ class BoardController extends GetxController {
 
   get isBacklogOpen => _isBacklogOpen.value;
 
-  // get taskTable => [
-  //       tasks.where((e) => e.stage == 7).toList(),
-  //       tasks.where((e) => e.stage == 0).toList(),
-  //       tasks.where((e) => e.stage == 3).toList(),
-  //       tasks.where((e) => e.stage == 1).toList(),
-  //       tasks.where((e) => e.stage == 4).toList(),
-  //       tasks.where((e) => e.stage == 2).toList(),
-  //       tasks.where((e) => e.stage == 5).toList(),
-  //     ];
+  get taskTable {
+    return <List<TaskModel>>[
+      tasks.where((e) => e.stage == 7).toList(),
+      tasks.where((e) => e.stage == 0).toList(),
+      tasks.where((e) => e.stage == 3).toList(),
+      tasks.where((e) => e.stage == 1).toList(),
+      tasks.where((e) => e.stage == 4).toList(),
+      tasks.where((e) => e.stage == 2).toList(),
+      tasks.where((e) => e.stage == 5).toList(),
+    ];
+  }
+
+  TaskModel? getTaskById(int id) {
+    return tasks.firstWhereOrNull((TaskModel t) => t.id == id);
+  }
 
   fetch() async {
     tasks.value = await BoardApi.getTasks(roomController.teamId);
     tasks.refresh();
+    update();
   }
 
   switchBacklog() {

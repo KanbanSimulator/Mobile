@@ -46,13 +46,10 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: widget.notifier,
-      builder: (valueListenableContext, bool newVal, _) {
-        if (_prevVal != newVal) { // если пришел newVal (значит произошло прокидывание по свапу)
-          _prevVal = newVal; // то сохраним чтобы в следующий раз отличать новый от старого
-          _count = widget.taskModel.peopleCount!; // и обновим counter людей
-        }
+    return Obx(
+      () {
+        widget.taskModel = boardController.getTaskById(widget.taskModel.id!) ?? widget.taskModel;
+        _count = widget.taskModel.peopleCount!; // и обновим counter людей
         return Container(
           width: double.infinity,
           height: 137,

@@ -26,7 +26,6 @@ class TaskTable extends StatefulWidget {
 }
 
 class _TaskTableState extends State<TaskTable> {
-  List<List<TaskModel>> _taskTable = [];
   bool _lastBacklogOpen = false;
   final GlobalKey<AnimatedListState> _rowKey = GlobalKey<AnimatedListState>();
   final Tween<Offset> _slideTween = Tween(begin: const Offset(-1, 0), end: const Offset(0, 0));
@@ -43,30 +42,19 @@ class _TaskTableState extends State<TaskTable> {
     if (widget.tasksRaw.isEmpty) {
       return const ErrorPage(text: "No tasks for this day");
     }
-    _taskTable = [
-          widget.tasksRaw.where((e) => e.stage == 7).toList(),
-          widget.tasksRaw.where((e) => e.stage == 0).toList(),
-          widget.tasksRaw.where((e) => e.stage == 3).toList(),
-          widget.tasksRaw.where((e) => e.stage == 1).toList(),
-          widget.tasksRaw.where((e) => e.stage == 4).toList(),
-          widget.tasksRaw.where((e) => e.stage == 2).toList(),
-          widget.tasksRaw.where((e) => e.stage == 5).toList(),
-        ];
-    // _taskTable = boardController.taskTable;
 
     return Obx(() {
       Widget backlogColumn = TaskColumn(
-        // key: Key("columnUnfolded"),
         correspondingStage: 0,
-        tasks: _taskTable[0],
+        tasks: boardController.taskTable[0],
         swapTasksHandler: _onSwapTasks,
       );
       List<Widget> columnWidgets = [
         backlogColumn,
-        for (int i = 1; i < _taskTable.length; i++)
+        for (int i = 1; i < boardController.taskTable.length; i++)
           TaskColumn(
             correspondingStage: i,
-            tasks: _taskTable[i],
+            tasks: boardController.taskTable[i],
             swapTasksHandler: _onSwapTasks,
           )
       ];

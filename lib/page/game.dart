@@ -44,12 +44,10 @@ class _GamePageState extends State<GamePage> {
 
   void _startLongPolling() {
     lp.start(
-      duration: const Duration(milliseconds: AppConst.gameUpdateFrequency),
+      duration: const Duration(seconds: AppConst.gameUpdateFrequency),
       worker: (timer) async {
-        boardController.fetch();
-        // print("=== task Story 2 people count ===");
-        // print(tasksFromServer.firstWhere((element) => element.title == "Story 2").peopleCount);
-        // print("=== task Story 2 people count ===");
+        boardController.fetchTasks();
+        boardController.fetchBoard();
         setState(() {});
       },
     );
@@ -81,67 +79,81 @@ class _GamePageState extends State<GamePage> {
                   decoration: const BoxDecoration(color: AppStyle.columnBgColor),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Stack(
                       children: [
-                        const SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: Logo(),
-                        ),
-                        const SizedBox(width: 48),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Room #${widget.roomId}",
-                              style: AppStyle.taskTitleTextStyle.copyWith(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
+                            const SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: Logo(),
                             ),
-                            const SizedBox(height: 6),
-                            Text(
-                              "Team #${widget.teamId}",
-                              style: AppStyle.taskTitleTextStyle.copyWith(
-                                color: Colors.white70,
-                                fontSize: 12,
+                            const SizedBox(width: 48),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Room #${widget.roomId}",
+                                  style: AppStyle.taskTitleTextStyle.copyWith(
+                                    color: Colors.white70,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  "Team #${widget.teamId}",
+                                  style: AppStyle.taskTitleTextStyle.copyWith(
+                                    color: Colors.white70,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    width: 140,
+                                    height: 48,
+                                    child: AppButton(
+                                      "Backlog",
+                                      leading: const Icon(
+                                        Icons.my_library_books_rounded,
+                                        color: AppStyle.iconColor,
+                                      ),
+                                      onPressed: () => boardController.switchBacklog(),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 48),
+                                  SizedBox(
+                                    width: 200,
+                                    height: 48,
+                                    child: AppButton(
+                                      "Complete this day",
+                                      leading: const Icon(
+                                        Icons.done_outline_rounded,
+                                        color: AppStyle.iconColor,
+                                      ),
+                                      onPressed: _onCompleteDayPressed,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                width: 140,
-                                height: 48,
-                                child: AppButton(
-                                  "Backlog",
-                                  leading: const Icon(
-                                    Icons.my_library_books_rounded,
-                                    color: AppStyle.iconColor,
-                                  ),
-                                  onPressed: () => _onBacklogPressed(context),
-                                ),
-                              ),
-                              const SizedBox(width: 48),
-                              SizedBox(
-                                width: 200,
-                                height: 48,
-                                child: AppButton(
-                                  "Complete this day",
-                                  leading: const Icon(
-                                    Icons.done_outline_rounded,
-                                    color: AppStyle.iconColor,
-                                  ),
-                                  onPressed: _onCompleteDayPressed,
-                                ),
-                              ),
-                            ],
+                        Center(
+                          child: Text(
+                            "Day ${boardController.board.value.day ?? -1}",
+                            style: AppStyle.taskTitleTextStyle.copyWith(
+                              color: Colors.white70,
+                              fontSize: 16,
+                              letterSpacing: 1.4,
+                            ),
                           ),
                         ),
                       ],
@@ -163,14 +175,16 @@ class _GamePageState extends State<GamePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                PeopleBank(count: 3, stage: 0),
-                                PeopleBank(count: 3, stage: 1),
-                                PeopleBank(count: 3, stage: 2),
-                              ],
+                            Obx(
+                              ()=> Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PeopleBank(count: boardController.board.value.analyticsPeopleBank ?? 3, stage: 0),
+                                  PeopleBank(count: boardController.board.value.developmentPeopleBank ?? 3, stage: 1),
+                                  PeopleBank(count: boardController.board.value.testingPeopleBank ?? 3, stage: 2),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 24),
                             Row(
@@ -217,15 +231,8 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  _onMovePerson({int? from, int? to}) {
-    boardController.movePerson(from: from, to: to);
-  }
-
-  _onBacklogPressed(context) {
-    boardController.switchBacklog();
-  }
-
   _onCompleteDayPressed() {
     print("complete day");
+
   }
 }

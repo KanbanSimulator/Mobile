@@ -16,13 +16,11 @@ import '../controller/board_controller.dart';
 class TaskCard extends StatefulWidget {
   TaskModel taskModel;
   final bool isGhost;
-  ValueNotifier<bool> notifier;
 
   TaskCard({
     Key? key,
     required this.taskModel,
     this.isGhost = false,
-    required this.notifier,
   }) : super(key: key);
 
   @override
@@ -30,14 +28,10 @@ class TaskCard extends StatefulWidget {
 }
 
 class _TaskCardState extends State<TaskCard> {
-  late int _count;
-  bool _prevVal = false; // это костыль для прокидывания обновления вниз в карточку
-
   BoardController boardController = Get.find<BoardController>();
 
   @override
   void initState() {
-    _count = widget.taskModel.peopleCount!;
     if (widget.taskModel.title == 'Story 0') {
       print("story 0 : widget.taskModel.peopleCount! : ${widget.taskModel.peopleCount!}");
     }
@@ -49,7 +43,6 @@ class _TaskCardState extends State<TaskCard> {
     return Obx(
       () {
         widget.taskModel = boardController.getTaskById(widget.taskModel.id!) ?? widget.taskModel;
-        _count = widget.taskModel.peopleCount!; // и обновим counter людей
         return Container(
           width: double.infinity,
           height: 137,
@@ -87,12 +80,6 @@ class _TaskCardState extends State<TaskCard> {
                           LongPressDraggable<TaskModel>(
                             data: widget.taskModel,
                             delay: const Duration(milliseconds: 1),
-                            onDragCompleted: () {
-                              setState(() {
-                                _count--;
-                                widget.taskModel = widget.taskModel.copyWith(peopleCount: _count);
-                              });
-                            },
                             feedback: Container(
                               decoration: const BoxDecoration(color: Colors.transparent),
                               child: SvgPicture.asset(
@@ -105,12 +92,12 @@ class _TaskCardState extends State<TaskCard> {
                             child: Container(
                               decoration: const BoxDecoration(color: Colors.transparent),
                               child: PeopleBankMini(
-                                count: _count,
+                                count: widget.taskModel.peopleCount!,
                                 stage: (widget.taskModel.stage! - 1) % 3,
                               ),
                             ),
                             childWhenDragging: PeopleBankMini(
-                              count: _count - 1,
+                              count: widget.taskModel.peopleCount! - 1,
                               stage: (widget.taskModel.stage! - 1) % 3,
                             ),
                           ),
@@ -129,7 +116,7 @@ class _TaskCardState extends State<TaskCard> {
                           itemCount: widget.taskModel.progress!.length,
                           itemBuilder: (context, index) {
                             return ProgressBar.fromProgress(
-                              typeColor: AppStyle.stageColor[index],
+                              typeColor: AppStyle.stageColor[(index - 1) % 3],
                               progress: widget.taskModel.progress![index],
                             );
                           },
@@ -149,10 +136,6 @@ class _TaskCardState extends State<TaskCard> {
             },
             onAccept: (TaskModel task) {
               boardController.movePerson(from: task.id, to: widget.taskModel.id);
-              setState(() {
-                _count++;
-                widget.taskModel = widget.taskModel.copyWith(peopleCount: _count);
-              });
             },
           ),
         );

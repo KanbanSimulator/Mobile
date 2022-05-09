@@ -16,5 +16,4 @@ class RoomModel with _$RoomModel {
   }) = _RoomModel;
 
   factory RoomModel.fromJson(Map<String, dynamic> json) => _$RoomModelFromJson(json);
-
 }

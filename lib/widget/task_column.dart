@@ -29,8 +29,6 @@ class TaskColumn extends StatefulWidget {
 }
 
 class _TaskColumnState extends State<TaskColumn> {
-  bool _childrenNotifierValue = false;
-
   BoardController boardController = Get.find<BoardController>();
 
   @override
@@ -39,7 +37,7 @@ class _TaskColumnState extends State<TaskColumn> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: DragTarget<TaskCardModel>(
         onWillAccept: (TaskCardModel? task) {
-          // logic on how we move tasks into stages
+          // todo logic validation MOVE
           if (task == null) return false;
           if (task.stage == null) return false;
           // final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
@@ -63,7 +61,6 @@ class _TaskColumnState extends State<TaskColumn> {
             itemBuilder: (context, index) {
               Widget taskCardWidget = TaskCard(
                 taskModel: widget.tasks[index],
-                notifier: ValueNotifier(_childrenNotifierValue),
               );
               return Draggable<TaskCardModel>(
                 // delay: Duration(seconds: 2), // for mobile use longdraggable
@@ -74,7 +71,7 @@ class _TaskColumnState extends State<TaskColumn> {
                     return taskCardWidget;
                   },
                   onWillAccept: (TaskCardModel? task) {
-                    // todo logic on how we swap tasks between stages
+                    // todo logic validation SWAP
                     if (task == null) return false;
                     if (task.stage == null) return false;
                     // final toStage = widget.tasks[index].stage!;
@@ -85,16 +82,11 @@ class _TaskColumnState extends State<TaskColumn> {
                   onAccept: (TaskCardModel task) {
                     print("accepted $task");
                     widget.swapTasksHandler(task, TaskCardModel.fromTaskModel(widget.tasks[index], index));
-                    setState(() {
-                      // провоцируем изменение в childrenNotifierValue чтобы оно пошло в карточку
-                      _childrenNotifierValue = !_childrenNotifierValue;
-                    });
                   },
                 ),
                 childWhenDragging: TaskCard(
                   taskModel: widget.tasks[index],
                   isGhost: true,
-                  notifier: ValueNotifier(_childrenNotifierValue),
                 ),
                 feedback: Card(
                   color: Colors.transparent,

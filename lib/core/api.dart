@@ -6,6 +6,7 @@ import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/model/task/task_model.dart';
 
 import '../const/app_const.dart';
+import '../model/board_dto/board_model.dart';
 import '../model/card_dto/card_model.dart';
 import '../model/move_card_dto/move_card_dto.dart';
 import '../model/move_person_dto/move_person_dto.dart';
@@ -182,8 +183,22 @@ class RoomApi {
 }
 
 class BoardApi {
+  static Future<BoardModel?> checkBoard(int teamId) async {
+    Response response = await _Api.getPostBoard(teamId); // same request
+    BoardModel? board;
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      print("board data from server: ${data}");
+      board = BoardModel.fromJson(data);
+      // print("board fetched: $board");
+    } catch (e) {
+      print("something went wrong extracting board model!");
+    }
+    return board;
+  }
+
   static Future<List<TaskModel>> getTasks(int teamId) async {
-    Response response = await _Api.getPostBoard(teamId);
+    Response response = await _Api.getPostBoard(teamId); // same request
     return _extractTasks(response);
   }
 
@@ -219,7 +234,7 @@ class BoardApi {
         tasks.add(TaskModel.fromCardModel(cardModel));
       }
     } catch (e) {
-      print("something wrong sending /room/create");
+      print("something wrong extracting tasks!");
     }
     return tasks ?? [];
   }

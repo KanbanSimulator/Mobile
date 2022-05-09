@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-class LPController extends GetxController {
+class LPController {
   var worker = ((timer) async => {}).obs;
   var duration = const Duration().obs;
 

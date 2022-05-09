@@ -4,6 +4,7 @@ import 'package:kanban/model/task_card/task_card_model.dart';
 
 import '../const/app_const.dart';
 import '../core/api.dart';
+import '../model/board_dto/board_model.dart';
 import '../model/task/task_model.dart';
 
 class BoardController extends GetxController {
@@ -11,9 +12,9 @@ class BoardController extends GetxController {
 
   var _isBacklogOpen = false.obs;
   var tasks = <TaskModel>[].obs;
+  var board = BoardModel().obs;
 
   get isBacklogOpen => _isBacklogOpen.value;
-
   get taskTable {
     return <List<TaskModel>>[
       tasks.where((e) => e.stage == 7).toList(),
@@ -30,10 +31,16 @@ class BoardController extends GetxController {
     return tasks.firstWhereOrNull((TaskModel t) => t.id == id);
   }
 
-  fetch() async {
+  fetchTasks() async {
     tasks.value = await BoardApi.getTasks(roomController.teamId);
     tasks.refresh();
-    update();
+    // update(); // todo uncomment if something breaks
+  }
+
+  fetchBoard() async {
+    board.value = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
+    board.refresh();
+    // update();
   }
 
   switchBacklog() {

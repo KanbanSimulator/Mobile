@@ -213,7 +213,7 @@ class _LobbyPageState extends State<LobbyPage> {
   // this navigates to GamePage
   void _continueRoomFlow() async {
     lp.stop();
-    await boardController.fetch();
+    await boardController.fetchTasks();
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext routeContext) => GamePage(

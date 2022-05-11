@@ -176,7 +176,7 @@ class _GamePageState extends State<GamePage> {
                           children: [
                             const SizedBox(height: 24),
                             Obx(
-                              ()=> Row(
+                              () => Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -233,6 +233,5 @@ class _GamePageState extends State<GamePage> {
 
   _onCompleteDayPressed() {
     print("complete day");
-
   }
 }

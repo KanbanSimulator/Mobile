@@ -48,36 +48,41 @@ class _PeopleBankState extends State<PeopleBank> {
         color: AppStyle.stageColor[(widget.stage - 1) % 3],
       ),
     );
-    return Draggable<TaskModel>(
-      feedback: person,
-      onDragCompleted: () {
-        setState(() {
-          _count--;
-        });
-      },
-      data: TaskModel(
-        stage: widget.stage,
-        title: '',
-        value: -1,
-        progress: ['', '', ''],
+    return Container(
+      decoration: BoxDecoration(
+        color: AppStyle.columnBgColor,
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: DragTarget<TaskModel>(
-        builder: (BuildContext context, List<Object?> candidateData,
-            List rejectedData) {
-          return _buildPeopleStack(_count, person);
-        },
-        onWillAccept: (TaskModel? task) {
-          if (task == null) return false;
-          return (task.stage == widget.stage);
-        },
-        onAccept: (TaskModel task) {
-          boardController.movePerson(from: task.id, to: null);
+      child: Draggable<TaskModel>(
+        feedback: person,
+        onDragCompleted: () {
           setState(() {
-            _count++;
+            _count--;
           });
         },
+        data: TaskModel(
+          stage: widget.stage,
+          title: '',
+          value: -1,
+          progress: ['', '', ''],
+        ),
+        child: DragTarget<TaskModel>(
+          builder: (BuildContext context, List<Object?> candidateData, List rejectedData) {
+            return _buildPeopleStack(_count, person);
+          },
+          onWillAccept: (TaskModel? task) {
+            if (task == null) return false;
+            return (task.stage == widget.stage);
+          },
+          onAccept: (TaskModel task) {
+            boardController.movePerson(from: task.id, to: null);
+            setState(() {
+              _count++;
+            });
+          },
+        ),
+        childWhenDragging: _buildPeopleStack(_count - 1, person),
       ),
-      childWhenDragging: _buildPeopleStack(_count - 1, person),
     );
   }
 
@@ -86,24 +91,32 @@ class _PeopleBankState extends State<PeopleBank> {
     return SizedBox(
       width: _maxWidth,
       height: _personWidth,
-      child: count <= 0 ? const SizedBox.shrink() : Stack(
-        children: List.generate(count, (index) {
-          // todo: align to center properly
-          double dx = 0;
-          if (count > 2) {
-            dx = _personWidth * index + shift / (count - 1) * index;
-          } else if (count == 2) {
-            dx = (_maxWidth / 2 - _personWidth / 2) * index;
-          } else if (count == 1) {
-            // dx = shift/2;
-          }
+      child: count <= 0
+          ? const SizedBox.shrink()
+          : Stack(
+              children: [
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: Colors.red,
+                //   ),
+                // ),
+                ...List.generate(count, (index) {
+                  double dx = 0;
+                  if (count > 2) {
+                    dx = _personWidth * index + shift / (count - 1) * index;
+                  } else if (count == 2) {
+                    dx = (_maxWidth / 2 - _personWidth / 2) * index;
+                  } else if (count == 1) {
+                    // dx = shift/2;
+                  }
 
-          return Positioned(
-            right: dx,
-            child: person,
-          );
-        }),
-      ),
+                  return Positioned(
+                    right: dx,
+                    child: person,
+                  );
+                }),
+              ],
+            ),
     );
   }
 }

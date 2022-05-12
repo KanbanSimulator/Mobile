@@ -31,12 +31,20 @@ class _PeopleBankState extends State<PeopleBank> {
 
   @override
   void initState() {
-    _count = widget.count;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.stage == 0) {
+      _count = boardController.board.value.analyticsPeopleBank ?? 0;
+    }
+    if (widget.stage == 1) {
+      _count = boardController.board.value.developmentPeopleBank ?? 0;
+    }
+    if (widget.stage == 2) {
+      _count = boardController.board.value.testingPeopleBank ?? 0;
+    }
     final person = SimpleShadow(
       opacity: 0.5,
       color: Colors.black,
@@ -55,11 +63,6 @@ class _PeopleBankState extends State<PeopleBank> {
       ),
       child: Draggable<TaskModel>(
         feedback: person,
-        onDragCompleted: () {
-          setState(() {
-            _count--;
-          });
-        },
         data: TaskModel(
           stage: widget.stage,
           title: '',
@@ -76,9 +79,6 @@ class _PeopleBankState extends State<PeopleBank> {
           },
           onAccept: (TaskModel task) {
             boardController.movePerson(from: task.id, to: null);
-            setState(() {
-              _count++;
-            });
           },
         ),
         childWhenDragging: _buildPeopleStack(_count - 1, person),

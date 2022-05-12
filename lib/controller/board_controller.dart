@@ -34,13 +34,11 @@ class BoardController extends GetxController {
   fetchTasks() async {
     tasks.value = await BoardApi.getTasks(roomController.teamId);
     tasks.refresh();
-    // update(); // todo uncomment if something breaks
   }
 
   fetchBoard() async {
     board.value = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
     board.refresh();
-    // update();
   }
 
   switchBacklog() {
@@ -54,12 +52,17 @@ class BoardController extends GetxController {
   }
 
   movePerson({int? from, int? to}) async {
-    print("move person from $from to $to");
     tasks.value = await BoardApi.movePerson(
       teamId: roomController.teamId,
       taskPrevId: from,
       taskNewId: to,
     );
+    tasks.refresh();
+  }
+
+  completeDay() async {
+    tasks.value = await BoardApi.completeDay(teamId: roomController.teamId);
+    tasks.refresh();
   }
 
   shouldAllowMove({required int taskStage, required List<String> taskProgress, required int toStage}) {
@@ -78,7 +81,6 @@ class BoardController extends GetxController {
       return false;
     }
     print("we allow task at stage $taskStage($taskStageBack) into stage $toStage($toStageBack)");
-
     return true;
   }
 }

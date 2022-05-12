@@ -233,5 +233,6 @@ class _GamePageState extends State<GamePage> {
 
   _onCompleteDayPressed() {
     print("complete day");
+    boardController.completeDay();
   }
 }

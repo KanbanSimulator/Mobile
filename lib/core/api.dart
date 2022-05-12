@@ -47,66 +47,16 @@ class _Api {
   }
 
   // BOARD
-  // static List<TaskModel> getTasksMock(int day) {
-  //   // mock
-  //   return [
-  //     TaskModel(
-  //       id: 55,
-  //       title: 'task 1',
-  //       value: 12,
-  //       stage: 3,
-  //       progress: [
-  //         '12/18',
-  //         '0/24',
-  //         '0/13',
-  //       ],
-  //       peopleCount: [0, 0, 0],
-  //     ),
-  //     TaskModel(
-  //       id: 66,
-  //       title: 'task 2',
-  //       value: 12,
-  //       stage: 1,
-  //       progress: [
-  //         '1/18',
-  //         '0/24',
-  //         '0/13',
-  //       ],
-  //       peopleCount: [0, 0, 0],
-  //     ),
-  //     TaskModel(
-  //       id: 77,
-  //       title: 'task 2',
-  //       value: 12,
-  //       stage: 1,
-  //       progress: [
-  //         '1/18',
-  //         '0/24',
-  //         '0/13',
-  //       ],
-  //       peopleCount: [0, 0, 0],
-  //     ),
-  //     TaskModel(
-  //       id: 88,
-  //       title: 'task 3',
-  //       value: 12,
-  //       stage: 2,
-  //       progress: [
-  //         '12/19',
-  //         '0/24',
-  //         '0/13',
-  //       ],
-  //       peopleCount: [0, 0, 0],
-  //     ),
-  //   ];
-  // }
-
   static Future<Response> getPostBoard(int teamId) async {
     return _dio.post("$baseUrl/board/$teamId");
   }
 
   static Future<Response> postMoveCard(MoveCardDto moveCardDto) async {
     return _dio.post("$baseUrl/board/move-card", data: moveCardDto);
+  }
+
+  static Future<Response> postStartDay(int teamId) async {
+    return _dio.post("$baseUrl/board/$teamId/start-day");
   }
 
   static postMovePerson(int teamId, MovePersonDto movePersonDto) async {
@@ -222,6 +172,13 @@ class BoardApi {
     Response response = await _Api.postMovePerson(teamId, movePersonDto);
     return _extractTasks(response);
   }
+
+  static Future<List<TaskModel>> completeDay({required int teamId}) async {
+    Response response = await _Api.postStartDay(teamId);
+    print("complete day response: ${response.data['payload']}");
+    return _extractTasks(response);
+  }
+
 
   static List<TaskModel> _extractTasks(Response<dynamic> response) {
     List<TaskModel>? tasks;

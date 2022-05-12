@@ -188,7 +188,7 @@ class BoardApi {
     BoardModel? board;
     try {
       Map<String, dynamic> data = response.data['payload'];
-      print("board data from server: ${data}");
+      // print("board data from server: ${data}");
       board = BoardModel.fromJson(data);
       // print("board fetched: $board");
     } catch (e) {

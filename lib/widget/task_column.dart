@@ -37,13 +37,13 @@ class _TaskColumnState extends State<TaskColumn> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: DragTarget<TaskCardModel>(
         onWillAccept: (TaskCardModel? task) {
-          // todo logic validation MOVE
           if (task == null) return false;
           if (task.stage == null) return false;
-          // final toStage = AppConst.stageIMapping[widget.correspondingStage]!;
-          // if stages not correspond
-          // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;
-          return true;
+          return boardController.shouldAllowMove(
+            taskProgress: task.progress!,
+            taskStage: task.stage!,
+            toStage: widget.correspondingStage,
+          );
         },
         onAccept: (TaskCardModel task) {
           boardController.moveTask(taskId: task.id!, toStage: AppConst.stageIMapping[widget.correspondingStage]!);

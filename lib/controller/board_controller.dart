@@ -61,4 +61,24 @@ class BoardController extends GetxController {
       taskNewId: to,
     );
   }
+
+  shouldAllowMove({required int taskStage, required List<String> taskProgress, required int toStage}) {
+    var taskStageBack = AppConst.stageFrontToBackMapping[taskStage]!;
+    var toStageBack = AppConst.stageFrontToBackMapping[AppConst.stageIMapping[toStage]!]!;
+    if ((taskStageBack - toStageBack).abs() != 1) {
+      // then they're not neighboring columns
+      print("move not allowed : not neighbors");
+      return false;
+    }
+    // next criterion is that the task should be full at its stage and should be in Finish
+    String stageProgress = taskProgress[(taskStage) % 3];
+    print("stage progress: $stageProgress");
+    if (stageProgress.split('/')[0] != stageProgress.split('/')[1]) {
+      print("move not allowed: stage not completed");
+      return false;
+    }
+    print("we allow task at stage $taskStage($taskStageBack) into stage $toStage($toStageBack)");
+
+    return true;
+  }
 }

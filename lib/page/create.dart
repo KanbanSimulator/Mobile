@@ -96,8 +96,8 @@ class _CreatePageState extends State<CreatePage> {
     );
     int roomId = roomCreated!.id!;
     CacheService.store("userId", roomCreated.player!.id);
-    print('room just created: ${roomCreated.toJson().toString()}');
-    print("user id set: ${await CacheService.getUserId()}");
+    // print('room just created: ${roomCreated.toJson().toString()}');
+    // print("user id set: ${await CacheService.getUserId()}");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (routeContext) => LobbyPage(roomModel: roomCreated),

@@ -18,6 +18,7 @@ class BoardController extends GetxController {
   var board = BoardModel().obs;
 
   get isBacklogOpen => _isBacklogOpen.value;
+
   get taskTable {
     return <List<TaskModel>>[
       tasks.where((e) => e.stage == 7).toList(),
@@ -39,13 +40,19 @@ class BoardController extends GetxController {
     tasks.refresh();
   }
 
-  fetchBoard(context) async {
+  fetchBoard({BuildContext? context}) async {
     BoardModel newBoard = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
-    if (newBoard.day != board.value.day) {
-      AppUi.toast(context, AppRes.newDayStarted, color: Colors.white);
-    }
+    print("new fetched board: ${board.value.analyticsPeopleBank} "
+        "${board.value.developmentPeopleBank} "
+        "${board.value.testingPeopleBank} "
+        "${board.value.day}");
+    var newDay = newBoard.day;
+    var boardDay = board.value.day;
     board.value = newBoard;
     board.refresh();
+    if (context != null && newDay != boardDay) {
+      AppUi.toast(context, AppRes.newDayStarted, color: Colors.white);
+    }
   }
 
   switchBacklog() {
@@ -65,11 +72,13 @@ class BoardController extends GetxController {
       taskNewId: to,
     );
     tasks.refresh();
+    fetchBoard();
   }
 
-  completeDay() async {
-    tasks.value = await BoardApi.completeDay(teamId: roomController.teamId);
-    tasks.refresh();
+  completeDay(context) async {
+    await BoardApi.completeDay(teamId: roomController.teamId);
+    await fetchBoard(context: context);
+    await fetchTasks();
   }
 
   shouldAllowMove({required int taskStage, required List<String> taskProgress, required int toStage}) {

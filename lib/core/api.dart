@@ -135,16 +135,7 @@ class RoomApi {
 class BoardApi {
   static Future<BoardModel?> checkBoard(int teamId) async {
     Response response = await _Api.getPostBoard(teamId); // same request
-    BoardModel? board;
-    try {
-      Map<String, dynamic> data = response.data['payload'];
-      // print("board data from server: ${data}");
-      board = BoardModel.fromJson(data);
-      // print("board fetched: $board");
-    } catch (e) {
-      print("something went wrong extracting board model!");
-    }
-    return board;
+    return _extractBoard(response);
   }
 
   static Future<List<TaskModel>> getTasks(int teamId) async {
@@ -173,10 +164,9 @@ class BoardApi {
     return _extractTasks(response);
   }
 
-  static Future<List<TaskModel>> completeDay({required int teamId}) async {
+  static Future<BoardModel?> completeDay({required int teamId}) async {
     Response response = await _Api.postStartDay(teamId);
-    // print("complete day response: ${response.data['payload']}");
-    return _extractTasks(response);
+    return _extractBoard(response);
   }
 
 
@@ -194,5 +184,18 @@ class BoardApi {
       print("something wrong extracting tasks!");
     }
     return tasks ?? [];
+  }
+
+  static BoardModel? _extractBoard(Response<dynamic> response) {
+    BoardModel? board;
+    try {
+      Map<String, dynamic> data = response.data['payload'];
+      // print("board data from server: ${data}");
+      board = BoardModel.fromJson(data);
+      // print("board fetched: $board");
+    } catch (e) {
+      print("something went wrong extracting board model!");
+    }
+    return board;
   }
 }

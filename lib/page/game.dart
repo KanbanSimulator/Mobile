@@ -39,6 +39,8 @@ class _GamePageState extends State<GamePage> {
 
   @override
   void initState() {
+    boardController.fetchTasks();
+    boardController.fetchBoard(context: context);
     _startLongPolling();
     super.initState();
   }
@@ -48,7 +50,7 @@ class _GamePageState extends State<GamePage> {
       duration: const Duration(seconds: AppConst.gameUpdateFrequency),
       worker: (timer) async {
         boardController.fetchTasks();
-        boardController.fetchBoard(context);
+        boardController.fetchBoard(context: context);
         setState(() {});
       },
     );
@@ -139,7 +141,7 @@ class _GamePageState extends State<GamePage> {
                                         Icons.done_outline_rounded,
                                         color: AppStyle.iconColor,
                                       ),
-                                      onPressed: () => boardController.completeDay(),
+                                      onPressed: () => boardController.completeDay(context),
                                     ),
                                   ),
                                 ],
@@ -147,13 +149,15 @@ class _GamePageState extends State<GamePage> {
                             ),
                           ],
                         ),
-                        Center(
-                          child: Text(
-                            "Day ${boardController.board.value.day ?? 1}",
-                            style: AppStyle.taskTitleTextStyle.copyWith(
-                              color: Colors.white70,
-                              fontSize: 16,
-                              letterSpacing: 1.4,
+                        Obx(
+                          () => Center(
+                            child: Text(
+                              "Day ${boardController.board.value.day ?? 1}",
+                              style: AppStyle.taskTitleTextStyle.copyWith(
+                                color: Colors.white70,
+                                fontSize: 16,
+                                letterSpacing: 1.4,
+                              ),
                             ),
                           ),
                         ),
@@ -203,10 +207,10 @@ class _GamePageState extends State<GamePage> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         PeopleBank(
-                                            count: boardController.board.value.analyticsPeopleBank ?? 3, stage: 0),
+                                            count: boardController.board.value.analyticsPeopleBank ?? 0, stage: 0),
                                         PeopleBank(
-                                            count: boardController.board.value.developmentPeopleBank ?? 3, stage: 1),
-                                        PeopleBank(count: boardController.board.value.testingPeopleBank ?? 3, stage: 2),
+                                            count: boardController.board.value.developmentPeopleBank ?? 1, stage: 1),
+                                        PeopleBank(count: boardController.board.value.testingPeopleBank ?? 2, stage: 2),
                                       ],
                                     ),
                                     const SizedBox(height: 24),

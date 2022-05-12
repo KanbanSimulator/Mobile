@@ -8,6 +8,8 @@ class AppRes {
       "*effort- effort (eng.); in Kanban, the amount of work that must be done for the card to be considered complete\n\n"
       "On the tenth day of the game, a new set of cards will be added to the BACKLOG. This will be accompanied by a notification about their appearance. Also, at the beginning of each day, there is a chance that urgent tasks will appear, the cards of which are marked in yellow, as well as the notification accompanying them. These tasks are valued more than ordinary , but their business value drops much faster over time, try to complete them as soon as possible!\n\n";
 
+  static const String newDayStarted = "New day started!";
+
   static const String usernameNotValid = "Username not valid: it should contain at least 4 characters.";
 
   static const String checkLoggedIn = "Something went wrong: Check if you're logged in.";

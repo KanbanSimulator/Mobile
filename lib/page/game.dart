@@ -14,6 +14,7 @@ import '../const/app_res.dart';
 import '../controller/board_controller.dart';
 import '../controller/lp_controller.dart';
 import '../controller/room_controller.dart';
+import '../core/app_ui.dart';
 import '../model/task/task_model.dart';
 import '../widget/logo.dart';
 
@@ -47,7 +48,7 @@ class _GamePageState extends State<GamePage> {
       duration: const Duration(seconds: AppConst.gameUpdateFrequency),
       worker: (timer) async {
         boardController.fetchTasks();
-        boardController.fetchBoard();
+        boardController.fetchBoard(context);
         setState(() {});
       },
     );
@@ -138,7 +139,7 @@ class _GamePageState extends State<GamePage> {
                                         Icons.done_outline_rounded,
                                         color: AppStyle.iconColor,
                                       ),
-                                      onPressed: _onCompleteDayPressed,
+                                      onPressed: () => boardController.completeDay(),
                                     ),
                                   ),
                                 ],
@@ -148,7 +149,7 @@ class _GamePageState extends State<GamePage> {
                         ),
                         Center(
                           child: Text(
-                            "Day ${boardController.board.value.day ?? -1}",
+                            "Day ${boardController.board.value.day ?? 1}",
                             style: AppStyle.taskTitleTextStyle.copyWith(
                               color: Colors.white70,
                               fontSize: 16,
@@ -176,18 +177,20 @@ class _GamePageState extends State<GamePage> {
                               AnimatedOpacity(
                                 opacity: boardController.isBacklogOpen ? 1.0 : 0.0,
                                 duration: const Duration(milliseconds: 500),
-                                child: (boardController.isBacklogOpen ? SizedBox(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width / 7,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
-                                      const SizedBox(height: 90),
-                                    ],
-                                  ),
-                                ) : const SizedBox.shrink()),
+                                child: (boardController.isBacklogOpen
+                                    ? SizedBox(
+                                        height: MediaQuery.of(context).size.height,
+                                        width: MediaQuery.of(context).size.width / 7,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
+                                            const SizedBox(height: 90),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox.shrink()),
                               ),
                               Expanded(
                                 child: Column(
@@ -253,10 +256,5 @@ class _GamePageState extends State<GamePage> {
         ),
       ),
     );
-  }
-
-  _onCompleteDayPressed() {
-    print("complete day");
-    boardController.completeDay();
   }
 }

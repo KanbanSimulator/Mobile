@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanban/controller/room_controller.dart';
 import 'package:kanban/model/task_card/task_card_model.dart';
 
 import '../const/app_const.dart';
+import '../const/app_res.dart';
 import '../core/api.dart';
+import '../core/app_ui.dart';
 import '../model/board_dto/board_model.dart';
 import '../model/task/task_model.dart';
 
@@ -36,8 +39,12 @@ class BoardController extends GetxController {
     tasks.refresh();
   }
 
-  fetchBoard() async {
-    board.value = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
+  fetchBoard(context) async {
+    BoardModel newBoard = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
+    if (newBoard.day != board.value.day) {
+      AppUi.toast(context, AppRes.newDayStarted, color: Colors.white);
+    }
+    board.value = newBoard;
     board.refresh();
   }
 

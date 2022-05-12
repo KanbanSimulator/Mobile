@@ -175,7 +175,7 @@ class BoardApi {
 
   static Future<List<TaskModel>> completeDay({required int teamId}) async {
     Response response = await _Api.postStartDay(teamId);
-    print("complete day response: ${response.data['payload']}");
+    // print("complete day response: ${response.data['payload']}");
     return _extractTasks(response);
   }
 

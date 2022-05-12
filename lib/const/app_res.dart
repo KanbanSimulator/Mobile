@@ -20,5 +20,5 @@ class AppRes {
 
   static const String finished = "Finished";
 
-  static const List<String> stageTitle = ["Analysis", "Development", "Testing"];
+  static const List<String> stageTitle = ["Backlog", "Analysis", "Development", "Testing"];
 }

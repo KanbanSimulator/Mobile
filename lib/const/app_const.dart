@@ -12,5 +12,5 @@ class AppConst {
 
   // long polling
   static const int lobbyUpdateFrequency = 1;  // in sec
-  static const int gameUpdateFrequency = 3; // in sec
+  static const int gameUpdateFrequency = 5; // in sec
 }

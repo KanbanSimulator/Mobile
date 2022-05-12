@@ -170,47 +170,71 @@ class _GamePageState extends State<GamePage> {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const SizedBox(height: 24),
-                            Obx(
-                              () => Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  PeopleBank(count: boardController.board.value.analyticsPeopleBank ?? 3, stage: 0),
-                                  PeopleBank(count: boardController.board.value.developmentPeopleBank ?? 3, stage: 1),
-                                  PeopleBank(count: boardController.board.value.testingPeopleBank ?? 3, stage: 2),
-                                ],
+                        child: Obx(
+                          () => Row(
+                            children: [
+                              AnimatedOpacity(
+                                opacity: boardController.isBacklogOpen ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 500),
+                                child: (boardController.isBacklogOpen ? SizedBox(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width / 7,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
+                                      const SizedBox(height: 90),
+                                    ],
+                                  ),
+                                ) : const SizedBox.shrink()),
                               ),
-                            ),
-                            const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(AppRes.stageTitle[0], style: AppStyle.stageTitleTextStyle),
-                                Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
-                                Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
-                              ],
-                            ),
-                            const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                                Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
-                                Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
-                              ],
-                            ),
-                            const SizedBox(height: 24),
-                          ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    const SizedBox(height: 24),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        PeopleBank(
+                                            count: boardController.board.value.analyticsPeopleBank ?? 3, stage: 0),
+                                        PeopleBank(
+                                            count: boardController.board.value.developmentPeopleBank ?? 3, stage: 1),
+                                        PeopleBank(count: boardController.board.value.testingPeopleBank ?? 3, stage: 2),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 24),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(AppRes.stageTitle[1], style: AppStyle.stageTitleTextStyle),
+                                        Text(AppRes.stageTitle[2], style: AppStyle.stageTitleTextStyle),
+                                        Text(AppRes.stageTitle[3], style: AppStyle.stageTitleTextStyle),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 24),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: const [
+                                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                                        Text(AppRes.inProgress, style: AppStyle.stageSubTitleTextStyle),
+                                        Text(AppRes.finished, style: AppStyle.stageSubTitleTextStyle),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 24),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Expanded(

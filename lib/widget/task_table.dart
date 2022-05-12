@@ -68,7 +68,7 @@ class _TaskTableState extends State<TaskTable> {
             (context, animation) => SlideTransition(
               position: animation.drive(_slideTween),
               child: SizedBox(
-                width: 125,
+                width: 120,
                 child: backlogColumn,
               ),
             ),

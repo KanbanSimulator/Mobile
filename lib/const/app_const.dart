@@ -2,6 +2,8 @@ class AppConst {
   static const String unnamed = "__unnamed__";
   static const int undefined = -1;
 
+  static const int gameOverDay = 25; // the day that we show the stats and call it game over
+
   // task table & task column
   // static const stageMapping =   {0:1, 1:3, 2:5, 3:2, 4:4, 5:6, 7:0}; // straight mapping
   static const stageIMapping =  {0:7, 1:0, 2:3, 3:1, 4:4, 5:2, 6:5}; // mapping table column -> stages

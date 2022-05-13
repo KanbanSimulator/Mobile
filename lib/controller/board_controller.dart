@@ -46,7 +46,9 @@ class BoardController extends GetxController {
     var boardDay = board.value.day;
     board.value = newBoard;
     board.refresh();
-    if (context != null && newDay != boardDay) {
+    if (context != null &&
+        newDay != boardDay &&
+        (boardDay ?? 1) < AppConst.gameOverDay) {
       AppUi.toast(context, AppRes.newDayStarted, color: Colors.white);
     }
   }

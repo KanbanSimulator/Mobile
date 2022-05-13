@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/core/api.dart';
+import 'package:kanban/page/stats.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/people_bank.dart';
 import 'package:kanban/widget/task_table.dart';
@@ -51,6 +52,18 @@ class _GamePageState extends State<GamePage> {
       worker: (timer) async {
         boardController.fetchTasks();
         boardController.fetchBoard(context: context);
+        if ((boardController.board.value.day ?? 1) >= AppConst.gameOverDay) {
+          try {
+            lp.stop();
+          } catch (e) {
+            log("stop long polling failed :c");
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => StatsPage(),
+            ),
+          );
+        }
         setState(() {});
       },
     );

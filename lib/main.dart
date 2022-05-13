@@ -6,6 +6,7 @@ import 'package:kanban/controller/lp_controller.dart';
 import 'package:kanban/page/auth.dart';
 import 'package:kanban/page/game.dart';
 import 'package:kanban/page/splash.dart';
+import 'package:kanban/page/stats.dart';
 
 import 'controller/room_controller.dart';
 import 'core/app_style.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kanban',
       // home: GamePage(),
-      home: SplashPage(),
+      home: StatsPage(),
+      // home: SplashPage(),
     );
   }
 }

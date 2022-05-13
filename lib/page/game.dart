@@ -58,7 +58,7 @@ class _GamePageState extends State<GamePage> {
           } catch (e) {
             log("stop long polling failed :c");
           }
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => StatsPage(),
             ),

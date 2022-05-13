@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kanban/model/room/room_model.dart';
 
-import '../core/api.dart';
+import '../core/service/room_api_service.dart';
 import '../model/player/player_model.dart';
 
 class RoomController extends GetxController {
@@ -15,7 +15,7 @@ class RoomController extends GetxController {
   fetch({
     required int playerId,
   }) async {
-    RoomModel? roomFromServer = await RoomApi.checkRoom(playerId, roomId);
+    RoomModel? roomFromServer = await RoomApiService.checkRoom(playerId, roomId);
     if (roomFromServer != null) {
       _addNewPlayers(newRoom: roomFromServer);
     } else {
@@ -88,7 +88,7 @@ class RoomController extends GetxController {
 
   // starts game, pulls new room state with started=true, refreshes the state
   startGame() async {
-    room.value = (await RoomApi.startGame(roomId, getRoom.players!))!;
+    room.value = (await RoomApiService.startGame(roomId, getRoom.players!))!;
     room.refresh();
   }
 }

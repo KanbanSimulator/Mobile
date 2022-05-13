@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanban/const/app_assets.dart';
-import 'package:kanban/core/api.dart';
+import 'package:kanban/core/api/api_base.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/people_bank_mini.dart';
 import 'package:kanban/widget/progress_bar.dart';
 
 import '../controller/board_controller.dart';
+import 'app_button_widget.dart';
 
 class TaskCard extends StatefulWidget {
   TaskModel taskModel;
@@ -43,6 +44,10 @@ class _TaskCardState extends State<TaskCard> {
     return Obx(
       () {
         widget.taskModel = boardController.getTaskById(widget.taskModel.id!) ?? widget.taskModel;
+        bool _isTaskCompleted = true;
+        for (String p in widget.taskModel.progress ?? []) {
+          _isTaskCompleted &= p.split('/')[0] == p.split('/')[1];
+        }
         return Container(
           width: double.infinity,
           height: 137,
@@ -77,30 +82,39 @@ class _TaskCardState extends State<TaskCard> {
                             widget.taskModel.title!,
                             style: AppStyle.taskTitleTextStyle,
                           ),
-                          LongPressDraggable<TaskModel>(
-                            data: widget.taskModel,
-                            delay: const Duration(milliseconds: 1),
-                            feedback: Container(
-                              decoration: const BoxDecoration(color: Colors.transparent),
-                              child: SvgPicture.asset(
-                                AppAssets.person,
-                                fit: BoxFit.fitWidth,
-                                width: 100,
-                                color: AppStyle.stageColor[(widget.taskModel.stage! - 1) % 3],
-                              ),
-                            ),
-                            child: Container(
-                              decoration: const BoxDecoration(color: Colors.transparent),
-                              child: PeopleBankMini(
-                                count: widget.taskModel.peopleCount!,
-                                stage: (widget.taskModel.stage! - 1) % 3,
-                              ),
-                            ),
-                            childWhenDragging: PeopleBankMini(
-                              count: widget.taskModel.peopleCount! - 1,
-                              stage: (widget.taskModel.stage! - 1) % 3,
-                            ),
-                          ),
+                          (_isTaskCompleted
+                              ? SizedBox(
+                                  height: 18,
+                                  child: AppButton(
+                                    "Complete me",
+                                    styleOverride: AppStyle.progressBarTextStyle,
+                                    onPressed: () => _onCompletePressed(),
+                                  ),
+                                )
+                              : LongPressDraggable<TaskModel>(
+                                  data: widget.taskModel,
+                                  delay: const Duration(milliseconds: 1),
+                                  feedback: Container(
+                                    decoration: const BoxDecoration(color: Colors.transparent),
+                                    child: SvgPicture.asset(
+                                      AppAssets.person,
+                                      fit: BoxFit.fitWidth,
+                                      width: 100,
+                                      color: AppStyle.stageColor[(widget.taskModel.stage! - 1) % 3],
+                                    ),
+                                  ),
+                                  child: Container(
+                                    decoration: const BoxDecoration(color: Colors.transparent),
+                                    child: PeopleBankMini(
+                                      count: widget.taskModel.peopleCount!,
+                                      stage: (widget.taskModel.stage! - 1) % 3,
+                                    ),
+                                  ),
+                                  childWhenDragging: PeopleBankMini(
+                                    count: widget.taskModel.peopleCount! - 1,
+                                    stage: (widget.taskModel.stage! - 1) % 3,
+                                  ),
+                                )),
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -141,5 +155,9 @@ class _TaskCardState extends State<TaskCard> {
         );
       },
     );
+  }
+
+  _onCompletePressed() {
+    boardController.completeTask(taskId: widget.taskModel.id!);
   }
 }

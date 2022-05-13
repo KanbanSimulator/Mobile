@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanban/controller/room_controller.dart';
-import 'package:kanban/model/task_card/task_card_model.dart';
 
 import '../const/app_const.dart';
 import '../const/app_res.dart';
-import '../core/api.dart';
 import '../core/app_ui.dart';
+import '../core/service/board_api_service.dart';
 import '../model/board_dto/board_model.dart';
 import '../model/task/task_model.dart';
 
@@ -36,12 +35,12 @@ class BoardController extends GetxController {
   }
 
   fetchTasks() async {
-    tasks.value = await BoardApi.getTasks(roomController.teamId);
+    tasks.value = await BoardApiService.getTasks(roomController.teamId);
     tasks.refresh();
   }
 
   fetchBoard({BuildContext? context}) async {
-    BoardModel newBoard = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
+    BoardModel newBoard = (await BoardApiService.checkBoard(roomController.teamId)) ?? board.value;
     var newDay = newBoard.day;
     var boardDay = board.value.day;
     board.value = newBoard;
@@ -59,12 +58,16 @@ class BoardController extends GetxController {
   }
 
   moveTask({required int taskId, required int toStage}) async {
-    tasks.value = (await BoardApi.moveTask(taskId, 0, toStage)) ?? tasks;
+    tasks.value = (await BoardApiService.moveTask(taskId, 0, toStage)) ?? tasks;
     tasks.refresh();
   }
 
+  completeTask({required int taskId}) {
+    moveTask(taskId: taskId, toStage: 6);
+  }
+
   movePerson({int? from, int? to}) async {
-    tasks.value = await BoardApi.movePerson(
+    tasks.value = await BoardApiService.movePerson(
       teamId: roomController.teamId,
       taskPrevId: from,
       taskNewId: to,
@@ -74,7 +77,7 @@ class BoardController extends GetxController {
   }
 
   completeDay(context) async {
-    await BoardApi.completeDay(teamId: roomController.teamId);
+    await BoardApiService.completeDay(teamId: roomController.teamId);
     await fetchBoard(context: context);
     await fetchTasks();
   }

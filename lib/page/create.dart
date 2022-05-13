@@ -3,13 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:kanban/const/app_const.dart';
 import 'package:kanban/const/app_res.dart';
 import 'package:kanban/core/app_style.dart';
-import 'package:kanban/core/api.dart';
+import 'package:kanban/core/api/api_base.dart';
 import 'package:kanban/core/app_ui.dart';
-import 'package:kanban/core/cache_service.dart';
+import 'package:kanban/core/service/cache_service.dart';
 import 'package:kanban/model/room/room_model.dart';
 import 'package:kanban/page/lobby.dart';
 import 'package:kanban/widget/app_button_widget.dart';
 import 'package:kanban/widget/text_input_widget.dart';
+
+import '../core/service/room_api_service.dart';
 
 class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -89,7 +91,7 @@ class _CreatePageState extends State<CreatePage> {
       AppUi.toast(context, AppRes.incorrectTeamsCounter);
       return;
     }
-    RoomModel? roomCreated = await RoomApi.createRoom(
+    RoomModel? roomCreated = await RoomApiService.createRoom(
       username,
       _isSpectatorSelected,
       int.parse(teamsCounter),

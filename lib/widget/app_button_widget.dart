@@ -5,12 +5,14 @@ class AppButton extends StatelessWidget {
   final onPressed;
   final String text;
   final Widget? leading;
+  final TextStyle? styleOverride;
 
   AppButton(
       this.text, {
         Key? key,
         this.onPressed,
         this.leading,
+        this.styleOverride,
       }) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class AppButton extends StatelessWidget {
           if (leading != null && text.isNotEmpty) const SizedBox(width: 12),
           Text(
             text,
-            style: AppStyle.buttonTextStyle,
+            style: styleOverride ?? AppStyle.buttonTextStyle,
           ),
         ],
       ),

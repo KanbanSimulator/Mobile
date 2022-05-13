@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kanban',
       // home: GamePage(),
-      home: StatsPage(),
-      // home: SplashPage(),
+      // home: StatsPage(),
+      home: SplashPage(),
     );
   }
 }

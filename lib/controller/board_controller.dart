@@ -42,10 +42,6 @@ class BoardController extends GetxController {
 
   fetchBoard({BuildContext? context}) async {
     BoardModel newBoard = (await BoardApi.checkBoard(roomController.teamId)) ?? board.value;
-    print("new fetched board: ${board.value.analyticsPeopleBank} "
-        "${board.value.developmentPeopleBank} "
-        "${board.value.testingPeopleBank} "
-        "${board.value.day}");
     var newDay = newBoard.day;
     var boardDay = board.value.day;
     board.value = newBoard;
@@ -91,8 +87,7 @@ class BoardController extends GetxController {
     }
     // next criterion is that the task should be full at its stage and should be in Finish
     String stageProgress = taskProgress[(taskStage) % 3];
-    print("stage progress: $stageProgress");
-    if (stageProgress.split('/')[0] != stageProgress.split('/')[1]) {
+    if (stageProgress.split('/')[0] != stageProgress.split('/')[1] && taskStage != 7) {
       print("move not allowed: stage not completed");
       return false;
     }

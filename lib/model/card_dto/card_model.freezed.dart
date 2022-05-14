@@ -36,6 +36,8 @@ class _$CardModelTearOff {
       int? developCompleted,
       int? testingRemaining,
       int? testingCompleted,
+      int? blockerCompleted,
+      int? blockerRemaining,
       String? columnType,
       int? businessValue,
       int? frontColumnType}) {
@@ -53,6 +55,8 @@ class _$CardModelTearOff {
       developCompleted: developCompleted,
       testingRemaining: testingRemaining,
       testingCompleted: testingCompleted,
+      blockerCompleted: blockerCompleted,
+      blockerRemaining: blockerRemaining,
       columnType: columnType,
       businessValue: businessValue,
       frontColumnType: frontColumnType,
@@ -82,6 +86,8 @@ mixin _$CardModel {
   int? get developCompleted => throw _privateConstructorUsedError;
   int? get testingRemaining => throw _privateConstructorUsedError;
   int? get testingCompleted => throw _privateConstructorUsedError;
+  int? get blockerCompleted => throw _privateConstructorUsedError;
+  int? get blockerRemaining => throw _privateConstructorUsedError;
   String? get columnType => throw _privateConstructorUsedError;
   int? get businessValue => throw _privateConstructorUsedError;
   int? get frontColumnType => throw _privateConstructorUsedError;
@@ -110,6 +116,8 @@ abstract class $CardModelCopyWith<$Res> {
       int? developCompleted,
       int? testingRemaining,
       int? testingCompleted,
+      int? blockerCompleted,
+      int? blockerRemaining,
       String? columnType,
       int? businessValue,
       int? frontColumnType});
@@ -138,6 +146,8 @@ class _$CardModelCopyWithImpl<$Res> implements $CardModelCopyWith<$Res> {
     Object? developCompleted = freezed,
     Object? testingRemaining = freezed,
     Object? testingCompleted = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
     Object? columnType = freezed,
     Object? businessValue = freezed,
     Object? frontColumnType = freezed,
@@ -195,6 +205,14 @@ class _$CardModelCopyWithImpl<$Res> implements $CardModelCopyWith<$Res> {
           ? _value.testingCompleted
           : testingCompleted // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
       columnType: columnType == freezed
           ? _value.columnType
           : columnType // ignore: cast_nullable_to_non_nullable
@@ -231,6 +249,8 @@ abstract class _$CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
       int? developCompleted,
       int? testingRemaining,
       int? testingCompleted,
+      int? blockerCompleted,
+      int? blockerRemaining,
       String? columnType,
       int? businessValue,
       int? frontColumnType});
@@ -260,6 +280,8 @@ class __$CardModelCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res>
     Object? developCompleted = freezed,
     Object? testingRemaining = freezed,
     Object? testingCompleted = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
     Object? columnType = freezed,
     Object? businessValue = freezed,
     Object? frontColumnType = freezed,
@@ -317,6 +339,14 @@ class __$CardModelCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res>
           ? _value.testingCompleted
           : testingCompleted // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
       columnType: columnType == freezed
           ? _value.columnType
           : columnType // ignore: cast_nullable_to_non_nullable
@@ -350,6 +380,8 @@ class _$_CardModel extends _CardModel {
       this.developCompleted,
       this.testingRemaining,
       this.testingCompleted,
+      this.blockerCompleted,
+      this.blockerRemaining,
       this.columnType,
       this.businessValue,
       this.frontColumnType})
@@ -385,6 +417,10 @@ class _$_CardModel extends _CardModel {
   @override
   final int? testingCompleted;
   @override
+  final int? blockerCompleted;
+  @override
+  final int? blockerRemaining;
+  @override
   final String? columnType;
   @override
   final int? businessValue;
@@ -393,7 +429,7 @@ class _$_CardModel extends _CardModel {
 
   @override
   String toString() {
-    return 'CardModel(id: $id, title: $title, team: $team, isExpedite: $isExpedite, ordering: $ordering, personsAmount: $personsAmount, readyDay: $readyDay, analyticRemaining: $analyticRemaining, analyticCompleted: $analyticCompleted, developRemaining: $developRemaining, developCompleted: $developCompleted, testingRemaining: $testingRemaining, testingCompleted: $testingCompleted, columnType: $columnType, businessValue: $businessValue, frontColumnType: $frontColumnType)';
+    return 'CardModel(id: $id, title: $title, team: $team, isExpedite: $isExpedite, ordering: $ordering, personsAmount: $personsAmount, readyDay: $readyDay, analyticRemaining: $analyticRemaining, analyticCompleted: $analyticCompleted, developRemaining: $developRemaining, developCompleted: $developCompleted, testingRemaining: $testingRemaining, testingCompleted: $testingCompleted, blockerCompleted: $blockerCompleted, blockerRemaining: $blockerRemaining, columnType: $columnType, businessValue: $businessValue, frontColumnType: $frontColumnType)';
   }
 
   @override
@@ -423,6 +459,10 @@ class _$_CardModel extends _CardModel {
             const DeepCollectionEquality()
                 .equals(other.testingCompleted, testingCompleted) &&
             const DeepCollectionEquality()
+                .equals(other.blockerCompleted, blockerCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.blockerRemaining, blockerRemaining) &&
+            const DeepCollectionEquality()
                 .equals(other.columnType, columnType) &&
             const DeepCollectionEquality()
                 .equals(other.businessValue, businessValue) &&
@@ -446,6 +486,8 @@ class _$_CardModel extends _CardModel {
       const DeepCollectionEquality().hash(developCompleted),
       const DeepCollectionEquality().hash(testingRemaining),
       const DeepCollectionEquality().hash(testingCompleted),
+      const DeepCollectionEquality().hash(blockerCompleted),
+      const DeepCollectionEquality().hash(blockerRemaining),
       const DeepCollectionEquality().hash(columnType),
       const DeepCollectionEquality().hash(businessValue),
       const DeepCollectionEquality().hash(frontColumnType));
@@ -476,6 +518,8 @@ abstract class _CardModel extends CardModel {
       int? developCompleted,
       int? testingRemaining,
       int? testingCompleted,
+      int? blockerCompleted,
+      int? blockerRemaining,
       String? columnType,
       int? businessValue,
       int? frontColumnType}) = _$_CardModel;
@@ -510,6 +554,10 @@ abstract class _CardModel extends CardModel {
   int? get testingRemaining;
   @override
   int? get testingCompleted;
+  @override
+  int? get blockerCompleted;
+  @override
+  int? get blockerRemaining;
   @override
   String? get columnType;
   @override

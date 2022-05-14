@@ -39,6 +39,7 @@ class _TaskColumnState extends State<TaskColumn> {
         onWillAccept: (TaskCardModel? task) {
           if (task == null) return false;
           if (task.stage == null) return false;
+          // if ((task.blockerRemaining ?? 0) > 0) return false;
           return boardController.shouldAllowMove(
             taskProgress: task.progress!,
             taskStage: task.stage!,
@@ -74,6 +75,7 @@ class _TaskColumnState extends State<TaskColumn> {
                     // todo logic validation SWAP
                     if (task == null) return false;
                     if (task.stage == null) return false;
+                    // if ((task.blockerRemaining ?? 0) > 0) return false;
                     // final toStage = widget.tasks[index].stage!;
                     // if stages not correspond
                     // if (task.stage! - 1) % 3 != toStage - 1) % 3) return false;

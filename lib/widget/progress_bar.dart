@@ -8,11 +8,13 @@ class ProgressBar extends StatelessWidget {
   String? numerator;
   String? denominator;
   Color typeColor;
+  Color borderColor;
 
   ProgressBar.fromProgress({
     Key? key,
     required this.progress,
     this.typeColor = Colors.white,
+    this.borderColor = AppStyle.taskBorderColor,
   }) : super(key: key) {
     numerator = progress!.split('/')[0];
     denominator = progress!.split('/')[1];
@@ -23,6 +25,7 @@ class ProgressBar extends StatelessWidget {
     required this.numerator,
     required this.denominator,
     this.typeColor = Colors.white,
+    this.borderColor = AppStyle.taskBorderColor,
   }) : super(key: key) {
     progress = "$numerator/$denominator";
   }
@@ -31,11 +34,11 @@ class ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // height: 34,
       height: 17,
       decoration: BoxDecoration(
         color: typeColor,
         borderRadius: BorderRadius.circular(6.0),
+        border: Border.all(color: borderColor),
       ),
       child: Center(
         child: Text(

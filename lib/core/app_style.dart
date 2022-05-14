@@ -38,7 +38,11 @@ class AppStyle {
 
   // task card
   static const taskBackgroundColor = Color.fromRGBO(65, 65, 65, 0.9); // background color for task card
+  static const blockedTaskBackgroundColor = Color.fromRGBO(61, 32, 40, 0.9019607843137255); // background color for task card
   static const taskBorderColor = Color(0xff9E9E9E);
+  static const blockedTaskBorderColor = Color(0xff965660);
+  static const expediteTaskBackgroundColor = Color(0xff675d2c);
+
   static const taskTitleTextStyle = TextStyle(
     // task card > title text > style
     color: Colors.white,

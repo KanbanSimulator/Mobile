@@ -1,11 +1,7 @@
-import 'dart:developer';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kanban/const/app_assets.dart';
-import 'package:kanban/core/api/api_base.dart';
 import 'package:kanban/core/app_style.dart';
 import 'package:kanban/model/task/task_model.dart';
 import 'package:kanban/widget/people_bank_mini.dart';
@@ -45,16 +41,34 @@ class _TaskCardState extends State<TaskCard> {
       () {
         widget.taskModel = boardController.getTaskById(widget.taskModel.id!) ?? widget.taskModel;
         bool _isTaskCompleted = true;
+        bool _isTaskBlocked = (widget.taskModel.blockerRemaining ?? 0) > 0;
+        bool _isTaskExpedite = (widget.taskModel.isExpedite ?? false);
         for (String p in widget.taskModel.progress ?? []) {
           _isTaskCompleted &= p.split('/')[0] == p.split('/')[1];
+        }
+        int _blockerProgress = 0;
+        Color taskCardBackground = AppStyle.taskBackgroundColor;
+        Color taskCardBorderColor = AppStyle.taskBorderColor;
+        Color taskCardTextColor = Colors.white;
+        if (_isTaskBlocked) {
+          var _blockerAll = widget.taskModel.blockerCompleted! + widget.taskModel.blockerRemaining!;
+          _blockerProgress = ((widget.taskModel.blockerRemaining!) / _blockerAll * 61).round();
+          taskCardBackground = AppStyle.blockedTaskBackgroundColor.withRed(_blockerProgress);
+          taskCardBorderColor = AppStyle.blockedTaskBorderColor;
+        }
+        if (_isTaskExpedite) {
+          taskCardBackground = AppStyle.expediteTaskBackgroundColor;
+          taskCardTextColor = Colors.white;
+          // taskCardTextColor = const Color(0xfffff0b9);
+          taskCardBorderColor = const Color(0xfffff0b9);
         }
         return Container(
           width: double.infinity,
           height: 137,
           decoration: BoxDecoration(
-            color: AppStyle.taskBackgroundColor,
+            color: taskCardBackground,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppStyle.taskBorderColor),
+            border: Border.all(color: taskCardBorderColor),
           ),
           child: DragTarget<TaskModel>(
             builder: (
@@ -80,7 +94,7 @@ class _TaskCardState extends State<TaskCard> {
                         children: [
                           Text(
                             widget.taskModel.title!,
-                            style: AppStyle.taskTitleTextStyle,
+                            style: AppStyle.taskTitleTextStyle.copyWith(color: taskCardTextColor),
                           ),
                           (_isTaskCompleted
                               ? SizedBox(
@@ -120,7 +134,7 @@ class _TaskCardState extends State<TaskCard> {
                       const SizedBox(height: 6),
                       Text(
                         "Value: ${widget.taskModel.value}",
-                        style: AppStyle.valueTextStyle,
+                        style: AppStyle.valueTextStyle.copyWith(color: taskCardTextColor),
                       ),
                       const SizedBox(height: 12),
                       Expanded(
@@ -130,6 +144,7 @@ class _TaskCardState extends State<TaskCard> {
                           itemCount: widget.taskModel.progress!.length,
                           itemBuilder: (context, index) {
                             return ProgressBar.fromProgress(
+                              borderColor: taskCardBorderColor,
                               typeColor: AppStyle.stageColor[(index - 1) % 3],
                               progress: widget.taskModel.progress![index],
                             );
@@ -146,6 +161,7 @@ class _TaskCardState extends State<TaskCard> {
             },
             onWillAccept: (TaskModel? task) {
               if (task == null) return false;
+              if ((widget.taskModel.blockerRemaining ?? 0) > 0) return false;
               return (task.stage == widget.taskModel.stage);
             },
             onAccept: (TaskModel task) {

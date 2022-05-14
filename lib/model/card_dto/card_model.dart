@@ -23,6 +23,8 @@ class CardModel with _$CardModel {
     int? developCompleted,
     int? testingRemaining,
     int? testingCompleted,
+    int? blockerCompleted,
+    int? blockerRemaining,
     String? columnType,
     int? businessValue,
     int? frontColumnType,

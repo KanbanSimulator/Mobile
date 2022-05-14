@@ -24,7 +24,10 @@ class _$TaskModelTearOff {
       List<String>? progress,
       int? value,
       int? stage,
-      int? peopleCount}) {
+      int? peopleCount,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite}) {
     return _TaskModel(
       id: id,
       title: title,
@@ -32,6 +35,9 @@ class _$TaskModelTearOff {
       value: value,
       stage: stage,
       peopleCount: peopleCount,
+      blockerCompleted: blockerCompleted,
+      blockerRemaining: blockerRemaining,
+      isExpedite: isExpedite,
     );
   }
 }
@@ -47,7 +53,11 @@ mixin _$TaskModel {
       throw _privateConstructorUsedError; // list of progresses
   int? get value => throw _privateConstructorUsedError;
   int? get stage => throw _privateConstructorUsedError;
-  int? get peopleCount => throw _privateConstructorUsedError;
+  int? get peopleCount =>
+      throw _privateConstructorUsedError; // list of people on each stage
+  int? get blockerCompleted => throw _privateConstructorUsedError;
+  int? get blockerRemaining => throw _privateConstructorUsedError;
+  bool? get isExpedite => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskModelCopyWith<TaskModel> get copyWith =>
@@ -64,7 +74,10 @@ abstract class $TaskModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      int? peopleCount});
+      int? peopleCount,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite});
 }
 
 /// @nodoc
@@ -83,6 +96,9 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
     Object? value = freezed,
     Object? stage = freezed,
     Object? peopleCount = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
+    Object? isExpedite = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -109,6 +125,18 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isExpedite: isExpedite == freezed
+          ? _value.isExpedite
+          : isExpedite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -125,7 +153,10 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       List<String>? progress,
       int? value,
       int? stage,
-      int? peopleCount});
+      int? peopleCount,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite});
 }
 
 /// @nodoc
@@ -145,6 +176,9 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
     Object? value = freezed,
     Object? stage = freezed,
     Object? peopleCount = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
+    Object? isExpedite = freezed,
   }) {
     return _then(_TaskModel(
       id: id == freezed
@@ -171,6 +205,18 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
           ? _value.peopleCount
           : peopleCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isExpedite: isExpedite == freezed
+          ? _value.isExpedite
+          : isExpedite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -184,7 +230,10 @@ class _$_TaskModel extends _TaskModel {
       this.progress,
       this.value,
       this.stage,
-      this.peopleCount})
+      this.peopleCount,
+      this.blockerCompleted,
+      this.blockerRemaining,
+      this.isExpedite})
       : super._();
 
   @override
@@ -199,10 +248,16 @@ class _$_TaskModel extends _TaskModel {
   final int? stage;
   @override
   final int? peopleCount;
+  @override // list of people on each stage
+  final int? blockerCompleted;
+  @override
+  final int? blockerRemaining;
+  @override
+  final bool? isExpedite;
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount)';
+    return 'TaskModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, blockerCompleted: $blockerCompleted, blockerRemaining: $blockerRemaining, isExpedite: $isExpedite)';
   }
 
   @override
@@ -216,7 +271,13 @@ class _$_TaskModel extends _TaskModel {
             const DeepCollectionEquality().equals(other.value, value) &&
             const DeepCollectionEquality().equals(other.stage, stage) &&
             const DeepCollectionEquality()
-                .equals(other.peopleCount, peopleCount));
+                .equals(other.peopleCount, peopleCount) &&
+            const DeepCollectionEquality()
+                .equals(other.blockerCompleted, blockerCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.blockerRemaining, blockerRemaining) &&
+            const DeepCollectionEquality()
+                .equals(other.isExpedite, isExpedite));
   }
 
   @override
@@ -227,7 +288,10 @@ class _$_TaskModel extends _TaskModel {
       const DeepCollectionEquality().hash(progress),
       const DeepCollectionEquality().hash(value),
       const DeepCollectionEquality().hash(stage),
-      const DeepCollectionEquality().hash(peopleCount));
+      const DeepCollectionEquality().hash(peopleCount),
+      const DeepCollectionEquality().hash(blockerCompleted),
+      const DeepCollectionEquality().hash(blockerRemaining),
+      const DeepCollectionEquality().hash(isExpedite));
 
   @JsonKey(ignore: true)
   @override
@@ -242,7 +306,10 @@ abstract class _TaskModel extends TaskModel {
       List<String>? progress,
       int? value,
       int? stage,
-      int? peopleCount}) = _$_TaskModel;
+      int? peopleCount,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite}) = _$_TaskModel;
   _TaskModel._() : super._();
 
   @override
@@ -257,6 +324,12 @@ abstract class _TaskModel extends TaskModel {
   int? get stage;
   @override
   int? get peopleCount;
+  @override // list of people on each stage
+  int? get blockerCompleted;
+  @override
+  int? get blockerRemaining;
+  @override
+  bool? get isExpedite;
   @override
   @JsonKey(ignore: true)
   _$TaskModelCopyWith<_TaskModel> get copyWith =>

@@ -17,18 +17,10 @@ class TaskModel with _$TaskModel {
     int? value,
     int? stage,
     int? peopleCount, // list of people on each stage
+    int? blockerCompleted,
+    int? blockerRemaining,
+    bool? isExpedite,
   }) = _TaskModel;
-
-  static TaskModel fromTaskCardModel(TaskCardModel task) {
-    return TaskModel(
-      id: task.id ?? -1,
-      title: task.title ?? "",
-      progress: task.progress ?? [],
-      value: task.value ?? -1,
-      stage: task.stage ?? -1,
-      peopleCount: task.peopleCount ?? 0,
-    );
-  }
 
   static TaskModel fromCardModel(CardModel card) {
     /*
@@ -85,6 +77,9 @@ class TaskModel with _$TaskModel {
       value: card.businessValue ?? -1,
       stage: AppConst.stageBackToFrontMapping[card.frontColumnType],
       peopleCount: card.personsAmount ?? 0,
+      blockerCompleted: card.blockerCompleted,
+      blockerRemaining: card.blockerRemaining,
+      isExpedite: card.isExpedite,
     );
   }
 }

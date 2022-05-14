@@ -25,7 +25,10 @@ class _$TaskCardModelTearOff {
       int? value,
       int? stage,
       int? peopleCount,
-      int? inColumnIndex}) {
+      int? inColumnIndex,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite}) {
     return _TaskCardModel(
       id: id,
       title: title,
@@ -34,6 +37,9 @@ class _$TaskCardModelTearOff {
       stage: stage,
       peopleCount: peopleCount,
       inColumnIndex: inColumnIndex,
+      blockerCompleted: blockerCompleted,
+      blockerRemaining: blockerRemaining,
+      isExpedite: isExpedite,
     );
   }
 }
@@ -52,6 +58,9 @@ mixin _$TaskCardModel {
   int? get peopleCount =>
       throw _privateConstructorUsedError; // list of people on each stage
   int? get inColumnIndex => throw _privateConstructorUsedError;
+  int? get blockerCompleted => throw _privateConstructorUsedError;
+  int? get blockerRemaining => throw _privateConstructorUsedError;
+  bool? get isExpedite => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskCardModelCopyWith<TaskCardModel> get copyWith =>
@@ -70,7 +79,10 @@ abstract class $TaskCardModelCopyWith<$Res> {
       int? value,
       int? stage,
       int? peopleCount,
-      int? inColumnIndex});
+      int? inColumnIndex,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite});
 }
 
 /// @nodoc
@@ -91,6 +103,9 @@ class _$TaskCardModelCopyWithImpl<$Res>
     Object? stage = freezed,
     Object? peopleCount = freezed,
     Object? inColumnIndex = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
+    Object? isExpedite = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -121,6 +136,18 @@ class _$TaskCardModelCopyWithImpl<$Res>
           ? _value.inColumnIndex
           : inColumnIndex // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isExpedite: isExpedite == freezed
+          ? _value.isExpedite
+          : isExpedite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -139,7 +166,10 @@ abstract class _$TaskCardModelCopyWith<$Res>
       int? value,
       int? stage,
       int? peopleCount,
-      int? inColumnIndex});
+      int? inColumnIndex,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite});
 }
 
 /// @nodoc
@@ -162,6 +192,9 @@ class __$TaskCardModelCopyWithImpl<$Res>
     Object? stage = freezed,
     Object? peopleCount = freezed,
     Object? inColumnIndex = freezed,
+    Object? blockerCompleted = freezed,
+    Object? blockerRemaining = freezed,
+    Object? isExpedite = freezed,
   }) {
     return _then(_TaskCardModel(
       id: id == freezed
@@ -192,6 +225,18 @@ class __$TaskCardModelCopyWithImpl<$Res>
           ? _value.inColumnIndex
           : inColumnIndex // ignore: cast_nullable_to_non_nullable
               as int?,
+      blockerCompleted: blockerCompleted == freezed
+          ? _value.blockerCompleted
+          : blockerCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      blockerRemaining: blockerRemaining == freezed
+          ? _value.blockerRemaining
+          : blockerRemaining // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isExpedite: isExpedite == freezed
+          ? _value.isExpedite
+          : isExpedite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -206,7 +251,10 @@ class _$_TaskCardModel extends _TaskCardModel {
       this.value,
       this.stage,
       this.peopleCount,
-      this.inColumnIndex})
+      this.inColumnIndex,
+      this.blockerCompleted,
+      this.blockerRemaining,
+      this.isExpedite})
       : super._();
 
   @override
@@ -223,10 +271,16 @@ class _$_TaskCardModel extends _TaskCardModel {
   final int? peopleCount;
   @override // list of people on each stage
   final int? inColumnIndex;
+  @override
+  final int? blockerCompleted;
+  @override
+  final int? blockerRemaining;
+  @override
+  final bool? isExpedite;
 
   @override
   String toString() {
-    return 'TaskCardModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, inColumnIndex: $inColumnIndex)';
+    return 'TaskCardModel(id: $id, title: $title, progress: $progress, value: $value, stage: $stage, peopleCount: $peopleCount, inColumnIndex: $inColumnIndex, blockerCompleted: $blockerCompleted, blockerRemaining: $blockerRemaining, isExpedite: $isExpedite)';
   }
 
   @override
@@ -242,7 +296,13 @@ class _$_TaskCardModel extends _TaskCardModel {
             const DeepCollectionEquality()
                 .equals(other.peopleCount, peopleCount) &&
             const DeepCollectionEquality()
-                .equals(other.inColumnIndex, inColumnIndex));
+                .equals(other.inColumnIndex, inColumnIndex) &&
+            const DeepCollectionEquality()
+                .equals(other.blockerCompleted, blockerCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.blockerRemaining, blockerRemaining) &&
+            const DeepCollectionEquality()
+                .equals(other.isExpedite, isExpedite));
   }
 
   @override
@@ -254,7 +314,10 @@ class _$_TaskCardModel extends _TaskCardModel {
       const DeepCollectionEquality().hash(value),
       const DeepCollectionEquality().hash(stage),
       const DeepCollectionEquality().hash(peopleCount),
-      const DeepCollectionEquality().hash(inColumnIndex));
+      const DeepCollectionEquality().hash(inColumnIndex),
+      const DeepCollectionEquality().hash(blockerCompleted),
+      const DeepCollectionEquality().hash(blockerRemaining),
+      const DeepCollectionEquality().hash(isExpedite));
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +333,10 @@ abstract class _TaskCardModel extends TaskCardModel {
       int? value,
       int? stage,
       int? peopleCount,
-      int? inColumnIndex}) = _$_TaskCardModel;
+      int? inColumnIndex,
+      int? blockerCompleted,
+      int? blockerRemaining,
+      bool? isExpedite}) = _$_TaskCardModel;
   _TaskCardModel._() : super._();
 
   @override
@@ -287,6 +353,12 @@ abstract class _TaskCardModel extends TaskCardModel {
   int? get peopleCount;
   @override // list of people on each stage
   int? get inColumnIndex;
+  @override
+  int? get blockerCompleted;
+  @override
+  int? get blockerRemaining;
+  @override
+  bool? get isExpedite;
   @override
   @JsonKey(ignore: true)
   _$TaskCardModelCopyWith<_TaskCardModel> get copyWith =>

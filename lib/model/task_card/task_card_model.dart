@@ -15,6 +15,9 @@ class TaskCardModel with _$TaskCardModel {
     int? stage,
     int? peopleCount, // list of people on each stage
     int? inColumnIndex,
+    int? blockerCompleted,
+    int? blockerRemaining,
+    bool? isExpedite,
   }) = _TaskCardModel;
 
   static TaskCardModel fromTaskModel(TaskModel task, int inColumnIndex) {
@@ -26,6 +29,9 @@ class TaskCardModel with _$TaskCardModel {
       stage: task.stage ?? -1,
       peopleCount: task.peopleCount ?? 0,
       inColumnIndex: inColumnIndex,
+      blockerCompleted: task.blockerCompleted,
+      blockerRemaining: task.blockerRemaining,
+      isExpedite: task.isExpedite,
     );
   }
 }

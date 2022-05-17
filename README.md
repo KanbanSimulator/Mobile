@@ -3,7 +3,7 @@
 A new way to learn Kanban.
 
 ## About the Project
-https://www.youtube.com/watch?v=fWCpnmTzekk
+Please, see the video: https://www.youtube.com/watch?v=fWCpnmTzekk
 
 ## Getting Started
 

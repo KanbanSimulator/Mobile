@@ -1,17 +1,17 @@
-# kanban
+# Kanban Simulator
 
-A new Flutter project.
+A new way to learn Kanban.
+
+## About the Project
+Please, see the video: https://www.youtube.com/watch?v=fWCpnmTzekk
+
+## CI/CD
+For the Web version CI/CD is automatic with Netlify.com
+
+For the Android version, Codemagic build: [![Codemagic build status](https://api.codemagic.io/apps/62839e77290c4542d6924569/62839e77290c4542d6924568/status_badge.svg)](https://codemagic.io/apps/62839e77290c4542d6924569/62839e77290c4542d6924568/latest_build)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To start, go to the website: https://kanban-simulator.netlify.com
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Mobile
+It works both for Web and Mobile but optimized for the latter
